@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="ModeloBD.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="ModeloBDTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ModeloBD" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModeloBDContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="InformeConjunto" EntityType="ModeloBD.Informe" />
+          <EntitySet Name="DestinatarioInformeConjunto" EntityType="ModeloBD.DestinatarioInforme" />
+          <EntitySet Name="ReporteEnvioConjunto" EntityType="ModeloBD.ReporteEnvio" />
+          <EntitySet Name="EntradaInformeConjunto" EntityType="ModeloBD.EntradaInforme" />
+          <EntitySet Name="HistorialEnvioDestinatarioConjunto" EntityType="ModeloBD.HistorialEnvioDestinatario" />
+          <AssociationSet Name="DestinatarioInformeInforme" Association="ModeloBD.DestinatarioInformeInforme">
+            <End Role="DestinatarioInforme" EntitySet="DestinatarioInformeConjunto" />
+            <End Role="Informe" EntitySet="InformeConjunto" />
+          </AssociationSet>
+          <AssociationSet Name="EntradaInformeInforme" Association="ModeloBD.EntradaInformeInforme">
+            <End Role="EntradaInforme" EntitySet="EntradaInformeConjunto" />
+            <End Role="Informe" EntitySet="InformeConjunto" />
+          </AssociationSet>
+          <AssociationSet Name="InformeReporteEnvio" Association="ModeloBD.InformeReporteEnvio">
+            <End Role="Informe" EntitySet="InformeConjunto" />
+            <End Role="ReporteEnvio" EntitySet="ReporteEnvioConjunto" />
+          </AssociationSet>
+          <AssociationSet Name="HistorialEnvioDestinatarioReporteEnvio" Association="ModeloBD.HistorialEnvioDestinatarioReporteEnvio">
+            <End Role="HistorialEnvioDestinatario" EntitySet="HistorialEnvioDestinatarioConjunto" />
+            <End Role="ReporteEnvio" EntitySet="ReporteEnvioConjunto" />
+          </AssociationSet>
+          <EntitySet Name="DestinatarioConjunto" EntityType="ModeloBD.Destinatario" />
+          <AssociationSet Name="DestinatarioInformeDetinatario" Association="ModeloBD.DestinatarioInformeDetinatario">
+            <End Role="DestinatarioInforme" EntitySet="DestinatarioInformeConjunto" />
+            <End Role="Detinatario" EntitySet="DestinatarioConjunto" />
+          </AssociationSet>
+          <AssociationSet Name="DestinatarioHistorialEnvioDestinatario" Association="ModeloBD.DestinatarioHistorialEnvioDestinatario">
+            <End Role="Destinatario" EntitySet="DestinatarioConjunto" />
+            <End Role="HistorialEnvioDestinatario" EntitySet="HistorialEnvioDestinatarioConjunto" />
+          </AssociationSet>
+          <EntitySet Name="RemitenteConjunto" EntityType="ModeloBD.Remitente" />
+          <EntitySet Name="RemitenteInformeConjunto" EntityType="ModeloBD.RemitenteInforme" />
+          <EntitySet Name="HistorialEnvioRemitenteConjunto" EntityType="ModeloBD.HistorialEnvioRemitente" />
+          <AssociationSet Name="RemitenteInformeRemitente" Association="ModeloBD.RemitenteInformeRemitente">
+            <End Role="RemitenteInforme" EntitySet="RemitenteInformeConjunto" />
+            <End Role="Remitente" EntitySet="RemitenteConjunto" />
+          </AssociationSet>
+          <AssociationSet Name="HistorialEnvioRemitenteRemitente" Association="ModeloBD.HistorialEnvioRemitenteRemitente">
+            <End Role="HistorialEnvioRemitente" EntitySet="HistorialEnvioRemitenteConjunto" />
+            <End Role="Remitente" EntitySet="RemitenteConjunto" />
+          </AssociationSet>
+          <AssociationSet Name="RemitenteInformeInforme" Association="ModeloBD.RemitenteInformeInforme">
+            <End Role="RemitenteInforme" EntitySet="RemitenteInformeConjunto" />
+            <End Role="Informe" EntitySet="InformeConjunto" />
+          </AssociationSet>
+          <AssociationSet Name="HistorialEnvioRemitenteReporteEnvio" Association="ModeloBD.HistorialEnvioRemitenteReporteEnvio">
+            <End Role="HistorialEnvioRemitente" EntitySet="HistorialEnvioRemitenteConjunto" />
+            <End Role="ReporteEnvio" EntitySet="ReporteEnvioConjunto" />
+          </AssociationSet>
+          <EntitySet Name="ConfiguracionGeneralConjunto" EntityType="ModeloBD.ConfiguracionGeneral" />
+        </EntityContainer>
+        <EntityType Name="Informe">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="EstadoID" Nullable="false" />
+          <Property Type="String" Name="FechaCreacion" Nullable="false" />
+          <Property Type="String" Name="Asunto" Nullable="false" />
+          <Property Type="String" Name="Balance" Nullable="false" />
+          <NavigationProperty Name="DestinatarioInforme" Relationship="ModeloBD.DestinatarioInformeInforme" FromRole="Informe" ToRole="DestinatarioInforme" />
+          <NavigationProperty Name="EntradaInforme" Relationship="ModeloBD.EntradaInformeInforme" FromRole="Informe" ToRole="EntradaInforme" />
+          <NavigationProperty Name="ReporteEnvio" Relationship="ModeloBD.InformeReporteEnvio" FromRole="Informe" ToRole="ReporteEnvio" />
+          <NavigationProperty Name="RemitenteInforme" Relationship="ModeloBD.RemitenteInformeInforme" FromRole="Informe" ToRole="RemitenteInforme" />
+        </EntityType>
+        <EntityType Name="DestinatarioInforme">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="InformeID" Nullable="false" />
+          <Property Type="String" Name="DestinatarioID" Nullable="false" />
+          <NavigationProperty Name="Informe" Relationship="ModeloBD.DestinatarioInformeInforme" FromRole="DestinatarioInforme" ToRole="Informe" />
+          <NavigationProperty Name="Detinatario" Relationship="ModeloBD.DestinatarioInformeDetinatario" FromRole="DestinatarioInforme" ToRole="Detinatario" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="ReporteEnvio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="InformeID" Nullable="false" />
+          <Property Type="String" Name="FechaEnvio" Nullable="false" />
+          <NavigationProperty Name="Informe" Relationship="ModeloBD.InformeReporteEnvio" FromRole="ReporteEnvio" ToRole="Informe" />
+          <NavigationProperty Name="HistorialEnvioDestinatario" Relationship="ModeloBD.HistorialEnvioDestinatarioReporteEnvio" FromRole="ReporteEnvio" ToRole="HistorialEnvioDestinatario" />
+          <NavigationProperty Name="HistorialEnvioRemitente" Relationship="ModeloBD.HistorialEnvioRemitenteReporteEnvio" FromRole="ReporteEnvio" ToRole="HistorialEnvioRemitente" />
+        </EntityType>
+        <EntityType Name="EntradaInforme">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="InformeID" Nullable="false" />
+          <Property Type="String" Name="Tipo" Nullable="false" />
+          <Property Type="String" Name="Valor" Nullable="false" />
+          <NavigationProperty Name="Informe" Relationship="ModeloBD.EntradaInformeInforme" FromRole="EntradaInforme" ToRole="Informe" />
+        </EntityType>
+        <EntityType Name="HistorialEnvioDestinatario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="ReporteEnvioID" Nullable="false" />
+          <Property Type="String" Name="DestinatarioID" Nullable="false" />
+          <NavigationProperty Name="ReporteEnvio" Relationship="ModeloBD.HistorialEnvioDestinatarioReporteEnvio" FromRole="HistorialEnvioDestinatario" ToRole="ReporteEnvio" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Destinatario" Relationship="ModeloBD.DestinatarioHistorialEnvioDestinatario" FromRole="HistorialEnvioDestinatario" ToRole="Destinatario" />
+        </EntityType>
+        <Association Name="DestinatarioInformeInforme">
+          <End Type="ModeloBD.DestinatarioInforme" Role="DestinatarioInforme" Multiplicity="*" />
+          <End Type="ModeloBD.Informe" Role="Informe" Multiplicity="1" />
+        </Association>
+        <Association Name="EntradaInformeInforme">
+          <End Type="ModeloBD.EntradaInforme" Role="EntradaInforme" Multiplicity="*" />
+          <End Type="ModeloBD.Informe" Role="Informe" Multiplicity="1" />
+        </Association>
+        <Association Name="InformeReporteEnvio">
+          <End Type="ModeloBD.Informe" Role="Informe" Multiplicity="1" />
+          <End Type="ModeloBD.ReporteEnvio" Role="ReporteEnvio" Multiplicity="*" />
+        </Association>
+        <Association Name="HistorialEnvioDestinatarioReporteEnvio">
+          <End Type="ModeloBD.HistorialEnvioDestinatario" Role="HistorialEnvioDestinatario" Multiplicity="*" />
+          <End Type="ModeloBD.ReporteEnvio" Role="ReporteEnvio" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Destinatario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <NavigationProperty Name="DestinatarioInforme" Relationship="ModeloBD.DestinatarioInformeDetinatario" FromRole="Detinatario" ToRole="DestinatarioInforme" />
+          <NavigationProperty Name="HistorialEnvioDestinatario" Relationship="ModeloBD.DestinatarioHistorialEnvioDestinatario" FromRole="Destinatario" ToRole="HistorialEnvioDestinatario" />
+        </EntityType>
+        <Association Name="DestinatarioInformeDetinatario">
+          <End Type="ModeloBD.DestinatarioInforme" Role="DestinatarioInforme" Multiplicity="*" />
+          <End Type="ModeloBD.Destinatario" Role="Detinatario" Multiplicity="1" />
+        </Association>
+        <Association Name="DestinatarioHistorialEnvioDestinatario">
+          <End Type="ModeloBD.Destinatario" Role="Destinatario" Multiplicity="1" />
+          <End Type="ModeloBD.HistorialEnvioDestinatario" Role="HistorialEnvioDestinatario" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Remitente">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <NavigationProperty Name="RemitenteInforme" Relationship="ModeloBD.RemitenteInformeRemitente" FromRole="Remitente" ToRole="RemitenteInforme" />
+          <NavigationProperty Name="HistorialEnvioRemitente" Relationship="ModeloBD.HistorialEnvioRemitenteRemitente" FromRole="Remitente" ToRole="HistorialEnvioRemitente" />
+          <Property Type="String" Name="Usuario" Nullable="false" />
+          <Property Type="String" Name="Contrasenia" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RemitenteInforme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="RemitenteID" Nullable="false" />
+          <NavigationProperty Name="Remitente" Relationship="ModeloBD.RemitenteInformeRemitente" FromRole="RemitenteInforme" ToRole="Remitente" />
+          <NavigationProperty Name="Informe" Relationship="ModeloBD.RemitenteInformeInforme" FromRole="RemitenteInforme" ToRole="Informe" />
+        </EntityType>
+        <EntityType Name="HistorialEnvioRemitente">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ReporteEnvioID" Nullable="false" />
+          <Property Type="String" Name="RemitenteID" Nullable="false" />
+          <NavigationProperty Name="Remitente" Relationship="ModeloBD.HistorialEnvioRemitenteRemitente" FromRole="HistorialEnvioRemitente" ToRole="Remitente" />
+          <NavigationProperty Name="ReporteEnvio" Relationship="ModeloBD.HistorialEnvioRemitenteReporteEnvio" FromRole="HistorialEnvioRemitente" ToRole="ReporteEnvio" />
+        </EntityType>
+        <Association Name="RemitenteInformeRemitente">
+          <End Type="ModeloBD.RemitenteInforme" Role="RemitenteInforme" Multiplicity="*" />
+          <End Type="ModeloBD.Remitente" Role="Remitente" Multiplicity="1" />
+        </Association>
+        <Association Name="HistorialEnvioRemitenteRemitente">
+          <End Type="ModeloBD.HistorialEnvioRemitente" Role="HistorialEnvioRemitente" Multiplicity="*" />
+          <End Type="ModeloBD.Remitente" Role="Remitente" Multiplicity="1" />
+        </Association>
+        <Association Name="RemitenteInformeInforme">
+          <End Type="ModeloBD.RemitenteInforme" Role="RemitenteInforme" Multiplicity="*" />
+          <End Type="ModeloBD.Informe" Role="Informe" Multiplicity="1" />
+        </Association>
+        <Association Name="HistorialEnvioRemitenteReporteEnvio">
+          <End Type="ModeloBD.HistorialEnvioRemitente" Role="HistorialEnvioRemitente" Multiplicity="*" />
+          <End Type="ModeloBD.ReporteEnvio" Role="ReporteEnvio" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ConfiguracionGeneral">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="ModeloBD" />
+        <Alias Key="Target" Value="ModeloBD.Store" />
+        <EntityContainerMapping CdmEntityContainer="ModeloBDContainer" StorageEntityContainer="ModeloBDTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
