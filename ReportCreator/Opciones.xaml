@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="ReportCreator.Opciones"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Button Content="Destinatarios" HorizontalAlignment="Left" Margin="100,76,0,0" VerticalAlignment="Top" Width="117"/>
+        <Button Content="Mail" HorizontalAlignment="Left" Margin="100,99,0,0" VerticalAlignment="Top" Width="117"/>
+        <Button Content="Asunto por defecto" HorizontalAlignment="Left" Margin="100,123,0,0" VerticalAlignment="Top" Width="117"/>
+        <Button Content="Google Drive" HorizontalAlignment="Left" Margin="100,147,0,0" VerticalAlignment="Top" Width="117"/>
+        <Button Content="Outlook" HorizontalAlignment="Left" Margin="100,171,0,0" VerticalAlignment="Top" Width="117"/>
+        <Button Content="Dropbox" HorizontalAlignment="Left" Margin="100,195,0,0" VerticalAlignment="Top" Width="117"/>
+
+    </Grid>
+</UserControl>
