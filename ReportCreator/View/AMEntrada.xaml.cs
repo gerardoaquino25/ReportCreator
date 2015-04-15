@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ReportCreator
+namespace ReportCreator.View
 {
     /// <summary>
-    /// Lógica de interacción para NuevoBorrador.xaml
+    /// Interaction logic for AMEntrada.xaml
     /// </summary>
-    public partial class NuevoBorrador : UserControl
+    public partial class AMEntrada : UserControl
     {
-        public NuevoBorrador()
+        public AMEntrada()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

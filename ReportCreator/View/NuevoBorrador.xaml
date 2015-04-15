@@ -4,8 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
-            
+        <Label Content="Asunto:" HorizontalAlignment="Left" Margin="78,75,0,0" VerticalAlignment="Top" Width="60"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="143,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343"/>
+        <Label Content="Entradas:" HorizontalAlignment="Left" Margin="78,121,0,0" VerticalAlignment="Top" Width="60"/>
+        <DataGrid AutoGenerateColumns="False" 
+          Height="300" 
+          Name="dataGrid1" Margin="143,121,114,179">
+            <DataGrid.Columns >
+                <DataGridTextColumn Header="ID" MinWidth="50" />
+                <DataGridTextColumn Header="Tipo" MinWidth="100" />
+                <DataGridTextColumn Header="Valor" MinWidth="50" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="+" HorizontalAlignment="Left" Margin="491,121,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="Button_Click"/>
     </Grid>
 </UserControl>
