@@ -12,6 +12,7 @@
         <Button Content="Google Drive" HorizontalAlignment="Left" Margin="100,147,0,0" VerticalAlignment="Top" Width="117"/>
         <Button Content="Outlook" HorizontalAlignment="Left" Margin="100,171,0,0" VerticalAlignment="Top" Width="117"/>
         <Button Content="Dropbox" HorizontalAlignment="Left" Margin="100,195,0,0" VerticalAlignment="Top" Width="117"/>
+        <Button Content="Volver" HorizontalAlignment="Left" Margin="100,219,0,0" VerticalAlignment="Top" Width="117" Click="Button_Click"/>
 
     </Grid>
 </UserControl>

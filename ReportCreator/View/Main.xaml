@@ -6,9 +6,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Button Content="Envio de informe" HorizontalAlignment="Left" Margin="104,115,0,0" VerticalAlignment="Top" Width="102"/>
-        <Button Content="Opciones" HorizontalAlignment="Left" Margin="104,139,0,0" VerticalAlignment="Top" Width="102"/>
-        <Button Content="Salir" HorizontalAlignment="Left" Margin="104,163,0,0" VerticalAlignment="Top" Width="102"/>
+        <Button Content="Envio de informe" HorizontalAlignment="Left" Margin="104,115,0,0" VerticalAlignment="Top" Width="102" Click="Button_Click"/>
+        <Button Content="Opciones" HorizontalAlignment="Left" Margin="104,139,0,0" VerticalAlignment="Top" Width="102" Click="Button_Click_1"/>
+        <Button Content="Salir" HorizontalAlignment="Left" Margin="104,163,0,0" VerticalAlignment="Top" Width="102" Click="Button_Click_2"/>
 
     </Grid>
 </UserControl>

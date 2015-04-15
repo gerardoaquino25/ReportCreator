@@ -16,13 +16,18 @@ using System.Windows.Shapes;
 namespace ReportCreator
 {
     /// <summary>
-    /// Lógica de interacción para EnvioInforme.xaml
+    /// Lógica de interacción para Opciones.xaml
     /// </summary>
-    public partial class EnvioInforme : UserControl
+    public partial class Opciones : UserControl
     {
-        public EnvioInforme()
+        public Opciones()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new Main();
         }
     }
 }

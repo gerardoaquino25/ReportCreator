@@ -20,9 +20,13 @@ namespace ReportCreator
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static Window self;
+
         public MainWindow()
         {
             InitializeComponent();
+            self = this;
+            this.Content = new Main();
         }
     }
 }

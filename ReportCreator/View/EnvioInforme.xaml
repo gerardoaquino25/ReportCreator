@@ -6,11 +6,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Button Content="Nuevo" HorizontalAlignment="Left" Margin="91,125,0,0" VerticalAlignment="Top" Width="125"/>
+        <Button Content="Nuevo" HorizontalAlignment="Left" Margin="91,125,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click_1"/>
         <Button Content="Borrador" HorizontalAlignment="Left" Margin="91,101,0,0" VerticalAlignment="Top" Width="125"/>
-        <Button Content="Pendiente de Envio" HorizontalAlignment="Left" Margin="91,149,0,0" VerticalAlignment="Top" Width="125"/>
+        <Button Content="Pendiente de Envio" HorizontalAlignment="Left" Margin="91,149,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click"/>
         <Button Content="Enviados" HorizontalAlignment="Left" Margin="91,173,0,0" VerticalAlignment="Top" Width="125"/>
-        <Button Content="Volver" HorizontalAlignment="Left" Margin="91,197,0,0" VerticalAlignment="Top" Width="125"/>
+        <Button Content="Volver" HorizontalAlignment="Left" Margin="91,197,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click_2"/>
 
     </Grid>
 </UserControl>

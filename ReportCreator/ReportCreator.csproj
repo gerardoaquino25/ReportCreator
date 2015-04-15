@@ -90,11 +90,11 @@
     <Compile Include="ReporteEnvio.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Page Include="EnvioInforme.xaml">
+    <Page Include="View\EnvioInforme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Main.xaml">
+    <Page Include="View\Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -106,25 +106,25 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EnvioInforme.xaml.cs">
+    <Compile Include="View\EnvioInforme.xaml.cs">
       <DependentUpon>EnvioInforme.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main.xaml.cs">
+    <Compile Include="View\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NuevoBorrador.xaml">
+    <Page Include="View\NuevoBorrador.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Opciones.xaml">
+    <Page Include="View\Opciones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PendienteEnvio.xaml">
+    <Page Include="View\PendienteEnvio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,13 +145,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModeloBD.edmx</DependentUpon>
     </Compile>
-    <Compile Include="NuevoBorrador.xaml.cs">
+    <Compile Include="View\NuevoBorrador.xaml.cs">
       <DependentUpon>NuevoBorrador.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Opciones.xaml.cs">
+    <Compile Include="View\Opciones.xaml.cs">
       <DependentUpon>Opciones.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PendienteEnvio.xaml.cs">
+    <Compile Include="View\PendienteEnvio.xaml.cs">
       <DependentUpon>PendienteEnvio.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -201,6 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
