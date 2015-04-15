@@ -14,6 +14,7 @@ namespace ReportCreator
     
     public partial class ConfiguracionGeneral
     {
-        public int Id { get; set; }
+        public string ID { get; set; }
+        public string Valor { get; set; }
     }
 }

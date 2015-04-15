@@ -4,11 +4,319 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="ModeloBD.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="ModeloBDTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="ModeloBD.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModeloBDStoreContainer">
+    <EntitySet Name="InformeConjunto" EntityType="ModeloBD.Store.InformeConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DestinatarioInformeConjunto" EntityType="ModeloBD.Store.DestinatarioInformeConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ReporteEnvioConjunto" EntityType="ModeloBD.Store.ReporteEnvioConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EntradaInformeConjunto" EntityType="ModeloBD.Store.EntradaInformeConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistorialEnvioDestinatarioConjunto" EntityType="ModeloBD.Store.HistorialEnvioDestinatarioConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DestinatarioConjunto" EntityType="ModeloBD.Store.DestinatarioConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RemitenteConjunto" EntityType="ModeloBD.Store.RemitenteConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RemitenteInformeConjunto" EntityType="ModeloBD.Store.RemitenteInformeConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistorialEnvioRemitenteConjunto" EntityType="ModeloBD.Store.HistorialEnvioRemitenteConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ConfiguracionGeneralConjunto" EntityType="ModeloBD.Store.ConfiguracionGeneralConjunto" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistorialEnvioDestinatarioReporteEnvio" EntityType="ModeloBD.Store.HistorialEnvioDestinatarioReporteEnvio" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistorialEnvioRemitenteReporteEnvio" EntityType="ModeloBD.Store.HistorialEnvioRemitenteReporteEnvio" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="DestinatarioInformeInforme" Association="ModeloBD.Store.DestinatarioInformeInforme">
+      <End Role="DestinatarioInforme" EntitySet="DestinatarioInformeConjunto" />
+      <End Role="Informe" EntitySet="InformeConjunto" />
+    </AssociationSet>
+    <AssociationSet Name="EntradaInformeInforme" Association="ModeloBD.Store.EntradaInformeInforme">
+      <End Role="EntradaInforme" EntitySet="EntradaInformeConjunto" />
+      <End Role="Informe" EntitySet="InformeConjunto" />
+    </AssociationSet>
+    <AssociationSet Name="InformeReporteEnvio" Association="ModeloBD.Store.InformeReporteEnvio">
+      <End Role="Informe" EntitySet="InformeConjunto" />
+      <End Role="ReporteEnvio" EntitySet="ReporteEnvioConjunto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistorialEnvioDestinatarioReporteEnvio_HistorialEnvioDestinatario" Association="ModeloBD.Store.FK_HistorialEnvioDestinatarioReporteEnvio_HistorialEnvioDestinatario">
+      <End Role="HistorialEnvioDestinatario" EntitySet="HistorialEnvioDestinatarioConjunto" />
+      <End Role="HistorialEnvioDestinatarioReporteEnvio" EntitySet="HistorialEnvioDestinatarioReporteEnvio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistorialEnvioDestinatarioReporteEnvio_ReporteEnvio" Association="ModeloBD.Store.FK_HistorialEnvioDestinatarioReporteEnvio_ReporteEnvio">
+      <End Role="ReporteEnvio" EntitySet="ReporteEnvioConjunto" />
+      <End Role="HistorialEnvioDestinatarioReporteEnvio" EntitySet="HistorialEnvioDestinatarioReporteEnvio" />
+    </AssociationSet>
+    <AssociationSet Name="DestinatarioInformeDetinatario" Association="ModeloBD.Store.DestinatarioInformeDetinatario">
+      <End Role="DestinatarioInforme" EntitySet="DestinatarioInformeConjunto" />
+      <End Role="Detinatario" EntitySet="DestinatarioConjunto" />
+    </AssociationSet>
+    <AssociationSet Name="DestinatarioHistorialEnvioDestinatario" Association="ModeloBD.Store.DestinatarioHistorialEnvioDestinatario">
+      <End Role="Destinatario" EntitySet="DestinatarioConjunto" />
+      <End Role="HistorialEnvioDestinatario" EntitySet="HistorialEnvioDestinatarioConjunto" />
+    </AssociationSet>
+    <AssociationSet Name="RemitenteInformeRemitente" Association="ModeloBD.Store.RemitenteInformeRemitente">
+      <End Role="RemitenteInforme" EntitySet="RemitenteInformeConjunto" />
+      <End Role="Remitente" EntitySet="RemitenteConjunto" />
+    </AssociationSet>
+    <AssociationSet Name="HistorialEnvioRemitenteRemitente" Association="ModeloBD.Store.HistorialEnvioRemitenteRemitente">
+      <End Role="HistorialEnvioRemitente" EntitySet="HistorialEnvioRemitenteConjunto" />
+      <End Role="Remitente" EntitySet="RemitenteConjunto" />
+    </AssociationSet>
+    <AssociationSet Name="RemitenteInformeInforme" Association="ModeloBD.Store.RemitenteInformeInforme">
+      <End Role="RemitenteInforme" EntitySet="RemitenteInformeConjunto" />
+      <End Role="Informe" EntitySet="InformeConjunto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistorialEnvioRemitenteReporteEnvio_HistorialEnvioRemitente" Association="ModeloBD.Store.FK_HistorialEnvioRemitenteReporteEnvio_HistorialEnvioRemitente">
+      <End Role="HistorialEnvioRemitente" EntitySet="HistorialEnvioRemitenteConjunto" />
+      <End Role="HistorialEnvioRemitenteReporteEnvio" EntitySet="HistorialEnvioRemitenteReporteEnvio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistorialEnvioRemitenteReporteEnvio_ReporteEnvio" Association="ModeloBD.Store.FK_HistorialEnvioRemitenteReporteEnvio_ReporteEnvio">
+      <End Role="ReporteEnvio" EntitySet="ReporteEnvioConjunto" />
+      <End Role="HistorialEnvioRemitenteReporteEnvio" EntitySet="HistorialEnvioRemitenteReporteEnvio" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="InformeConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstadoID" Type="smallint" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="Asunto" Type="nvarchar" Nullable="false" />
+    <Property Name="Balance" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DestinatarioInformeConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InformeID" Type="bigint" Nullable="false" />
+    <Property Name="DestinatarioID" Type="int" Nullable="false" />
+    <Property Name="Informe_ID" Type="bigint" Nullable="false" />
+    <Property Name="Detinatario_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReporteEnvioConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InformeID" Type="bigint" Nullable="false" />
+    <Property Name="FechaEnvio" Type="datetime" Nullable="false" />
+    <Property Name="Informe_ID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EntradaInformeConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InformeID" Type="bigint" Nullable="false" />
+    <Property Name="Tipo" Type="int" Nullable="false" />
+    <Property Name="Valor" Type="nvarchar" Nullable="false" />
+    <Property Name="Informe_ID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistorialEnvioDestinatarioConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReporteEnvioID" Type="bigint" Nullable="false" />
+    <Property Name="DestinatarioID" Type="int" Nullable="false" />
+    <Property Name="Destinatario_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DestinatarioConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RemitenteConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" />
+    <Property Name="Usuario" Type="nvarchar" Nullable="false" />
+    <Property Name="Contrasenia" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RemitenteInformeConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RemitenteID" Type="int" Nullable="false" />
+    <Property Name="Remitente_ID" Type="int" Nullable="false" />
+    <Property Name="Informe_ID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistorialEnvioRemitenteConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReporteEnvioID" Type="bigint" Nullable="false" />
+    <Property Name="RemitenteID" Type="int" Nullable="false" />
+    <Property Name="Remitente_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ConfiguracionGeneralConjunto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" Nullable="false" />
+    <Property Name="Valor" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistorialEnvioDestinatarioReporteEnvio">
+    <Key>
+      <PropertyRef Name="HistorialEnvioDestinatario_ID" />
+      <PropertyRef Name="ReporteEnvio_ID" />
+    </Key>
+    <Property Name="HistorialEnvioDestinatario_ID" Type="bigint" Nullable="false" />
+    <Property Name="ReporteEnvio_ID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistorialEnvioRemitenteReporteEnvio">
+    <Key>
+      <PropertyRef Name="HistorialEnvioRemitente_ID" />
+      <PropertyRef Name="ReporteEnvio_ID" />
+    </Key>
+    <Property Name="HistorialEnvioRemitente_ID" Type="bigint" Nullable="false" />
+    <Property Name="ReporteEnvio_ID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="DestinatarioInformeInforme">
+    <End Role="DestinatarioInforme" Type="ModeloBD.Store.DestinatarioInformeConjunto" Multiplicity="*" />
+    <End Role="Informe" Type="ModeloBD.Store.InformeConjunto" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Informe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DestinatarioInforme">
+        <PropertyRef Name="Informe_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EntradaInformeInforme">
+    <End Role="EntradaInforme" Type="ModeloBD.Store.EntradaInformeConjunto" Multiplicity="*" />
+    <End Role="Informe" Type="ModeloBD.Store.InformeConjunto" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Informe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EntradaInforme">
+        <PropertyRef Name="Informe_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="InformeReporteEnvio">
+    <End Role="Informe" Type="ModeloBD.Store.InformeConjunto" Multiplicity="1" />
+    <End Role="ReporteEnvio" Type="ModeloBD.Store.ReporteEnvioConjunto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Informe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReporteEnvio">
+        <PropertyRef Name="Informe_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DestinatarioInformeDetinatario">
+    <End Role="DestinatarioInforme" Type="ModeloBD.Store.DestinatarioInformeConjunto" Multiplicity="*" />
+    <End Role="Detinatario" Type="ModeloBD.Store.DestinatarioConjunto" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Detinatario">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DestinatarioInforme">
+        <PropertyRef Name="Detinatario_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DestinatarioHistorialEnvioDestinatario">
+    <End Role="Destinatario" Type="ModeloBD.Store.DestinatarioConjunto" Multiplicity="1" />
+    <End Role="HistorialEnvioDestinatario" Type="ModeloBD.Store.HistorialEnvioDestinatarioConjunto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Destinatario">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistorialEnvioDestinatario">
+        <PropertyRef Name="Destinatario_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RemitenteInformeRemitente">
+    <End Role="RemitenteInforme" Type="ModeloBD.Store.RemitenteInformeConjunto" Multiplicity="*" />
+    <End Role="Remitente" Type="ModeloBD.Store.RemitenteConjunto" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Remitente">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RemitenteInforme">
+        <PropertyRef Name="Remitente_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HistorialEnvioRemitenteRemitente">
+    <End Role="HistorialEnvioRemitente" Type="ModeloBD.Store.HistorialEnvioRemitenteConjunto" Multiplicity="*" />
+    <End Role="Remitente" Type="ModeloBD.Store.RemitenteConjunto" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Remitente">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistorialEnvioRemitente">
+        <PropertyRef Name="Remitente_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RemitenteInformeInforme">
+    <End Role="RemitenteInforme" Type="ModeloBD.Store.RemitenteInformeConjunto" Multiplicity="*" />
+    <End Role="Informe" Type="ModeloBD.Store.InformeConjunto" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Informe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RemitenteInforme">
+        <PropertyRef Name="Informe_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistorialEnvioDestinatarioReporteEnvio_HistorialEnvioDestinatario">
+    <End Role="HistorialEnvioDestinatario" Type="ModeloBD.Store.HistorialEnvioDestinatarioConjunto" Multiplicity="1" />
+    <End Role="HistorialEnvioDestinatarioReporteEnvio" Type="ModeloBD.Store.HistorialEnvioDestinatarioReporteEnvio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HistorialEnvioDestinatario">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistorialEnvioDestinatarioReporteEnvio">
+        <PropertyRef Name="HistorialEnvioDestinatario_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistorialEnvioDestinatarioReporteEnvio_ReporteEnvio">
+    <End Role="HistorialEnvioDestinatarioReporteEnvio" Type="ModeloBD.Store.HistorialEnvioDestinatarioReporteEnvio" Multiplicity="*" />
+    <End Role="ReporteEnvio" Type="ModeloBD.Store.ReporteEnvioConjunto" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ReporteEnvio">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistorialEnvioDestinatarioReporteEnvio">
+        <PropertyRef Name="ReporteEnvio_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistorialEnvioRemitenteReporteEnvio_HistorialEnvioRemitente">
+    <End Role="HistorialEnvioRemitente" Type="ModeloBD.Store.HistorialEnvioRemitenteConjunto" Multiplicity="1" />
+    <End Role="HistorialEnvioRemitenteReporteEnvio" Type="ModeloBD.Store.HistorialEnvioRemitenteReporteEnvio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HistorialEnvioRemitente">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistorialEnvioRemitenteReporteEnvio">
+        <PropertyRef Name="HistorialEnvioRemitente_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistorialEnvioRemitenteReporteEnvio_ReporteEnvio">
+    <End Role="HistorialEnvioRemitenteReporteEnvio" Type="ModeloBD.Store.HistorialEnvioRemitenteReporteEnvio" Multiplicity="*" />
+    <End Role="ReporteEnvio" Type="ModeloBD.Store.ReporteEnvioConjunto" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ReporteEnvio">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistorialEnvioRemitenteReporteEnvio">
+        <PropertyRef Name="ReporteEnvio_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ModeloBD" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -69,8 +377,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="EstadoID" Nullable="false" />
-          <Property Type="String" Name="FechaCreacion" Nullable="false" />
+          <Property Type="Int16" Name="EstadoID" Nullable="false" />
+          <Property Type="DateTime" Name="FechaCreacion" Nullable="false" />
           <Property Type="String" Name="Asunto" Nullable="false" />
           <Property Type="String" Name="Balance" Nullable="false" />
           <NavigationProperty Name="DestinatarioInforme" Relationship="ModeloBD.DestinatarioInformeInforme" FromRole="Informe" ToRole="DestinatarioInforme" />
@@ -82,19 +390,19 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Type="String" Name="InformeID" Nullable="false" />
-          <Property Type="String" Name="DestinatarioID" Nullable="false" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="InformeID" Nullable="false" />
+          <Property Type="Int32" Name="DestinatarioID" Nullable="false" />
           <NavigationProperty Name="Informe" Relationship="ModeloBD.DestinatarioInformeInforme" FromRole="DestinatarioInforme" ToRole="Informe" />
           <NavigationProperty Name="Detinatario" Relationship="ModeloBD.DestinatarioInformeDetinatario" FromRole="DestinatarioInforme" ToRole="Detinatario" />
-          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="ReporteEnvio">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="InformeID" Nullable="false" />
-          <Property Type="String" Name="FechaEnvio" Nullable="false" />
+          <Property Type="Int64" Name="InformeID" Nullable="false" />
+          <Property Type="DateTime" Name="FechaEnvio" Nullable="false" />
           <NavigationProperty Name="Informe" Relationship="ModeloBD.InformeReporteEnvio" FromRole="ReporteEnvio" ToRole="Informe" />
           <NavigationProperty Name="HistorialEnvioDestinatario" Relationship="ModeloBD.HistorialEnvioDestinatarioReporteEnvio" FromRole="ReporteEnvio" ToRole="HistorialEnvioDestinatario" />
           <NavigationProperty Name="HistorialEnvioRemitente" Relationship="ModeloBD.HistorialEnvioRemitenteReporteEnvio" FromRole="ReporteEnvio" ToRole="HistorialEnvioRemitente" />
@@ -104,8 +412,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="InformeID" Nullable="false" />
-          <Property Type="String" Name="Tipo" Nullable="false" />
+          <Property Type="Int64" Name="InformeID" Nullable="false" />
+          <Property Type="Int32" Name="Tipo" Nullable="false" />
           <Property Type="String" Name="Valor" Nullable="false" />
           <NavigationProperty Name="Informe" Relationship="ModeloBD.EntradaInformeInforme" FromRole="EntradaInforme" ToRole="Informe" />
         </EntityType>
@@ -113,10 +421,10 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Type="String" Name="ReporteEnvioID" Nullable="false" />
-          <Property Type="String" Name="DestinatarioID" Nullable="false" />
-          <NavigationProperty Name="ReporteEnvio" Relationship="ModeloBD.HistorialEnvioDestinatarioReporteEnvio" FromRole="HistorialEnvioDestinatario" ToRole="ReporteEnvio" />
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="ReporteEnvioID" Nullable="false" />
+          <Property Type="Int32" Name="DestinatarioID" Nullable="false" />
+          <NavigationProperty Name="ReporteEnvio" Relationship="ModeloBD.HistorialEnvioDestinatarioReporteEnvio" FromRole="HistorialEnvioDestinatario" ToRole="ReporteEnvio" />
           <NavigationProperty Name="Destinatario" Relationship="ModeloBD.DestinatarioHistorialEnvioDestinatario" FromRole="HistorialEnvioDestinatario" ToRole="Destinatario" />
         </EntityType>
         <Association Name="DestinatarioInformeInforme">
@@ -139,7 +447,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Email" Nullable="false" />
           <NavigationProperty Name="DestinatarioInforme" Relationship="ModeloBD.DestinatarioInformeDetinatario" FromRole="Detinatario" ToRole="DestinatarioInforme" />
           <NavigationProperty Name="HistorialEnvioDestinatario" Relationship="ModeloBD.DestinatarioHistorialEnvioDestinatario" FromRole="Destinatario" ToRole="HistorialEnvioDestinatario" />
@@ -158,17 +466,17 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Email" Nullable="false" />
-          <NavigationProperty Name="RemitenteInforme" Relationship="ModeloBD.RemitenteInformeRemitente" FromRole="Remitente" ToRole="RemitenteInforme" />
-          <NavigationProperty Name="HistorialEnvioRemitente" Relationship="ModeloBD.HistorialEnvioRemitenteRemitente" FromRole="Remitente" ToRole="HistorialEnvioRemitente" />
           <Property Type="String" Name="Usuario" Nullable="false" />
           <Property Type="String" Name="Contrasenia" Nullable="false" />
+          <NavigationProperty Name="RemitenteInforme" Relationship="ModeloBD.RemitenteInformeRemitente" FromRole="Remitente" ToRole="RemitenteInforme" />
+          <NavigationProperty Name="HistorialEnvioRemitente" Relationship="ModeloBD.HistorialEnvioRemitenteRemitente" FromRole="Remitente" ToRole="HistorialEnvioRemitente" />
         </EntityType>
         <EntityType Name="RemitenteInforme">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="RemitenteID" Nullable="false" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="RemitenteID" Nullable="false" />
           <NavigationProperty Name="Remitente" Relationship="ModeloBD.RemitenteInformeRemitente" FromRole="RemitenteInforme" ToRole="Remitente" />
           <NavigationProperty Name="Informe" Relationship="ModeloBD.RemitenteInformeInforme" FromRole="RemitenteInforme" ToRole="Informe" />
         </EntityType>
@@ -176,9 +484,9 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="ReporteEnvioID" Nullable="false" />
-          <Property Type="String" Name="RemitenteID" Nullable="false" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="ReporteEnvioID" Nullable="false" />
+          <Property Type="Int32" Name="RemitenteID" Nullable="false" />
           <NavigationProperty Name="Remitente" Relationship="ModeloBD.HistorialEnvioRemitenteRemitente" FromRole="HistorialEnvioRemitente" ToRole="Remitente" />
           <NavigationProperty Name="ReporteEnvio" Relationship="ModeloBD.HistorialEnvioRemitenteReporteEnvio" FromRole="HistorialEnvioRemitente" ToRole="ReporteEnvio" />
         </EntityType>
@@ -200,21 +508,190 @@
         </Association>
         <EntityType Name="ConfiguracionGeneral">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="String" Name="Valor" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="ModeloBD" />
-        <Alias Key="Target" Value="ModeloBD.Store" />
-        <EntityContainerMapping CdmEntityContainer="ModeloBDContainer" StorageEntityContainer="ModeloBDTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModeloBDStoreContainer" CdmEntityContainer="ModeloBDContainer">
+    <EntitySetMapping Name="InformeConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.Informe)">
+        <MappingFragment StoreEntitySet="InformeConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EstadoID" ColumnName="EstadoID" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="Asunto" ColumnName="Asunto" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DestinatarioInformeConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.DestinatarioInforme)">
+        <MappingFragment StoreEntitySet="DestinatarioInformeConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="InformeID" ColumnName="InformeID" />
+          <ScalarProperty Name="DestinatarioID" ColumnName="DestinatarioID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReporteEnvioConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.ReporteEnvio)">
+        <MappingFragment StoreEntitySet="ReporteEnvioConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="InformeID" ColumnName="InformeID" />
+          <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EntradaInformeConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.EntradaInforme)">
+        <MappingFragment StoreEntitySet="EntradaInformeConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="InformeID" ColumnName="InformeID" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistorialEnvioDestinatarioConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.HistorialEnvioDestinatario)">
+        <MappingFragment StoreEntitySet="HistorialEnvioDestinatarioConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ReporteEnvioID" ColumnName="ReporteEnvioID" />
+          <ScalarProperty Name="DestinatarioID" ColumnName="DestinatarioID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DestinatarioConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.Destinatario)">
+        <MappingFragment StoreEntitySet="DestinatarioConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RemitenteConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.Remitente)">
+        <MappingFragment StoreEntitySet="RemitenteConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+          <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RemitenteInformeConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.RemitenteInforme)">
+        <MappingFragment StoreEntitySet="RemitenteInformeConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RemitenteID" ColumnName="RemitenteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistorialEnvioRemitenteConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.HistorialEnvioRemitente)">
+        <MappingFragment StoreEntitySet="HistorialEnvioRemitenteConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ReporteEnvioID" ColumnName="ReporteEnvioID" />
+          <ScalarProperty Name="RemitenteID" ColumnName="RemitenteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConfiguracionGeneralConjunto">
+      <EntityTypeMapping TypeName="IsTypeOf(ModeloBD.ConfiguracionGeneral)">
+        <MappingFragment StoreEntitySet="ConfiguracionGeneralConjunto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="DestinatarioInformeInforme" TypeName="ModeloBD.DestinatarioInformeInforme" StoreEntitySet="DestinatarioInformeConjunto">
+      <EndProperty Name="Informe">
+        <ScalarProperty Name="ID" ColumnName="Informe_ID" />
+      </EndProperty>
+      <EndProperty Name="DestinatarioInforme">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EntradaInformeInforme" TypeName="ModeloBD.EntradaInformeInforme" StoreEntitySet="EntradaInformeConjunto">
+      <EndProperty Name="Informe">
+        <ScalarProperty Name="ID" ColumnName="Informe_ID" />
+      </EndProperty>
+      <EndProperty Name="EntradaInforme">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="InformeReporteEnvio" TypeName="ModeloBD.InformeReporteEnvio" StoreEntitySet="ReporteEnvioConjunto">
+      <EndProperty Name="Informe">
+        <ScalarProperty Name="ID" ColumnName="Informe_ID" />
+      </EndProperty>
+      <EndProperty Name="ReporteEnvio">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HistorialEnvioDestinatarioReporteEnvio" TypeName="ModeloBD.HistorialEnvioDestinatarioReporteEnvio" StoreEntitySet="HistorialEnvioDestinatarioReporteEnvio">
+      <EndProperty Name="HistorialEnvioDestinatario">
+        <ScalarProperty Name="ID" ColumnName="HistorialEnvioDestinatario_ID" />
+      </EndProperty>
+      <EndProperty Name="ReporteEnvio">
+        <ScalarProperty Name="ID" ColumnName="ReporteEnvio_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DestinatarioInformeDetinatario" TypeName="ModeloBD.DestinatarioInformeDetinatario" StoreEntitySet="DestinatarioInformeConjunto">
+      <EndProperty Name="Detinatario">
+        <ScalarProperty Name="ID" ColumnName="Detinatario_ID" />
+      </EndProperty>
+      <EndProperty Name="DestinatarioInforme">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DestinatarioHistorialEnvioDestinatario" TypeName="ModeloBD.DestinatarioHistorialEnvioDestinatario" StoreEntitySet="HistorialEnvioDestinatarioConjunto">
+      <EndProperty Name="Destinatario">
+        <ScalarProperty Name="ID" ColumnName="Destinatario_ID" />
+      </EndProperty>
+      <EndProperty Name="HistorialEnvioDestinatario">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RemitenteInformeRemitente" TypeName="ModeloBD.RemitenteInformeRemitente" StoreEntitySet="RemitenteInformeConjunto">
+      <EndProperty Name="Remitente">
+        <ScalarProperty Name="ID" ColumnName="Remitente_ID" />
+      </EndProperty>
+      <EndProperty Name="RemitenteInforme">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HistorialEnvioRemitenteRemitente" TypeName="ModeloBD.HistorialEnvioRemitenteRemitente" StoreEntitySet="HistorialEnvioRemitenteConjunto">
+      <EndProperty Name="Remitente">
+        <ScalarProperty Name="ID" ColumnName="Remitente_ID" />
+      </EndProperty>
+      <EndProperty Name="HistorialEnvioRemitente">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RemitenteInformeInforme" TypeName="ModeloBD.RemitenteInformeInforme" StoreEntitySet="RemitenteInformeConjunto">
+      <EndProperty Name="Informe">
+        <ScalarProperty Name="ID" ColumnName="Informe_ID" />
+      </EndProperty>
+      <EndProperty Name="RemitenteInforme">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HistorialEnvioRemitenteReporteEnvio" TypeName="ModeloBD.HistorialEnvioRemitenteReporteEnvio" StoreEntitySet="HistorialEnvioRemitenteReporteEnvio">
+      <EndProperty Name="HistorialEnvioRemitente">
+        <ScalarProperty Name="ID" ColumnName="HistorialEnvioRemitente_ID" />
+      </EndProperty>
+      <EndProperty Name="ReporteEnvio">
+        <ScalarProperty Name="ID" ColumnName="ReporteEnvio_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">

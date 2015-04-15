@@ -14,8 +14,8 @@ namespace ReportCreator
     
     public partial class RemitenteInforme
     {
-        public int Id { get; set; }
-        public string RemitenteID { get; set; }
+        public long ID { get; set; }
+        public int RemitenteID { get; set; }
     
         public virtual Remitente Remitente { get; set; }
         public virtual Informe Informe { get; set; }

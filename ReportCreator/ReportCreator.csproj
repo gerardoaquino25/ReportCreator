@@ -183,6 +183,7 @@
     <None Include="ModeloBD.edmx.diagram">
       <DependentUpon>ModeloBD.edmx</DependentUpon>
     </None>
+    <None Include="ModeloBD.edmx.sqlce" />
     <None Include="ModeloBD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModeloBD.edmx</DependentUpon>

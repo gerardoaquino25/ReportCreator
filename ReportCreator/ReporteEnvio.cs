@@ -21,8 +21,8 @@ namespace ReportCreator
         }
     
         public long ID { get; set; }
-        public string InformeID { get; set; }
-        public string FechaEnvio { get; set; }
+        public long InformeID { get; set; }
+        public System.DateTime FechaEnvio { get; set; }
     
         public virtual Informe Informe { get; set; }
         public virtual ICollection<HistorialEnvioDestinatario> HistorialEnvioDestinatario { get; set; }

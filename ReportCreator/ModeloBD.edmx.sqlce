@@ -1,0 +1,369 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 04/14/2015 23:49:07
+-- Generated from EDMX file: C:\development\Proyectos\ReportCreator\ReportCreator\ModeloBD.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'InformeConjunto'
+CREATE TABLE [InformeConjunto] (
+    [ID] bigint IDENTITY(1,1) NOT NULL,
+    [EstadoID] smallint  NOT NULL,
+    [FechaCreacion] datetime  NOT NULL,
+    [Asunto] nvarchar(4000)  NOT NULL,
+    [Balance] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'DestinatarioInformeConjunto'
+CREATE TABLE [DestinatarioInformeConjunto] (
+    [ID] bigint IDENTITY(1,1) NOT NULL,
+    [InformeID] bigint  NOT NULL,
+    [DestinatarioID] int  NOT NULL,
+    [Informe_ID] bigint  NOT NULL,
+    [Detinatario_ID] int  NOT NULL
+);
+GO
+
+-- Creating table 'ReporteEnvioConjunto'
+CREATE TABLE [ReporteEnvioConjunto] (
+    [ID] bigint IDENTITY(1,1) NOT NULL,
+    [InformeID] bigint  NOT NULL,
+    [FechaEnvio] datetime  NOT NULL,
+    [Informe_ID] bigint  NOT NULL
+);
+GO
+
+-- Creating table 'EntradaInformeConjunto'
+CREATE TABLE [EntradaInformeConjunto] (
+    [ID] bigint IDENTITY(1,1) NOT NULL,
+    [InformeID] bigint  NOT NULL,
+    [Tipo] int  NOT NULL,
+    [Valor] nvarchar(4000)  NOT NULL,
+    [Informe_ID] bigint  NOT NULL
+);
+GO
+
+-- Creating table 'HistorialEnvioDestinatarioConjunto'
+CREATE TABLE [HistorialEnvioDestinatarioConjunto] (
+    [ID] bigint IDENTITY(1,1) NOT NULL,
+    [ReporteEnvioID] bigint  NOT NULL,
+    [DestinatarioID] int  NOT NULL,
+    [Destinatario_ID] int  NOT NULL
+);
+GO
+
+-- Creating table 'DestinatarioConjunto'
+CREATE TABLE [DestinatarioConjunto] (
+    [ID] int IDENTITY(1,1) NOT NULL,
+    [Email] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'RemitenteConjunto'
+CREATE TABLE [RemitenteConjunto] (
+    [ID] int IDENTITY(1,1) NOT NULL,
+    [Email] nvarchar(4000)  NOT NULL,
+    [Usuario] nvarchar(4000)  NOT NULL,
+    [Contrasenia] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'RemitenteInformeConjunto'
+CREATE TABLE [RemitenteInformeConjunto] (
+    [ID] bigint IDENTITY(1,1) NOT NULL,
+    [RemitenteID] int  NOT NULL,
+    [Remitente_ID] int  NOT NULL,
+    [Informe_ID] bigint  NOT NULL
+);
+GO
+
+-- Creating table 'HistorialEnvioRemitenteConjunto'
+CREATE TABLE [HistorialEnvioRemitenteConjunto] (
+    [ID] bigint IDENTITY(1,1) NOT NULL,
+    [ReporteEnvioID] bigint  NOT NULL,
+    [RemitenteID] int  NOT NULL,
+    [Remitente_ID] int  NOT NULL
+);
+GO
+
+-- Creating table 'ConfiguracionGeneralConjunto'
+CREATE TABLE [ConfiguracionGeneralConjunto] (
+    [ID] nvarchar(4000)  NOT NULL,
+    [Valor] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'HistorialEnvioDestinatarioReporteEnvio'
+CREATE TABLE [HistorialEnvioDestinatarioReporteEnvio] (
+    [HistorialEnvioDestinatario_ID] bigint  NOT NULL,
+    [ReporteEnvio_ID] bigint  NOT NULL
+);
+GO
+
+-- Creating table 'HistorialEnvioRemitenteReporteEnvio'
+CREATE TABLE [HistorialEnvioRemitenteReporteEnvio] (
+    [HistorialEnvioRemitente_ID] bigint  NOT NULL,
+    [ReporteEnvio_ID] bigint  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [ID] in table 'InformeConjunto'
+ALTER TABLE [InformeConjunto]
+ADD CONSTRAINT [PK_InformeConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [ID] in table 'DestinatarioInformeConjunto'
+ALTER TABLE [DestinatarioInformeConjunto]
+ADD CONSTRAINT [PK_DestinatarioInformeConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [ID] in table 'ReporteEnvioConjunto'
+ALTER TABLE [ReporteEnvioConjunto]
+ADD CONSTRAINT [PK_ReporteEnvioConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [ID] in table 'EntradaInformeConjunto'
+ALTER TABLE [EntradaInformeConjunto]
+ADD CONSTRAINT [PK_EntradaInformeConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [ID] in table 'HistorialEnvioDestinatarioConjunto'
+ALTER TABLE [HistorialEnvioDestinatarioConjunto]
+ADD CONSTRAINT [PK_HistorialEnvioDestinatarioConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [ID] in table 'DestinatarioConjunto'
+ALTER TABLE [DestinatarioConjunto]
+ADD CONSTRAINT [PK_DestinatarioConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [ID] in table 'RemitenteConjunto'
+ALTER TABLE [RemitenteConjunto]
+ADD CONSTRAINT [PK_RemitenteConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [ID] in table 'RemitenteInformeConjunto'
+ALTER TABLE [RemitenteInformeConjunto]
+ADD CONSTRAINT [PK_RemitenteInformeConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [ID] in table 'HistorialEnvioRemitenteConjunto'
+ALTER TABLE [HistorialEnvioRemitenteConjunto]
+ADD CONSTRAINT [PK_HistorialEnvioRemitenteConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [ID] in table 'ConfiguracionGeneralConjunto'
+ALTER TABLE [ConfiguracionGeneralConjunto]
+ADD CONSTRAINT [PK_ConfiguracionGeneralConjunto]
+    PRIMARY KEY ([ID] );
+GO
+
+-- Creating primary key on [HistorialEnvioDestinatario_ID], [ReporteEnvio_ID] in table 'HistorialEnvioDestinatarioReporteEnvio'
+ALTER TABLE [HistorialEnvioDestinatarioReporteEnvio]
+ADD CONSTRAINT [PK_HistorialEnvioDestinatarioReporteEnvio]
+    PRIMARY KEY ([HistorialEnvioDestinatario_ID], [ReporteEnvio_ID] );
+GO
+
+-- Creating primary key on [HistorialEnvioRemitente_ID], [ReporteEnvio_ID] in table 'HistorialEnvioRemitenteReporteEnvio'
+ALTER TABLE [HistorialEnvioRemitenteReporteEnvio]
+ADD CONSTRAINT [PK_HistorialEnvioRemitenteReporteEnvio]
+    PRIMARY KEY ([HistorialEnvioRemitente_ID], [ReporteEnvio_ID] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [Informe_ID] in table 'DestinatarioInformeConjunto'
+ALTER TABLE [DestinatarioInformeConjunto]
+ADD CONSTRAINT [FK_DestinatarioInformeInforme]
+    FOREIGN KEY ([Informe_ID])
+    REFERENCES [InformeConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DestinatarioInformeInforme'
+CREATE INDEX [IX_FK_DestinatarioInformeInforme]
+ON [DestinatarioInformeConjunto]
+    ([Informe_ID]);
+GO
+
+-- Creating foreign key on [Informe_ID] in table 'EntradaInformeConjunto'
+ALTER TABLE [EntradaInformeConjunto]
+ADD CONSTRAINT [FK_EntradaInformeInforme]
+    FOREIGN KEY ([Informe_ID])
+    REFERENCES [InformeConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EntradaInformeInforme'
+CREATE INDEX [IX_FK_EntradaInformeInforme]
+ON [EntradaInformeConjunto]
+    ([Informe_ID]);
+GO
+
+-- Creating foreign key on [Informe_ID] in table 'ReporteEnvioConjunto'
+ALTER TABLE [ReporteEnvioConjunto]
+ADD CONSTRAINT [FK_InformeReporteEnvio]
+    FOREIGN KEY ([Informe_ID])
+    REFERENCES [InformeConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_InformeReporteEnvio'
+CREATE INDEX [IX_FK_InformeReporteEnvio]
+ON [ReporteEnvioConjunto]
+    ([Informe_ID]);
+GO
+
+-- Creating foreign key on [HistorialEnvioDestinatario_ID] in table 'HistorialEnvioDestinatarioReporteEnvio'
+ALTER TABLE [HistorialEnvioDestinatarioReporteEnvio]
+ADD CONSTRAINT [FK_HistorialEnvioDestinatarioReporteEnvio_HistorialEnvioDestinatario]
+    FOREIGN KEY ([HistorialEnvioDestinatario_ID])
+    REFERENCES [HistorialEnvioDestinatarioConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [ReporteEnvio_ID] in table 'HistorialEnvioDestinatarioReporteEnvio'
+ALTER TABLE [HistorialEnvioDestinatarioReporteEnvio]
+ADD CONSTRAINT [FK_HistorialEnvioDestinatarioReporteEnvio_ReporteEnvio]
+    FOREIGN KEY ([ReporteEnvio_ID])
+    REFERENCES [ReporteEnvioConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HistorialEnvioDestinatarioReporteEnvio_ReporteEnvio'
+CREATE INDEX [IX_FK_HistorialEnvioDestinatarioReporteEnvio_ReporteEnvio]
+ON [HistorialEnvioDestinatarioReporteEnvio]
+    ([ReporteEnvio_ID]);
+GO
+
+-- Creating foreign key on [Detinatario_ID] in table 'DestinatarioInformeConjunto'
+ALTER TABLE [DestinatarioInformeConjunto]
+ADD CONSTRAINT [FK_DestinatarioInformeDetinatario]
+    FOREIGN KEY ([Detinatario_ID])
+    REFERENCES [DestinatarioConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DestinatarioInformeDetinatario'
+CREATE INDEX [IX_FK_DestinatarioInformeDetinatario]
+ON [DestinatarioInformeConjunto]
+    ([Detinatario_ID]);
+GO
+
+-- Creating foreign key on [Destinatario_ID] in table 'HistorialEnvioDestinatarioConjunto'
+ALTER TABLE [HistorialEnvioDestinatarioConjunto]
+ADD CONSTRAINT [FK_DestinatarioHistorialEnvioDestinatario]
+    FOREIGN KEY ([Destinatario_ID])
+    REFERENCES [DestinatarioConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DestinatarioHistorialEnvioDestinatario'
+CREATE INDEX [IX_FK_DestinatarioHistorialEnvioDestinatario]
+ON [HistorialEnvioDestinatarioConjunto]
+    ([Destinatario_ID]);
+GO
+
+-- Creating foreign key on [Remitente_ID] in table 'RemitenteInformeConjunto'
+ALTER TABLE [RemitenteInformeConjunto]
+ADD CONSTRAINT [FK_RemitenteInformeRemitente]
+    FOREIGN KEY ([Remitente_ID])
+    REFERENCES [RemitenteConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RemitenteInformeRemitente'
+CREATE INDEX [IX_FK_RemitenteInformeRemitente]
+ON [RemitenteInformeConjunto]
+    ([Remitente_ID]);
+GO
+
+-- Creating foreign key on [Remitente_ID] in table 'HistorialEnvioRemitenteConjunto'
+ALTER TABLE [HistorialEnvioRemitenteConjunto]
+ADD CONSTRAINT [FK_HistorialEnvioRemitenteRemitente]
+    FOREIGN KEY ([Remitente_ID])
+    REFERENCES [RemitenteConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HistorialEnvioRemitenteRemitente'
+CREATE INDEX [IX_FK_HistorialEnvioRemitenteRemitente]
+ON [HistorialEnvioRemitenteConjunto]
+    ([Remitente_ID]);
+GO
+
+-- Creating foreign key on [Informe_ID] in table 'RemitenteInformeConjunto'
+ALTER TABLE [RemitenteInformeConjunto]
+ADD CONSTRAINT [FK_RemitenteInformeInforme]
+    FOREIGN KEY ([Informe_ID])
+    REFERENCES [InformeConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RemitenteInformeInforme'
+CREATE INDEX [IX_FK_RemitenteInformeInforme]
+ON [RemitenteInformeConjunto]
+    ([Informe_ID]);
+GO
+
+-- Creating foreign key on [HistorialEnvioRemitente_ID] in table 'HistorialEnvioRemitenteReporteEnvio'
+ALTER TABLE [HistorialEnvioRemitenteReporteEnvio]
+ADD CONSTRAINT [FK_HistorialEnvioRemitenteReporteEnvio_HistorialEnvioRemitente]
+    FOREIGN KEY ([HistorialEnvioRemitente_ID])
+    REFERENCES [HistorialEnvioRemitenteConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [ReporteEnvio_ID] in table 'HistorialEnvioRemitenteReporteEnvio'
+ALTER TABLE [HistorialEnvioRemitenteReporteEnvio]
+ADD CONSTRAINT [FK_HistorialEnvioRemitenteReporteEnvio_ReporteEnvio]
+    FOREIGN KEY ([ReporteEnvio_ID])
+    REFERENCES [ReporteEnvioConjunto]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HistorialEnvioRemitenteReporteEnvio_ReporteEnvio'
+CREATE INDEX [IX_FK_HistorialEnvioRemitenteReporteEnvio_ReporteEnvio]
+ON [HistorialEnvioRemitenteReporteEnvio]
+    ([ReporteEnvio_ID]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

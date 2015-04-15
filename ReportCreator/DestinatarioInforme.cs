@@ -14,9 +14,9 @@ namespace ReportCreator
     
     public partial class DestinatarioInforme
     {
-        public string InformeID { get; set; }
-        public string DestinatarioID { get; set; }
         public long ID { get; set; }
+        public long InformeID { get; set; }
+        public int DestinatarioID { get; set; }
     
         public virtual Informe Informe { get; set; }
         public virtual Destinatario Detinatario { get; set; }

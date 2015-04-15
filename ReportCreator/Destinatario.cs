@@ -20,7 +20,7 @@ namespace ReportCreator
             this.HistorialEnvioDestinatario = new HashSet<HistorialEnvioDestinatario>();
         }
     
-        public long ID { get; set; }
+        public int ID { get; set; }
         public string Email { get; set; }
     
         public virtual ICollection<DestinatarioInforme> DestinatarioInforme { get; set; }

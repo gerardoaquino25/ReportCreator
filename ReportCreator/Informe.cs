@@ -23,8 +23,8 @@ namespace ReportCreator
         }
     
         public long ID { get; set; }
-        public string EstadoID { get; set; }
-        public string FechaCreacion { get; set; }
+        public short EstadoID { get; set; }
+        public System.DateTime FechaCreacion { get; set; }
         public string Asunto { get; set; }
         public string Balance { get; set; }
     

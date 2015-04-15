@@ -15,8 +15,8 @@ namespace ReportCreator
     public partial class EntradaInforme
     {
         public long ID { get; set; }
-        public string InformeID { get; set; }
-        public string Tipo { get; set; }
+        public long InformeID { get; set; }
+        public int Tipo { get; set; }
         public string Valor { get; set; }
     
         public virtual Informe Informe { get; set; }

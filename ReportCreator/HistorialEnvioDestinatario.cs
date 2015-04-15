@@ -19,9 +19,9 @@ namespace ReportCreator
             this.ReporteEnvio = new HashSet<ReporteEnvio>();
         }
     
-        public string ReporteEnvioID { get; set; }
-        public string DestinatarioID { get; set; }
         public long ID { get; set; }
+        public long ReporteEnvioID { get; set; }
+        public int DestinatarioID { get; set; }
     
         public virtual ICollection<ReporteEnvio> ReporteEnvio { get; set; }
         public virtual Destinatario Destinatario { get; set; }
