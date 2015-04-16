@@ -25,6 +25,11 @@ namespace ReportCreator
             InitializeComponent();
         }
 
+        public NuevoBorrador(long InformeID, bool borrador)
+        {
+            InitializeComponent();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 

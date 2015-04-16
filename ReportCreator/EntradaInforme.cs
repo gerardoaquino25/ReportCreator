@@ -18,6 +18,7 @@ namespace ReportCreator
         public long InformeID { get; set; }
         public int Tipo { get; set; }
         public string Valor { get; set; }
+        public string Titulo { get; set; }
     
         public virtual Informe Informe { get; set; }
     }

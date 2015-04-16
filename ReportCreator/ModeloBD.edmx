@@ -416,6 +416,7 @@
           <Property Type="Int32" Name="Tipo" Nullable="false" />
           <Property Type="String" Name="Valor" Nullable="false" />
           <NavigationProperty Name="Informe" Relationship="ModeloBD.EntradaInformeInforme" FromRole="EntradaInforme" ToRole="Informe" />
+          <Property Type="String" Name="Titulo" Nullable="false" />
         </EntityType>
         <EntityType Name="HistorialEnvioDestinatario">
           <Key>
