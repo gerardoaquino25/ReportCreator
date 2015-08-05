@@ -7,17 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReportCreator
+namespace ReportCreator.DB
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class RemitenteInforme
+    public partial class EntradaInforme
     {
         public long ID { get; set; }
-        public int RemitenteID { get; set; }
+        public long InformeID { get; set; }
+        public int Tipo { get; set; }
+        public string ValorNC { get; set; }
+        public string Titulo { get; set; }
     
-        public virtual Remitente Remitente { get; set; }
         public virtual Informe Informe { get; set; }
     }
 }

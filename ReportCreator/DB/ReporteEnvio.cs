@@ -7,19 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReportCreator
+namespace ReportCreator.DB
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class EntradaInforme
+    public partial class ReporteEnvio
     {
+        public ReporteEnvio()
+        {
+            this.HistorialEnvioDestinatario = new HashSet<HistorialEnvioDestinatario>();
+            this.HistorialEnvioRemitente = new HashSet<HistorialEnvioRemitente>();
+        }
+    
         public long ID { get; set; }
         public long InformeID { get; set; }
-        public int Tipo { get; set; }
-        public string Valor { get; set; }
-        public string Titulo { get; set; }
+        public System.DateTime FechaEnvio { get; set; }
     
         public virtual Informe Informe { get; set; }
+        public virtual ICollection<HistorialEnvioDestinatario> HistorialEnvioDestinatario { get; set; }
+        public virtual ICollection<HistorialEnvioRemitente> HistorialEnvioRemitente { get; set; }
     }
 }

@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="ReportCreator.View.Cotizacion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="300">
+    <Grid>
+        <DataGrid HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" Height="224" Width="280">
+            <DataGrid.Columns >
+                <DataGridTextColumn Binding="{Binding Path=interno.id}" Header="Interno" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=fechaCreacion}" Header="Fecha" MinWidth="100" />
+                <DataGridTextColumn Binding="{Binding Path=observacion}" Header="Observación" MinWidth="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Interno:" HorizontalAlignment="Left" Margin="23,295,0,0" VerticalAlignment="Top" Width="52"/>
+        <ComboBox HorizontalAlignment="Left" Height="26" Margin="80,295,0,0" VerticalAlignment="Top" Width="130"/>
+        <Label Content="Fecha:" HorizontalAlignment="Left" Margin="32,333,0,0" VerticalAlignment="Top"/>
+        <DatePicker HorizontalAlignment="Left" Margin="80,335,0,0" VerticalAlignment="Top"/>
+        <Label Content="Mes:" HorizontalAlignment="Left" Margin="11,17,0,0" VerticalAlignment="Top"/>
+        <ComboBox HorizontalAlignment="Left" Margin="59,21,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Observación:" HorizontalAlignment="Left" Margin="32,361,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="115,364,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
+    </Grid>
+</UserControl>

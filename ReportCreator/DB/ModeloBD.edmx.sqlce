@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 04/14/2015 23:49:07
--- Generated from EDMX file: C:\development\Proyectos\ReportCreator\ReportCreator\ModeloBD.edmx
+-- Date Created: 04/16/2015 10:50:35
+-- Generated from EDMX file: C:\development\ReportCreator\ReportCreator\ModeloBD.edmx
 -- --------------------------------------------------
 
 
@@ -12,12 +12,60 @@
 -- NOTE: if the constraint does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
+    ALTER TABLE [DestinatarioInformeConjunto] DROP CONSTRAINT [FK_DestinatarioInformeInforme];
+GO
+    ALTER TABLE [EntradaInformeConjunto] DROP CONSTRAINT [FK_EntradaInformeInforme];
+GO
+    ALTER TABLE [ReporteEnvioConjunto] DROP CONSTRAINT [FK_InformeReporteEnvio];
+GO
+    ALTER TABLE [HistorialEnvioDestinatarioReporteEnvio] DROP CONSTRAINT [FK_HistorialEnvioDestinatarioReporteEnvio_HistorialEnvioDestinatario];
+GO
+    ALTER TABLE [HistorialEnvioDestinatarioReporteEnvio] DROP CONSTRAINT [FK_HistorialEnvioDestinatarioReporteEnvio_ReporteEnvio];
+GO
+    ALTER TABLE [DestinatarioInformeConjunto] DROP CONSTRAINT [FK_DestinatarioInformeDetinatario];
+GO
+    ALTER TABLE [HistorialEnvioDestinatarioConjunto] DROP CONSTRAINT [FK_DestinatarioHistorialEnvioDestinatario];
+GO
+    ALTER TABLE [RemitenteInformeConjunto] DROP CONSTRAINT [FK_RemitenteInformeRemitente];
+GO
+    ALTER TABLE [HistorialEnvioRemitenteConjunto] DROP CONSTRAINT [FK_HistorialEnvioRemitenteRemitente];
+GO
+    ALTER TABLE [RemitenteInformeConjunto] DROP CONSTRAINT [FK_RemitenteInformeInforme];
+GO
+    ALTER TABLE [HistorialEnvioRemitenteReporteEnvio] DROP CONSTRAINT [FK_HistorialEnvioRemitenteReporteEnvio_HistorialEnvioRemitente];
+GO
+    ALTER TABLE [HistorialEnvioRemitenteReporteEnvio] DROP CONSTRAINT [FK_HistorialEnvioRemitenteReporteEnvio_ReporteEnvio];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- NOTE: if the table does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
+    DROP TABLE [InformeConjunto];
+GO
+    DROP TABLE [DestinatarioInformeConjunto];
+GO
+    DROP TABLE [ReporteEnvioConjunto];
+GO
+    DROP TABLE [EntradaInformeConjunto];
+GO
+    DROP TABLE [HistorialEnvioDestinatarioConjunto];
+GO
+    DROP TABLE [DestinatarioConjunto];
+GO
+    DROP TABLE [RemitenteConjunto];
+GO
+    DROP TABLE [RemitenteInformeConjunto];
+GO
+    DROP TABLE [HistorialEnvioRemitenteConjunto];
+GO
+    DROP TABLE [ConfiguracionGeneralConjunto];
+GO
+    DROP TABLE [HistorialEnvioDestinatarioReporteEnvio];
+GO
+    DROP TABLE [HistorialEnvioRemitenteReporteEnvio];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -58,6 +106,7 @@ CREATE TABLE [EntradaInformeConjunto] (
     [InformeID] bigint  NOT NULL,
     [Tipo] int  NOT NULL,
     [Valor] nvarchar(4000)  NOT NULL,
+    [Titulo] nvarchar(4000)  NOT NULL,
     [Informe_ID] bigint  NOT NULL
 );
 GO

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ReportCreator
+namespace ReportCreator.View
 {
     /// <summary>
     /// Lógica de interacción para Opciones.xaml

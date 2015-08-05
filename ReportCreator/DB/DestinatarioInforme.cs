@@ -7,23 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReportCreator
+namespace ReportCreator.DB
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class HistorialEnvioDestinatario
+    public partial class DestinatarioInforme
     {
-        public HistorialEnvioDestinatario()
-        {
-            this.ReporteEnvio = new HashSet<ReporteEnvio>();
-        }
-    
         public long ID { get; set; }
-        public long ReporteEnvioID { get; set; }
+        public long InformeID { get; set; }
         public int DestinatarioID { get; set; }
     
-        public virtual ICollection<ReporteEnvio> ReporteEnvio { get; set; }
-        public virtual Destinatario Destinatario { get; set; }
+        public virtual Informe Informe { get; set; }
+        public virtual Destinatario Detinatario { get; set; }
     }
 }

@@ -13,6 +13,21 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <PublishUrl>publicar\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,8 +54,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
@@ -60,36 +77,56 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConfiguracionGeneral.cs">
+    <Compile Include="DB\ConfiguracionGeneral.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Destinatario.cs">
+    <Compile Include="DB\Destinatario.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="DestinatarioInforme.cs">
+    <Compile Include="DB\DestinatarioInforme.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntradaInforme.cs">
+    <Compile Include="Entities\Entrada.cs" />
+    <Compile Include="Entities\EntradaGenerica.cs" />
+    <Compile Include="Entities\Informe.cs" />
+    <Compile Include="DB\EntradaInforme.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="HistorialEnvioDestinatario.cs">
+    <Compile Include="DB\HistorialEnvioDestinatario.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="HistorialEnvioRemitente.cs">
+    <Compile Include="DB\HistorialEnvioRemitente.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Informe.cs">
+    <Compile Include="DB\Informe.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Remitente.cs">
+    <Compile Include="Entities\TipoEntrada.cs" />
+    <Compile Include="Model\IRepository.cs" />
+    <Compile Include="Model\Notificacion.cs" />
+    <Compile Include="Model\Repository.cs" />
+    <Compile Include="DB\Remitente.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="RemitenteInforme.cs">
+    <Compile Include="DB\RemitenteInforme.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ReporteEnvio.cs">
+    <Compile Include="ReportCreatorDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportCreatorDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ReporteEnvio.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
+    <Page Include="View\Borradores.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EntradaGenerica.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\EnvioInforme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,6 +143,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View\Borradores.xaml.cs">
+      <DependentUpon>Borradores.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EntradaGenerica.xaml.cs">
+      <DependentUpon>EntradaGenerica.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EnvioInforme.xaml.cs">
       <DependentUpon>EnvioInforme.xaml</DependentUpon>
     </Compile>
@@ -116,6 +159,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\NuevaEntrada.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\NuevoBorrador.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,20 +177,23 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModeloBD.Context.cs">
+    <Compile Include="DB\ModeloBD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModeloBD.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD.cs">
+    <Compile Include="DB\ModeloBD.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD.Designer.cs">
+    <Compile Include="DB\ModeloBD.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModeloBD.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="View\NuevaEntrada.xaml.cs">
+      <DependentUpon>NuevaEntrada.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NuevoBorrador.xaml.cs">
       <DependentUpon>NuevoBorrador.xaml</DependentUpon>
@@ -171,20 +221,20 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="ModeloBD.edmx">
+    <EntityDeploy Include="DB\ModeloBD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModeloBD.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="ModeloBD.Context.tt">
+    <None Include="DB\ModeloBD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModeloBD.edmx</DependentUpon>
       <LastGenOutput>ModeloBD.Context.cs</LastGenOutput>
     </None>
-    <None Include="ModeloBD.edmx.diagram">
+    <None Include="DB\ModeloBD.edmx.diagram">
       <DependentUpon>ModeloBD.edmx</DependentUpon>
     </None>
-    <None Include="ModeloBD.edmx.sqlce" />
-    <None Include="ModeloBD.tt">
+    <None Include="DB\ModeloBD.edmx.sqlce" />
+    <None Include="DB\ModeloBD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModeloBD.edmx</DependentUpon>
       <LastGenOutput>ModeloBD.cs</LastGenOutput>
@@ -195,6 +245,17 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="ReportCreatorDataSet.xsc">
+      <DependentUpon>ReportCreatorDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ReportCreatorDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReportCreatorDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ReportCreatorDataSet.xss">
+      <DependentUpon>ReportCreatorDataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -203,7 +264,31 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Content Include="ReportCreator.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.4.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server Compact 4.0 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

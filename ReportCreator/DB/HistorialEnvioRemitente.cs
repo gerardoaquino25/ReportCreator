@@ -7,23 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReportCreator
+namespace ReportCreator.DB
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Destinatario
+    public partial class HistorialEnvioRemitente
     {
-        public Destinatario()
+        public HistorialEnvioRemitente()
         {
-            this.DestinatarioInforme = new HashSet<DestinatarioInforme>();
-            this.HistorialEnvioDestinatario = new HashSet<HistorialEnvioDestinatario>();
+            this.ReporteEnvio = new HashSet<ReporteEnvio>();
         }
     
-        public int ID { get; set; }
-        public string Email { get; set; }
+        public long ID { get; set; }
+        public long ReporteEnvioID { get; set; }
+        public int RemitenteID { get; set; }
     
-        public virtual ICollection<DestinatarioInforme> DestinatarioInforme { get; set; }
-        public virtual ICollection<HistorialEnvioDestinatario> HistorialEnvioDestinatario { get; set; }
+        public virtual Remitente Remitente { get; set; }
+        public virtual ICollection<ReporteEnvio> ReporteEnvio { get; set; }
     }
 }

@@ -104,6 +104,7 @@
     <Property Name="InformeID" Type="bigint" Nullable="false" />
     <Property Name="Tipo" Type="int" Nullable="false" />
     <Property Name="Valor" Type="nvarchar" Nullable="false" />
+    <Property Name="Titulo" Type="nvarchar" Nullable="false" />
     <Property Name="Informe_ID" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="HistorialEnvioDestinatarioConjunto">
@@ -414,7 +415,7 @@
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int64" Name="InformeID" Nullable="false" />
           <Property Type="Int32" Name="Tipo" Nullable="false" />
-          <Property Type="String" Name="Valor" Nullable="false" />
+          <Property Type="String" Name="ValorNC" Nullable="false" />
           <NavigationProperty Name="Informe" Relationship="ModeloBD.EntradaInformeInforme" FromRole="EntradaInforme" ToRole="Informe" />
           <Property Type="String" Name="Titulo" Nullable="false" />
         </EntityType>
@@ -555,7 +556,8 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="InformeID" ColumnName="InformeID" />
           <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="ValorNC" ColumnName="Valor" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

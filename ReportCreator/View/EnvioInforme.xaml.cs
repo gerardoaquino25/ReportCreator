@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ReportCreator
+namespace ReportCreator.View
 {
     /// <summary>
     /// Lógica de interacción para EnvioInforme.xaml
@@ -38,6 +38,11 @@ namespace ReportCreator
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new Main();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new Borradores();
         }
     }
 }

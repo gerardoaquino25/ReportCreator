@@ -16,23 +16,13 @@ using System.Windows.Shapes;
 namespace ReportCreator.View
 {
     /// <summary>
-    /// Interaction logic for AMEntrada.xaml
+    /// Lógica de interacción para Cotizacion.xaml
     /// </summary>
-    public partial class AMEntrada : UserControl
+    public partial class Cotizacion : UserControl
     {
-        public AMEntrada()
+        public Cotizacion()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            MainWindow.self.Content = new NuevoBorrador();
         }
     }
 }
