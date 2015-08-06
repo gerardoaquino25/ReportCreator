@@ -15,5 +15,7 @@ namespace ReportCreator.Model
         Informe GetInforme(long id);
         Notificacion GuardarInforme(long idInforme, string asunto);
         IList<Informe> GetInformesBorrador();
+        IList<Interno> GetInternos();
+        Notificacion GuardarInternos(IList<Interno> internos);
     }
 }

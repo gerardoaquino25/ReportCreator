@@ -292,5 +292,92 @@ namespace ReportCreator.Model
 
             return informes;
         }
+
+        public IList<Interno> GetInternos()
+        {
+            IList<Interno> internos = new List<Interno>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM interno WHERE activo = 1", con);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    Interno informe = new Interno();
+                    informe.id = rdr.GetInt64(0);
+                    informe.nombre = rdr.GetString(1);
+                    informe.circulo = rdr.GetString(2);
+                    internos.Add(informe);
+                }
+            }
+
+            con.Close();
+
+            return internos;
+        }
+
+        public Notificacion GuardarInternos(IList<Interno> internos)
+        {
+            Notificacion respuesta = new Notificacion();
+            var aUpdatear = from interno in internos where interno.id != 0 select interno;
+            var aInsertar = from interno in internos where interno.id == 0 select interno;
+            IList<long> activos = new List<long>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            foreach (Interno interno in aUpdatear)
+            {
+                if (interno.nombre.Trim() != String.Empty)
+                {
+                    activos.Add(interno.id);
+
+                    SqlCeCommand cmd = new SqlCeCommand("UPDATE interno SET nombre=@nombre, circulo=@circulo WHERE id=@id", con);
+                    cmd.Parameters.AddWithValue("@id", interno.id);
+                    cmd.Parameters.AddWithValue("@nombre", interno.nombre);
+                    cmd.Parameters.AddWithValue("@circulo", interno.circulo);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+            }
+
+            SqlCeCommand cmd2 = new SqlCeCommand("UPDATE interno SET activo = 0 WHERE id NOT IN " + "(" + String.Join(",", activos.Select(x => x.ToString()).ToArray()) + ")", con);
+            try
+            {
+                cmd2.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            foreach (Interno interno in aInsertar)
+            {
+                SqlCeCommand cmd = new SqlCeCommand("INSERT INTO interno (nombre, circulo) VALUES (@nombre, @circulo)", con);
+                cmd.Parameters.AddWithValue("@nombre", interno.nombre);
+                cmd.Parameters.AddWithValue("@circulo", interno.circulo);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
+            return respuesta;
+        }
     }
 }

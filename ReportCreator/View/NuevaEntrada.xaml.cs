@@ -48,9 +48,7 @@ namespace ReportCreator.View
                 case 0:
                     break;
                 case 1:
-                    IRepository repo = new Repository();
-                    idEntrada = repo.AgregarEntrada(idInforme, asunto.Text, seleccionado);
-                    MainWindow.self.Content = new EntradaGenerica(idInforme, idEntrada);
+                    MainWindow.self.Content = new EntradaGenerica(idInforme, asunto.Text);
                     break;
                 case 2:
                     //MainWindow.self.Content = new NuevoBorrador();
@@ -74,7 +72,7 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 9:
-                    //MainWindow.self.Content = new NuevoBorrador();
+                    MainWindow.self.Content = new Cotizacion(idInforme, asunto.Text);
                     break;
                 case 10:
                     //MainWindow.self.Content = new NuevoBorrador();

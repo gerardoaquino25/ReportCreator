@@ -21,7 +21,7 @@
             <ComboBoxItem Name="circulo">Círculo</ComboBoxItem>
             <ComboBoxItem Name="balance">Balance</ComboBoxItem>
         </ComboBox>
-                <Label Content="Tipo:" HorizontalAlignment="Left" Height="27" Margin="16,26,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label Content="Tipo:" HorizontalAlignment="Left" Height="27" Margin="16,26,0,0" VerticalAlignment="Top" Width="70"/>
         <Label Content="Asunto:" HorizontalAlignment="Left" Height="27" Margin="16,58,0,0" VerticalAlignment="Top" Width="70"/>
         <TextBox Name="asunto" HorizontalAlignment="Left" Height="27" Margin="91,58,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="199"/>
         <Button Content="Siguiente" HorizontalAlignment="Left" Height="31" Margin="204,93,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click_1"/>

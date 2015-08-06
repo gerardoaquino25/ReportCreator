@@ -29,5 +29,10 @@ namespace ReportCreator.View
         {
             MainWindow.self.Content = new Main();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new Internos();
+        }
     }
 }

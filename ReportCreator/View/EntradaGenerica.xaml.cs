@@ -23,22 +23,23 @@ namespace ReportCreator.View
     {
         private long idInforme;
         private long idEntrada;
+        private string asunto;
 
         public EntradaGenerica()
         {
             InitializeComponent();
         }
 
-        public EntradaGenerica(long idInforme, long idEntrada)
+        public EntradaGenerica(long idInforme, string asunto)
         {
             InitializeComponent();
             this.idInforme = idInforme;
-            this.idEntrada = idEntrada;
         }
 
         private void GuardarClick(object sender, RoutedEventArgs e)
         {
             IRepository repo = new Repository();
+            idEntrada = repo.AgregarEntrada(idInforme, asunto, 1);
             repo.GuardarEntradaGenerica(idEntrada, Texto.Text);
             MainWindow.self.Content = new NuevoBorrador(idInforme);
         }
