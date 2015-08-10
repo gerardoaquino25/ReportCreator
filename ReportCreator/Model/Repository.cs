@@ -8,6 +8,8 @@ using System.Configuration;
 using System.Data;
 using ReportCreator.Entities;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace ReportCreator.Model
 {
@@ -375,6 +377,201 @@ namespace ReportCreator.Model
                 {
 
                 }
+            }
+
+            return respuesta;
+        }
+
+        public Notificacion GuardarMailSender(int id, string email, string password, int puerto, string smtp)
+        {
+            Notificacion respuesta = new Notificacion();
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            string prueba = Decrypt(Encrypt(password));
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                UPDATE mail_sender 
+                SET email=@email, puerto=@puerto, smtp=@smtp, password=@password
+                WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@password", Encrypt(password));
+            cmd.Parameters.AddWithValue("@puerto", puerto);
+            cmd.Parameters.AddWithValue("@smtp", smtp);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return respuesta;
+        }
+
+        public long AgregarMailSender(string email, string password, int puerto, string smtp)
+        {
+            long resultado = 0;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO mail_sender (email, password, puerto, smtp) VALUES (@email, @password, @puerto, @smtp)", con);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@password", Encrypt(password));
+            cmd.Parameters.AddWithValue("@puerto", puerto);
+            cmd.Parameters.AddWithValue("@smtp", smtp);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT @@IDENTITY";
+                resultado = Convert.ToInt64(cmd.ExecuteScalar());
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public IList<MailSender> ObtenerMailSenders()
+        {
+            IList<MailSender> mailSenders = new List<MailSender>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM mail_sender", con);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    MailSender mailSender = new MailSender();
+                    mailSender.id = rdr.GetInt32(0);
+                    mailSender.email = rdr.GetString(1);
+                    mailSender.smtp = rdr.GetString(2);
+                    mailSender.puerto = rdr.GetInt32(4);
+                    mailSenders.Add(mailSender);
+                }
+            }
+
+            con.Close();
+
+            return mailSenders;
+        }
+
+        public MailSender ObtenerMailSender(int email_id)
+        {
+            MailSender mailSender = new MailSender();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM mail_sender WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", email_id);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    mailSender.id = rdr.GetInt32(0);
+                    mailSender.email = rdr.GetString(1);
+                    mailSender.smtp = rdr.GetString(2);
+                    mailSender.password = rdr.GetString(3);
+                    mailSender.puerto = rdr.GetInt32(4);
+                }
+            }
+
+            con.Close();
+
+            return mailSender;
+        }
+
+        private static readonly byte[] initVectorBytes = Encoding.ASCII.GetBytes("tu89geji340t89u2");
+        private const int keysize = 256;
+
+        private string Encrypt(string pass)
+        {
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(pass);
+            using (PasswordDeriveBytes password = new PasswordDeriveBytes("RO-SOFTWARE-GDA", null))
+            {
+                byte[] keyBytes = password.GetBytes(keysize / 8);
+                using (RijndaelManaged symmetricKey = new RijndaelManaged())
+                {
+                    symmetricKey.Mode = CipherMode.CBC;
+                    using (ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, initVectorBytes))
+                    {
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            using (CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                            {
+                                cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+                                cryptoStream.FlushFinalBlock();
+                                byte[] cipherTextBytes = memoryStream.ToArray();
+                                return Convert.ToBase64String(cipherTextBytes);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static string Decrypt(string cipherText)
+        {
+            byte[] cipherTextBytes = Convert.FromBase64String(cipherText);
+            using (PasswordDeriveBytes password = new PasswordDeriveBytes("RO-SOFTWARE-GDA", null))
+            {
+                byte[] keyBytes = password.GetBytes(keysize / 8);
+                using (RijndaelManaged symmetricKey = new RijndaelManaged())
+                {
+                    symmetricKey.Mode = CipherMode.CBC;
+                    using (ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, initVectorBytes))
+                    {
+                        using (MemoryStream memoryStream = new MemoryStream(cipherTextBytes))
+                        {
+                            using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                            {
+                                byte[] plainTextBytes = new byte[cipherTextBytes.Length];
+                                int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                                return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public Notificacion BorrarMailSender(int id)
+        {
+            Notificacion respuesta = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand("DELETE FROM mail_sender WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
             }
 
             return respuesta;

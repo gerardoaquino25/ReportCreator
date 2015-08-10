@@ -34,5 +34,10 @@ namespace ReportCreator.View
         {
             MainWindow.self.Content = new Internos();
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new Mail();
+        }
     }
 }
