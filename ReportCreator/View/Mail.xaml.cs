@@ -34,6 +34,11 @@ namespace ReportCreator.View
             MainWindow.self.Content = new DetalleMail();
         }
 
+        private void VolverClick(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new Opciones();
+        }
+
         private void Row_KeyDown(object sender, KeyEventArgs e)
         {
             if (Key.Delete == e.Key)

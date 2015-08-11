@@ -2,6 +2,7 @@
 using ReportCreator.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,20 +23,36 @@ namespace ReportCreator.View
     /// </summary>
     public partial class Borradores : UserControl
     {
-        IList<Informe> informes;
+        ObservableCollection<Informe> informes;
         IRepository repo = new Repository();
 
         public Borradores()
         {
             InitializeComponent();
-            informes = repo.ObtenerInformesBorrador();
+            informes = new ObservableCollection<Informe> (repo.ObtenerInformesBorrador());
             Informes.ItemsSource = informes;
         }
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow row = sender as DataGridRow;
-            MainWindow.self.Content = new NuevoBorrador(((Informe) row.Item).id);
+            MainWindow.self.Content = new NuevoBorrador(((Informe)row.Item).id, false);
+        }
+
+        private void VolverClick(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new EnvioInforme();
+        }
+
+        private void Row_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Key.Delete == e.Key)
+            {
+                DataGridRow row = sender as DataGridRow;
+                Informe informe = ((Informe)row.Item);
+                repo.BorrarInforme(informe.id);
+                informes.Remove(informe);
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using ReportCreator.Model;
 using ReportCreator.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -27,32 +28,47 @@ namespace ReportCreator.View
         Informe informe;
         long idInforme = 0;
         IRepository repo = new Repository();
+        bool nuevo = false;
+        ObservableCollection<Entrada> entradas;
 
         public NuevoBorrador()
         {
             InitializeComponent();
         }
 
-        public NuevoBorrador(long idInforme)
+        public NuevoBorrador(long idInforme, bool nuevo)
         {
             InitializeComponent();
             informe = repo.ObtenerInforme(idInforme);
             this.idInforme = idInforme;
-            Entradas.ItemsSource = informe.entradas;
+            entradas = new ObservableCollection<Entrada>(informe.entradas);
+            Entradas.ItemsSource = entradas;
             Asunto.Text = informe.asunto;
+            this.nuevo = nuevo;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AgregarClick(object sender, RoutedEventArgs e)
         {
             if (idInforme == 0)
                 idInforme = repo.AgregarInforme(Asunto.Text);
             else
                 repo.GuardarInforme(idInforme, Asunto.Text);
 
-            MainWindow.self.Content = new NuevaEntrada(idInforme);
+            MainWindow.self.Content = new NuevaEntrada(idInforme, nuevo);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Row_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Key.Delete == e.Key)
+            {
+                DataGridRow row = sender as DataGridRow;
+                Entrada entrada = ((Entrada)row.Item);
+                repo.BorrarEntrada(entrada.id, entrada.tipo.id);
+                entradas.Remove(entrada);
+            }
+        }
+
+        private void GuardarClick(object sender, RoutedEventArgs e)
         {
             if (idInforme == 0)
                 repo.AgregarInforme("");
@@ -69,7 +85,7 @@ namespace ReportCreator.View
             switch (entrada.tipo.id)
             {
                 case 1:
-                    MainWindow.self.Content = new EntradaGenerica(entrada.id);
+                    MainWindow.self.Content = new EntradaGenerica(entrada.id, nuevo);
                     break;
                 case 2:
                     //MainWindow.self.Content = new NuevoBorrador();
@@ -93,7 +109,7 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 9:
-                    MainWindow.self.Content = new EntradaCotizacion(entrada.id);
+                    MainWindow.self.Content = new EntradaCotizacion(entrada.id, nuevo);
                     break;
                 case 10:
                     //MainWindow.self.Content = new NuevoBorrador();
@@ -103,8 +119,15 @@ namespace ReportCreator.View
                     break;
             }
 
-
             long slsa = 0;
+        }
+
+        private void VolverClick(object sender, RoutedEventArgs e)
+        {
+            if (nuevo)
+                MainWindow.self.Content = new EnvioInforme();
+            else
+                MainWindow.self.Content = new Borradores();
         }
     }
 }

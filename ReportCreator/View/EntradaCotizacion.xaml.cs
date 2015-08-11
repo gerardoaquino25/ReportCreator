@@ -24,21 +24,24 @@ namespace ReportCreator.View
     {
         private IRepository repo = new Repository();
         private ReportCreator.Entities.EntradaCotizacion cotizacion;
+        private bool nuevo;
         //private IList<Interno> Internos = new Repository().GetInternos();
 
-        public EntradaCotizacion(long idEntrada)
+        public EntradaCotizacion(long idEntrada, bool nuevo)
         {
             InitializeComponent();
             this.cotizacion = repo.ObtenerEntradaCotizacion(idEntrada);
             iniciar();
+            this.nuevo = nuevo;
         }
 
-        public EntradaCotizacion(long idInforme, string asunto)
+        public EntradaCotizacion(long idInforme, string asunto, bool nuevo)
         {
             InitializeComponent();
             iniciar();
             cotizacion.idInforme = idInforme;
             cotizacion.titulo = asunto;
+            this.nuevo = nuevo;
         }
 
         public void iniciar()
@@ -68,7 +71,7 @@ namespace ReportCreator.View
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new NuevoBorrador(cotizacion.idInforme);
+            MainWindow.self.Content = new NuevoBorrador(cotizacion.idInforme, nuevo);
         }
 
         private void GuardarClick(object sender, RoutedEventArgs e)
@@ -79,7 +82,7 @@ namespace ReportCreator.View
             cotizacion.anio = (int)Anio.SelectedItem;
             repo.GuardarEntradaCotizacion(cotizacion);
 
-            MainWindow.self.Content = new NuevoBorrador(cotizacion.idInforme);
+            MainWindow.self.Content = new NuevoBorrador(cotizacion.idInforme, nuevo);
         }
     }
 }

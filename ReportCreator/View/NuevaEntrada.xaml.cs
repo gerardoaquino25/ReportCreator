@@ -24,16 +24,19 @@ namespace ReportCreator.View
         int seleccionado = 0;
         long idInforme;
         long idEntrada;
+        private bool nuevo;
 
-        public NuevaEntrada()
+        public NuevaEntrada(bool nuevo)
         {
             InitializeComponent();
+            this.nuevo = nuevo;
         }
 
-        public NuevaEntrada(long idInforme)
+        public NuevaEntrada(long idInforme, bool nuevo)
         {
-            this.idInforme = idInforme;
             InitializeComponent();
+            this.idInforme = idInforme;
+            this.nuevo = nuevo;
         }
 
         private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -48,7 +51,7 @@ namespace ReportCreator.View
                 case 0:
                     break;
                 case 1:
-                    MainWindow.self.Content = new EntradaGenerica(idInforme, asunto.Text);
+                    MainWindow.self.Content = new EntradaGenerica(idInforme, asunto.Text, nuevo);
                     break;
                 case 2:
                     //MainWindow.self.Content = new NuevoBorrador();
@@ -72,7 +75,7 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 9:
-                    MainWindow.self.Content = new EntradaCotizacion(idInforme, asunto.Text);
+                    MainWindow.self.Content = new EntradaCotizacion(idInforme, asunto.Text, nuevo);
                     break;
                 case 10:
                     //MainWindow.self.Content = new NuevoBorrador();

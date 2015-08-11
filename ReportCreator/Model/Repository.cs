@@ -554,6 +554,9 @@ namespace ReportCreator.Model
         {
             IList<MailSender> mailSenders = new List<MailSender>();
 
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
             SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM mail_sender", con);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
@@ -783,6 +786,83 @@ namespace ReportCreator.Model
             {
                 con.Close();
             }
+
+            return respuesta;
+        }
+
+        public Notificacion BorrarEntrada(long id, int tipo)
+        {
+            Notificacion respuesta = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            try
+            {
+                SqlCeCommand cmd = new SqlCeCommand("DELETE FROM entrada_informe WHERE id=@id", con);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+                //TODO: Ir agregando a medida que se van creando las demas funciones.
+                switch (tipo)
+                {
+                    case 1:
+                        cmd = new SqlCeCommand("DELETE FROM entrada_generica WHERE id=@id", con);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        break;
+                    case 9:
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCeCommand("DELETE FROM entrada_cotizacion WHERE id=@id", con);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCeCommand("DELETE FROM cotizacion_interno WHERE entrada_cotizacion_id=@id", con);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return respuesta;
+        }
+
+        public Notificacion BorrarInforme(long id)
+        {
+            Notificacion respuesta = new Notificacion();
+
+            //if (!con.State.Equals(ConnectionState.Open))
+            //    con.Open();
+
+            //try
+            //{
+
+            //    SqlCeCommand cmd = new SqlCeCommand("DELETE FROM entrada_informe WHERE informe_id=@id", con);
+            //    cmd.Parameters.AddWithValue("@id", id);
+            //    cmd.ExecuteNonQuery();
+            //    cmd = new SqlCeCommand("DELETE FROM entrada_generica WHERE id=@id", con);
+            //    cmd.Parameters.AddWithValue("@id", id);
+            //    cmd.ExecuteNonQuery();
+            //    cmd = new SqlCeCommand("DELETE FROM entrada_cotizacion WHERE id=@id", con);
+            //    cmd.Parameters.AddWithValue("@id", id);
+            //    cmd.ExecuteNonQuery();
+            //    cmd = new SqlCeCommand("DELETE FROM cotizacion_interno WHERE entrada_cotizacion_id=@id", con);
+            //    cmd.Parameters.AddWithValue("@id", id);
+            //    cmd.ExecuteNonQuery();
+            //}
+            //catch (Exception e)
+            //{
+
+            //}
+            //finally
+            //{
+            //    con.Close();
+            //}
 
             return respuesta;
         }

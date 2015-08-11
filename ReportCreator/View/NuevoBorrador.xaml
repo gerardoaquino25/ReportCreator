@@ -8,7 +8,7 @@
         <Label Content="Asunto:" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Top" Width="60"/>
         <TextBox Name="Asunto" HorizontalAlignment="Left" Height="26" Margin="72,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252"/>
         <Label Content="Entradas:" HorizontalAlignment="Left" Margin="78,56,0,0" VerticalAlignment="Top" Width="60"/>
-        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False" 
+        <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" 
           Name="Entradas" Margin="12,56,9,0" Height="300" VerticalAlignment="Top">
             <DataGrid.Columns >
                 <DataGridTextColumn Binding="{Binding Path=id}" Header="ID" MinWidth="50" />
@@ -18,10 +18,12 @@
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                    <EventSetter Event="KeyDown" Handler="Row_KeyDown"/>
                 </Style>
             </DataGrid.Resources>
         </DataGrid>
-        <Button Content="+" HorizontalAlignment="Left" Margin="333,10,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="Button_Click" FontWeight="Bold" FontSize="16" Padding="0,0,1,1"/>
-        <Button Content="Guardar" HorizontalAlignment="Left" Margin="284,367,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Button_Click_1"/>
+        <Button Content="+" HorizontalAlignment="Left" Margin="333,10,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="AgregarClick" FontWeight="Bold" FontSize="16" Padding="0,0,1,1"/>
+        <Button Content="Guardar" HorizontalAlignment="Left" Margin="203,367,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="GuardarClick"/>
+        <Button Content="Volver" HorizontalAlignment="Left" Margin="283,367,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="VolverClick"/>
     </Grid>
 </UserControl>

@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Informes" HorizontalAlignment="Left" VerticalAlignment="Top" Height="300" Width="300">
+        <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Informes" HorizontalAlignment="Left" VerticalAlignment="Top" Height="245" Width="280" Margin="10,10,0,0">
             <DataGrid.Columns >
                 <DataGridTextColumn Binding="{Binding Path=asunto}" Header="Asunto" MinWidth="50" />
                 <DataGridTextColumn Binding="{Binding Path=fechaCreacion}" Header="Fecha de creación" MinWidth="100" />
@@ -14,9 +14,11 @@
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                    <EventSetter Event="KeyDown" Handler="Row_KeyDown"/>
                 </Style>
             </DataGrid.Resources>
         </DataGrid>
+        <Button Content="Volver" HorizontalAlignment="Left" Margin="215,267,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="VolverClick"/>
 
     </Grid>
 </UserControl>

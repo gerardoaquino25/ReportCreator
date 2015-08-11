@@ -28,5 +28,7 @@ namespace ReportCreator.Model
         Notificacion GuardarMailSender(int id, string email, string password, int puerto, string smtp);
         
         Notificacion BorrarMailSender(int id);
+        Notificacion BorrarEntrada(long id, int tipo);
+        Notificacion BorrarInforme(long id);
     }
 }

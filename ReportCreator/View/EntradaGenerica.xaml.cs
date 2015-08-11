@@ -23,21 +23,24 @@ namespace ReportCreator.View
     {
         private Entities.EntradaGenerica entradaGenerica;
         IRepository repo = new Repository();
+        private bool nuevo;
 
-        public EntradaGenerica(long idEntrada)
+        public EntradaGenerica(long idEntrada, bool nuevo)
         {
             InitializeComponent();
             this.entradaGenerica = repo.ObtenerEntradaGenerica(idEntrada);
             iniciar();
             Texto.Text = entradaGenerica.data;
+            this.nuevo = nuevo;
         }
 
-        public EntradaGenerica(long idInforme, string titulo)
+        public EntradaGenerica(long idInforme, string titulo, bool nuevo)
         {
             InitializeComponent();
             iniciar();
             entradaGenerica.idInforme = idInforme;
             entradaGenerica.titulo = titulo;
+            this.nuevo = nuevo;
         }
 
         private void iniciar()
@@ -52,12 +55,12 @@ namespace ReportCreator.View
                 entradaGenerica.id = repo.AgregarEntrada(entradaGenerica.idInforme, entradaGenerica.titulo, 1);
             entradaGenerica.data = Texto.Text;
             repo.GuardarEntradaGenerica(entradaGenerica);
-            MainWindow.self.Content = new NuevoBorrador(entradaGenerica.idInforme);
+            MainWindow.self.Content = new NuevoBorrador(entradaGenerica.idInforme, nuevo);
         }
 
         private void CancelarClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new NuevoBorrador(entradaGenerica.idInforme);
+            MainWindow.self.Content = new NuevoBorrador(entradaGenerica.idInforme, nuevo);
         }
     }
 }
