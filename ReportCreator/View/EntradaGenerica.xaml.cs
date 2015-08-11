@@ -55,12 +55,12 @@ namespace ReportCreator.View
                 entradaGenerica.id = repo.AgregarEntrada(entradaGenerica.idInforme, entradaGenerica.titulo, 1);
             entradaGenerica.data = Texto.Text;
             repo.GuardarEntradaGenerica(entradaGenerica);
-            MainWindow.self.Content = new NuevoBorrador(entradaGenerica.idInforme, nuevo);
+            MainWindow.self.Content = new Borrador(entradaGenerica.idInforme, nuevo);
         }
 
         private void CancelarClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new NuevoBorrador(entradaGenerica.idInforme, nuevo);
+            MainWindow.self.Content = new Borrador(entradaGenerica.idInforme, nuevo);
         }
     }
 }

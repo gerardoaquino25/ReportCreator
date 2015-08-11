@@ -23,20 +23,20 @@ namespace ReportCreator.View
     /// <summary>
     /// Lógica de interacción para NuevoBorrador.xaml
     /// </summary>
-    public partial class NuevoBorrador : UserControl
+    public partial class Borrador : UserControl
     {
         Informe informe;
         long idInforme = 0;
         IRepository repo = new Repository();
-        bool nuevo = false;
+        bool nuevo = true;
         ObservableCollection<Entrada> entradas;
 
-        public NuevoBorrador()
+        public Borrador()
         {
             InitializeComponent();
         }
 
-        public NuevoBorrador(long idInforme, bool nuevo)
+        public Borrador(long idInforme, bool nuevo)
         {
             InitializeComponent();
             informe = repo.ObtenerInforme(idInforme);

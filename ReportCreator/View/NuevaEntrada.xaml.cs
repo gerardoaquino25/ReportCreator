@@ -23,7 +23,6 @@ namespace ReportCreator.View
     {
         int seleccionado = 0;
         long idInforme;
-        long idEntrada;
         private bool nuevo;
 
         public NuevaEntrada(bool nuevo)
@@ -57,7 +56,7 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 3:
-                    //MainWindow.self.Content = new NuevoBorrador();
+                    MainWindow.self.Content = new EntradaCampaniaFinanciera(idInforme, asunto.Text);
                     break;
                 case 4:
                     //MainWindow.self.Content = new NuevoBorrador();

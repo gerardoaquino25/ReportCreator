@@ -25,19 +25,24 @@ namespace ReportCreator.View
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void VolverClick(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new Main();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void InternosClick(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new Internos();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void MailSendersClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Mail();
+            MainWindow.self.Content = new MailSenders();
+        }
+
+        private void MailReceiversClick(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new MailReceivers();
         }
     }
 }

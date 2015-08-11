@@ -71,7 +71,7 @@ namespace ReportCreator.View
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new NuevoBorrador(cotizacion.idInforme, nuevo);
+            MainWindow.self.Content = new Borrador(cotizacion.idInforme, nuevo);
         }
 
         private void GuardarClick(object sender, RoutedEventArgs e)
@@ -82,7 +82,7 @@ namespace ReportCreator.View
             cotizacion.anio = (int)Anio.SelectedItem;
             repo.GuardarEntradaCotizacion(cotizacion);
 
-            MainWindow.self.Content = new NuevoBorrador(cotizacion.idInforme, nuevo);
+            MainWindow.self.Content = new Borrador(cotizacion.idInforme, nuevo);
         }
     }
 }

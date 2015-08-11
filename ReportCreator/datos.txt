@@ -1,0 +1,124 @@
+INICIO
+
+-CREACION DE TABLAS
+
+CREATE TABLE [configuracion_general] (
+  [nombre] nchar(100) NULL
+, [valor] nvarchar(1000) NOT NULL
+);
+GO
+ALTER TABLE [configuracion_general] ADD CONSTRAINT [UQ__configuracion_general__0000000000000006] UNIQUE ([nombre]);
+GO
+ALTER TABLE [configuracion_general] ADD CONSTRAINT [UQ__configuracion_general__000000000000000B] UNIQUE ([valor]);
+GO
+
+CREATE TABLE [cotizacion_interno] (
+  [id] bigint IDENTITY (1,1) NOT NULL
+, [entrada_cotizacion_id] bigint NOT NULL
+, [interno] bigint NOT NULL
+, [fecha_ingreso] datetime NULL
+, [pago] int NOT NULL
+, [observacion] nvarchar(400) NULL
+);
+GO
+ALTER TABLE [cotizacion_interno] ADD CONSTRAINT [PK_cotizacion_interno] PRIMARY KEY ([id]);
+GO
+ALTER TABLE [cotizacion_interno] ADD CONSTRAINT [UQ__cotizacion_interno__00000000000000C5] UNIQUE ([id]);
+GO
+
+CREATE TABLE [entrada_cotizacion] (
+  [id] bigint NOT NULL
+, [mes] int NOT NULL
+, [anio] int NOT NULL
+);
+GO
+ALTER TABLE [entrada_cotizacion] ADD CONSTRAINT [PK_entrada_cotizacion] PRIMARY KEY ([id]);
+GO
+ALTER TABLE [entrada_cotizacion] ADD CONSTRAINT [UQ__entrada_cotizacion__0000000000000098] UNIQUE ([id]);
+GO
+
+CREATE TABLE [entrada_generica] (
+  [id] bigint NOT NULL
+, [data] nvarchar(4000) NULL
+);
+GO
+ALTER TABLE [entrada_generica] ADD CONSTRAINT [PK_entrada_generica] PRIMARY KEY ([id]);
+GO
+
+CREATE TABLE [entrada_informe] (
+  [id] bigint IDENTITY (1,1) NOT NULL
+, [informe_id] bigint NOT NULL
+, [tipo] smallint NOT NULL
+, [titulo] nvarchar(200) NOT NULL
+);
+GO
+ALTER TABLE [entrada_informe] ADD CONSTRAINT [PK_entrada_informe] PRIMARY KEY ([id]);
+GO
+ALTER TABLE [entrada_informe] ADD CONSTRAINT [UQ__entrada_informe__000000000000002F] UNIQUE ([id]);
+GO
+
+CREATE TABLE [entrada_tipo] (
+  [id] bigint NOT NULL
+, [descripcion] nvarchar(100) NOT NULL
+);
+GO
+ALTER TABLE [entrada_tipo] ADD CONSTRAINT [PK_entrada_tipo] PRIMARY KEY ([id]);
+GO
+
+CREATE TABLE [informe] (
+  [id] bigint IDENTITY (1,1) NOT NULL
+, [estado_id] smallint NOT NULL
+, [fecha_creacion] datetime NOT NULL
+, [asunto] nvarchar(200) NOT NULL
+);
+GO
+ALTER TABLE [informe] ADD CONSTRAINT [PK_informe] PRIMARY KEY ([id]);
+GO
+ALTER TABLE [informe] ADD CONSTRAINT [UQ__informe__0000000000000041] UNIQUE ([id]);
+GO
+
+CREATE TABLE [informe_estado] (
+  [id] tinyint NOT NULL
+, [descripcion] nvarchar(100) NOT NULL
+);
+GO
+ALTER TABLE [informe_estado] ADD CONSTRAINT [PK_informe_estado] PRIMARY KEY ([id]);
+GO
+ALTER TABLE [informe_estado] ADD CONSTRAINT [UQ__informe_estado__0000000000000062] UNIQUE ([id]);
+GO
+ALTER TABLE [informe_estado] ADD CONSTRAINT [UQ__informe_estado__0000000000000067] UNIQUE ([descripcion]);
+GO
+
+CREATE TABLE [interno] (
+  [id] bigint IDENTITY (1,1) NOT NULL
+, [nombre] nvarchar(200) NOT NULL
+, [circulo] nvarchar(200) NOT NULL
+, [activo] bit DEFAULT 1 NOT NULL
+);
+GO
+ALTER TABLE [interno] ADD CONSTRAINT [PK_interno] PRIMARY KEY ([id]);
+GO
+ALTER TABLE [interno] ADD CONSTRAINT [UQ__interno__0000000000000086] UNIQUE ([id]);
+GO
+
+CREATE TABLE [mail_sender] (
+  [id] int IDENTITY (1,1) NOT NULL
+, [email] nvarchar(200) NOT NULL
+, [smtp] nvarchar(300) NOT NULL
+, [password] nvarchar(1000) NOT NULL
+, [puerto] int NOT NULL
+);
+GO
+ALTER TABLE [mail_sender] ADD CONSTRAINT [PK_mail_sender] PRIMARY KEY ([id]);
+GO
+ALTER TABLE [mail_sender] ADD CONSTRAINT [UQ__mail_sender__0000000000000129] UNIQUE ([id]);
+GO
+
+CREATE TABLE [mail_receiver] (
+  [id] bigint IDENTITY (1,1) NOT NULL
+, [mail] nvarchar(200) NOT NULL
+, [descripcion] nvarchar(500) NULL
+);
+GO
+ALTER TABLE [mail_receiver] ADD CONSTRAINT [PK_mail_receiver] PRIMARY KEY ([id]);
+GO

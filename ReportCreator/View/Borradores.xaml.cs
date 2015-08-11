@@ -36,7 +36,7 @@ namespace ReportCreator.View
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow row = sender as DataGridRow;
-            MainWindow.self.Content = new NuevoBorrador(((Informe)row.Item).id, false);
+            MainWindow.self.Content = new Borrador(((Informe)row.Item).id, false);
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)

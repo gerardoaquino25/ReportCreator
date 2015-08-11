@@ -489,23 +489,23 @@ namespace ReportCreator.Model
             return respuesta;
         }
 
-        public Notificacion GuardarMailSender(int id, string email, string password, int puerto, string smtp)
+        public Notificacion GuardarMailSender(MailSender mailSender)
         {
             Notificacion respuesta = new Notificacion();
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            string prueba = Decrypt(Encrypt(password));
+            string prueba = Decrypt(Encrypt(mailSender.password));
 
             SqlCeCommand cmd = new SqlCeCommand(@"
                 UPDATE mail_sender 
                 SET email=@email, puerto=@puerto, smtp=@smtp, password=@password
                 WHERE id=@id", con);
-            cmd.Parameters.AddWithValue("@id", id);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@password", Encrypt(password));
-            cmd.Parameters.AddWithValue("@puerto", puerto);
-            cmd.Parameters.AddWithValue("@smtp", smtp);
+            cmd.Parameters.AddWithValue("@id", mailSender.id);
+            cmd.Parameters.AddWithValue("@email", mailSender.email);
+            cmd.Parameters.AddWithValue("@password", Encrypt(mailSender.password));
+            cmd.Parameters.AddWithValue("@puerto", mailSender.puerto);
+            cmd.Parameters.AddWithValue("@smtp", mailSender.smtp);
 
             try
             {
@@ -835,36 +835,155 @@ namespace ReportCreator.Model
         public Notificacion BorrarInforme(long id)
         {
             Notificacion respuesta = new Notificacion();
+            Informe informe = ObtenerInforme(id);
 
-            //if (!con.State.Equals(ConnectionState.Open))
-            //    con.Open();
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
 
-            //try
-            //{
+            try
+            {
+                foreach (Entrada entrada in informe.entradas)
+                    BorrarEntrada(entrada.id, entrada.tipo.id);
 
-            //    SqlCeCommand cmd = new SqlCeCommand("DELETE FROM entrada_informe WHERE informe_id=@id", con);
-            //    cmd.Parameters.AddWithValue("@id", id);
-            //    cmd.ExecuteNonQuery();
-            //    cmd = new SqlCeCommand("DELETE FROM entrada_generica WHERE id=@id", con);
-            //    cmd.Parameters.AddWithValue("@id", id);
-            //    cmd.ExecuteNonQuery();
-            //    cmd = new SqlCeCommand("DELETE FROM entrada_cotizacion WHERE id=@id", con);
-            //    cmd.Parameters.AddWithValue("@id", id);
-            //    cmd.ExecuteNonQuery();
-            //    cmd = new SqlCeCommand("DELETE FROM cotizacion_interno WHERE entrada_cotizacion_id=@id", con);
-            //    cmd.Parameters.AddWithValue("@id", id);
-            //    cmd.ExecuteNonQuery();
-            //}
-            //catch (Exception e)
-            //{
+                SqlCeCommand cmd = new SqlCeCommand("DELETE FROM entrada_informe WHERE informe_id=@id", con);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
 
-            //}
-            //finally
-            //{
-            //    con.Close();
-            //}
+            }
+            finally
+            {
+                con.Close();
+            }
 
             return respuesta;
+        }
+
+        public IList<MailReceiver> ObtenerMailReceivers()
+        {
+            IList<MailReceiver> emailReceivers = new List<MailReceiver>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM mail_receiver WHERE activo = 1", con);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    MailReceiver emailReceiver = new MailReceiver();
+                    emailReceiver.id = rdr.GetInt32(0);
+                    emailReceiver.email = rdr.GetString(1);
+                    emailReceiver.descripcion = !rdr.IsDBNull(2) ? rdr.GetString(2) : "";
+                    emailReceiver.nombre = !rdr.IsDBNull(3) ? rdr.GetString(3) : "";
+                    emailReceivers.Add(emailReceiver);
+                }
+            }
+
+            return emailReceivers;
+        }
+
+        public Notificacion GuardarMailReceivers(IList<MailReceiver> receivers)
+        {
+            Notificacion respuesta = new Notificacion();
+            var aUpdatear = from interno in receivers where interno.id != 0 select interno;
+            var aInsertar = from interno in receivers where interno.id == 0 select interno;
+            IList<long> activos = new List<long>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            foreach (MailReceiver emailReceiver in aUpdatear)
+            {
+                if (emailReceiver.nombre.Trim() != String.Empty)
+                {
+                    activos.Add(emailReceiver.id);
+
+                    SqlCeCommand cmd = new SqlCeCommand("UPDATE mail_receiver SET email=@email, descripcion=@descripcion, nombre=@nombre WHERE id=@id", con);
+                    cmd.Parameters.AddWithValue("@id", emailReceiver.id);
+                    cmd.Parameters.AddWithValue("@email", emailReceiver.email);
+                    cmd.Parameters.AddWithValue("@descripcion", emailReceiver.descripcion);
+                    cmd.Parameters.AddWithValue("@nombre", emailReceiver.nombre);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+            }
+
+            SqlCeCommand cmd2 = new SqlCeCommand("UPDATE mail_receiver SET activo = 0 WHERE id NOT IN " + "(" + String.Join(",", activos.Select(x => x.ToString()).ToArray()) + ")", con);
+            try
+            {
+                cmd2.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            foreach (MailReceiver emailReceiver in aInsertar)
+            {
+                SqlCeCommand cmd = new SqlCeCommand("INSERT INTO mail_receiver (email, descripcion, nombre) VALUES (@email, @descripcion, @nombre)", con);
+                cmd.Parameters.AddWithValue("@email", emailReceiver.email);
+                object param1 = emailReceiver.descripcion;
+                if (param1 == null)
+                    param1 = DBNull.Value;
+                cmd.Parameters.AddWithValue("@descripcion", param1);
+                object param2 = emailReceiver.nombre;
+                if (param1 == null)
+                    param1 = DBNull.Value;
+                cmd.Parameters.AddWithValue("@nombre", param2);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
+            return respuesta;
+        }
+
+        public IList<Externo> ObtenerAportantesCF()
+        {
+            IList<Externo> externos = new List<Externo>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM campania_financiera_aportante", con);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    Externo externo = new Externo();
+                    externo.id = rdr.GetInt32(0);
+                    externo.nombre = rdr.GetString(1);
+                    externo.observacion = !rdr.IsDBNull(3) ? rdr.GetString(3) : "";
+                    externos.Add(externo);
+                }
+            }
+
+            return externos;
+        }
+
+        public IList<CampaniaFinanciera> ObtenerCFExistentes()
+        {
+            IList<CampaniaFinanciera> campaniasFinancieras = new List<CampaniaFinanciera>();
+
+            return campaniasFinancieras;
         }
     }
 }

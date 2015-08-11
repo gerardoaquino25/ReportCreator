@@ -32,7 +32,7 @@ namespace ReportCreator.View
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new NuevoBorrador();
+            MainWindow.self.Content = new Borrador();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

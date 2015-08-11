@@ -19,14 +19,14 @@ namespace ReportCreator.View
     /// <summary>
     /// Lógica de interacción para Mail.xaml
     /// </summary>
-    public partial class Mail : UserControl
+    public partial class MailSenders : UserControl
     {
         IRepository repo = new Repository();
 
-        public Mail()
+        public MailSenders()
         {
             InitializeComponent();
-            MailSenders.ItemsSource = repo.ObtenerMailSenders();
+            MailSendersDG.ItemsSource = repo.ObtenerMailSenders();
         }
 
         private void AgregarClick(object sender, RoutedEventArgs e)

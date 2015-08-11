@@ -47,14 +47,21 @@ namespace ReportCreator.View
             if (mail_id == 0)
                 repo.AgregarMailSender(Email.Text, Password.Password, Convert.ToInt32(Puerto.Text), Smtp.Text);
             else
-                repo.GuardarMailSender(mail_id, Email.Text, Password.Password, Convert.ToInt32(Puerto.Text), Smtp.Text);
+                repo.GuardarMailSender(new MailSender()
+                {
+                    id = mail_id,
+                    email = Email.Text,
+                    password = Password.Password,
+                    puerto = Convert.ToInt32(Puerto.Text),
+                    smtp = Smtp.Text
+                });
 
-            MainWindow.self.Content = new Mail();
+            MainWindow.self.Content = new MailSenders();
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Mail();
+            MainWindow.self.Content = new MailSenders();
         }
 
         private void ProbarClick(object sender, RoutedEventArgs e)
