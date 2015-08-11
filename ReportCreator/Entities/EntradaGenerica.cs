@@ -8,6 +8,6 @@ namespace ReportCreator.Entities
 {
     public class EntradaGenerica : Entrada
     {
-        private string data;
+        public string data { get; set; }
     }
 }

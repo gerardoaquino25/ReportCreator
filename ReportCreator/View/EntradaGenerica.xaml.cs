@@ -21,32 +21,43 @@ namespace ReportCreator.View
     /// </summary>
     public partial class EntradaGenerica : UserControl
     {
-        private long idInforme;
-        private long idEntrada;
-        private string asunto;
+        private Entities.EntradaGenerica entradaGenerica;
+        IRepository repo = new Repository();
 
-        public EntradaGenerica()
+        public EntradaGenerica(long idEntrada)
         {
             InitializeComponent();
+            this.entradaGenerica = repo.ObtenerEntradaGenerica(idEntrada);
+            iniciar();
+            Texto.Text = entradaGenerica.data;
         }
 
-        public EntradaGenerica(long idInforme, string asunto)
+        public EntradaGenerica(long idInforme, string titulo)
         {
             InitializeComponent();
-            this.idInforme = idInforme;
+            iniciar();
+            entradaGenerica.idInforme = idInforme;
+            entradaGenerica.titulo = titulo;
+        }
+
+        private void iniciar()
+        {
+            if (entradaGenerica == null)
+                entradaGenerica = new Entities.EntradaGenerica();
         }
 
         private void GuardarClick(object sender, RoutedEventArgs e)
         {
-            IRepository repo = new Repository();
-            idEntrada = repo.AgregarEntrada(idInforme, asunto, 1);
-            repo.GuardarEntradaGenerica(idEntrada, Texto.Text);
-            MainWindow.self.Content = new NuevoBorrador(idInforme);
+            if (entradaGenerica.id == 0)
+                entradaGenerica.id = repo.AgregarEntrada(entradaGenerica.idInforme, entradaGenerica.titulo, 1);
+            entradaGenerica.data = Texto.Text;
+            repo.GuardarEntradaGenerica(entradaGenerica);
+            MainWindow.self.Content = new NuevoBorrador(entradaGenerica.idInforme);
         }
 
         private void CancelarClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new NuevoBorrador();
+            MainWindow.self.Content = new NuevoBorrador(entradaGenerica.idInforme);
         }
     }
 }

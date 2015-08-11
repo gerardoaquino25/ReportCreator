@@ -86,7 +86,7 @@
     <Compile Include="DB\DestinatarioInforme.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Cotizacion.cs" />
+    <Compile Include="Entities\EntradaCotizacion.cs" />
     <Compile Include="Entities\CotizacionInterno.cs" />
     <Compile Include="Entities\Entrada.cs" />
     <Compile Include="Entities\EntradaGenerica.cs" />
@@ -126,7 +126,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Cotizacion.xaml">
+    <Page Include="View\EntradaCotizacion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -157,8 +157,8 @@
     <Compile Include="View\Borradores.xaml.cs">
       <DependentUpon>Borradores.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Cotizacion.xaml.cs">
-      <DependentUpon>Cotizacion.xaml</DependentUpon>
+    <Compile Include="View\EntradaCotizacion.xaml.cs">
+      <DependentUpon>EntradaCotizacion.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EntradaGenerica.xaml.cs">
       <DependentUpon>EntradaGenerica.xaml</DependentUpon>

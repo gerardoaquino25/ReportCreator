@@ -13,8 +13,13 @@
             <DataGrid.Columns >
                 <DataGridTextColumn Binding="{Binding Path=id}" Header="ID" MinWidth="50" />
                 <DataGridTextColumn Binding="{Binding Path=tipoDescripcion}" Header="Tipo" MinWidth="100" />
-                <DataGridTextColumn Binding="{Binding Path=asunto}" Header="Asunto" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=titulo}" Header="Titulo" MinWidth="50" />
             </DataGrid.Columns>
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
         </DataGrid>
         <Button Content="+" HorizontalAlignment="Left" Margin="333,10,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="Button_Click" FontWeight="Bold" FontSize="16" Padding="0,0,1,1"/>
         <Button Content="Guardar" HorizontalAlignment="Left" Margin="284,367,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Button_Click_1"/>

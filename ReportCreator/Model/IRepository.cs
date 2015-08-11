@@ -10,12 +10,15 @@ namespace ReportCreator.Model
     public interface IRepository
     {
         long AgregarInforme(string titulo);
-        long AgregarEntrada(long idInforme, string asunto, int tipo);
-        Notificacion GuardarEntradaGenerica(long idEntrada, string data);
-        Informe GetInforme(long id);
+        long AgregarEntrada(long idInforme, string titulo, int tipo);
+        Notificacion GuardarEntradaGenerica(EntradaGenerica entradaGenerica);
+        Informe ObtenerInforme(long id);
         Notificacion GuardarInforme(long idInforme, string asunto);
-        IList<Informe> GetInformesBorrador();
-        IList<Interno> GetInternos();
+        IList<Informe> ObtenerInformesBorrador();
+        IList<Interno> ObtenerInternos();
         Notificacion GuardarInternos(IList<Interno> internos);
+        Notificacion GuardarEntradaCotizacion(EntradaCotizacion cotizacion);
+        EntradaCotizacion ObtenerEntradaCotizacion(long idEntrada);
+        EntradaGenerica ObtenerEntradaGenerica(long idEntrada);
     }
 }

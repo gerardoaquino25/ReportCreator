@@ -10,7 +10,7 @@ namespace ReportCreator.Entities
         public long id { get; set; }
         public long idInforme { get; set; }
         public TipoEntrada tipo { get; set; }
-        public string asunto { get; set; }
+        public string titulo { get; set; }
         public string tipoDescripcion { get; set; }
     }
 }

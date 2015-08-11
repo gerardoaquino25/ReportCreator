@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ReportCreator.Entities
 {
-    public class Cotizacion
+    public class EntradaCotizacion : Entrada
     {
-        public int id { get; set; }
         public int mes { get; set; }
         public int anio { get; set; }
         public IList<CotizacionInterno> cotizacionesInternos { get; set; }

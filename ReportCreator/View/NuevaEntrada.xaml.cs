@@ -72,7 +72,7 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 9:
-                    MainWindow.self.Content = new Cotizacion(idInforme, asunto.Text);
+                    MainWindow.self.Content = new EntradaCotizacion(idInforme, asunto.Text);
                     break;
                 case 10:
                     //MainWindow.self.Content = new NuevoBorrador();

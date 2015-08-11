@@ -28,7 +28,7 @@ namespace ReportCreator.View
         public Borradores()
         {
             InitializeComponent();
-            informes = repo.GetInformesBorrador();
+            informes = repo.ObtenerInformesBorrador();
             Informes.ItemsSource = informes;
         }
 

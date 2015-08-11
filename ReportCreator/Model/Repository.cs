@@ -58,16 +58,16 @@ namespace ReportCreator.Model
             return resultado;
         }
 
-        public long AgregarEntrada(long idInforme, string asunto, int tipo)
+        public long AgregarEntrada(long idInforme, string titulo, int tipo)
         {
             long resultado = 0;
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO entrada_informe (informe_id, asunto, tipo) VALUES (@informe_id, @asunto, @tipo)", con);
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO entrada_informe (informe_id, titulo, tipo) VALUES (@informe_id, @titulo, @tipo)", con);
             cmd.Parameters.AddWithValue("@informe_id", idInforme);
-            cmd.Parameters.AddWithValue("@asunto", asunto);
+            cmd.Parameters.AddWithValue("@titulo", titulo);
             cmd.Parameters.AddWithValue("@tipo", tipo);
 
             try
@@ -102,7 +102,7 @@ namespace ReportCreator.Model
                         //MainWindow.self.Content = new NuevoBorrador();
                         break;
                     case 9:
-                        //MainWindow.self.Content = new NuevoBorrador();
+                        AgregarEntradaCotizacion(resultado);
                         break;
                     case 10:
                         //MainWindow.self.Content = new NuevoBorrador();
@@ -122,6 +122,29 @@ namespace ReportCreator.Model
             }
 
             return resultado;
+        }
+
+        private void AgregarEntradaCotizacion(long idEntrada)
+        {
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO entrada_cotizacion (id, mes, anio) VALUES (@id, 0, 0)", con);
+            cmd.Parameters.AddWithValue("@id", idEntrada);
+            int ejecuto = 0;
+
+            try
+            {
+                ejecuto = cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         private void AgregarEntradaGenerica(long idEntrada, string texto)
@@ -148,7 +171,7 @@ namespace ReportCreator.Model
             }
         }
 
-        public Notificacion GuardarEntradaGenerica(long idEntrada, string data)
+        public Notificacion GuardarEntradaGenerica(EntradaGenerica entradaGenerica)
         {
             Notificacion respuesta = new Notificacion();
 
@@ -156,8 +179,8 @@ namespace ReportCreator.Model
                 con.Open();
 
             SqlCeCommand cmd = new SqlCeCommand("UPDATE entrada_generica SET data=@data WHERE id=@id", con);
-            cmd.Parameters.AddWithValue("@id", idEntrada);
-            cmd.Parameters.AddWithValue("@data", data);
+            cmd.Parameters.AddWithValue("@id", entradaGenerica.id);
+            cmd.Parameters.AddWithValue("@data", entradaGenerica.data);
 
             try
             {
@@ -175,7 +198,7 @@ namespace ReportCreator.Model
             return respuesta;
         }
 
-        public Informe GetDatosInforme(long id)
+        public Informe ObtenerDatosInforme(long id)
         {
             Informe informe = new Informe();
 
@@ -201,15 +224,18 @@ namespace ReportCreator.Model
             return informe;
         }
 
-        public IList<Entrada> GetEntradasInforme(long id)
+        public IList<Entrada> ObtenerEntradasInforme(long id)
         {
             IList<Entrada> entradas = new List<Entrada>();
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT ei.id, ei.informe_id, ei.tipo, ei.asunto, et.descripcion FROM entrada_informe ei 
-            INNER JOIN entrada_tipo et ON et.id = ei.tipo WHERE ei.informe_id=@id", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT ei.id, ei.informe_id, ei.tipo, ei.titulo, et.descripcion 
+                FROM entrada_informe ei 
+                INNER JOIN entrada_tipo et ON et.id = ei.tipo 
+                WHERE ei.informe_id=@id", con);
             cmd.Parameters.AddWithValue("@id", id);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
@@ -220,7 +246,7 @@ namespace ReportCreator.Model
                     entrada.id = rdr.GetInt64(0);
                     entrada.idInforme = rdr.GetInt64(1);
                     entrada.tipo = new TipoEntrada(rdr.GetInt16(2), rdr.GetString(4));
-                    entrada.asunto = rdr.GetString(3);
+                    entrada.titulo = rdr.GetString(3);
                     entrada.tipoDescripcion = entrada.tipo.descripcion;
                     entradas.Add(entrada);
                 }
@@ -231,10 +257,10 @@ namespace ReportCreator.Model
             return entradas;
         }
 
-        public Informe GetInforme(long id)
+        public Informe ObtenerInforme(long id)
         {
-            Informe informe = GetDatosInforme(id);
-            informe.entradas = GetEntradasInforme(id);
+            Informe informe = ObtenerDatosInforme(id);
+            informe.entradas = ObtenerEntradasInforme(id);
 
             return informe;
         }
@@ -266,7 +292,7 @@ namespace ReportCreator.Model
             return respuesta;
         }
 
-        public IList<Informe> GetInformesBorrador()
+        public IList<Informe> ObtenerInformesBorrador()
         {
             IList<Informe> informes = new List<Informe>();
 
@@ -293,7 +319,7 @@ namespace ReportCreator.Model
             return informes;
         }
 
-        public IList<Interno> GetInternos()
+        public IList<Interno> ObtenerInternos()
         {
             IList<Interno> internos = new List<Interno>();
 
@@ -378,6 +404,198 @@ namespace ReportCreator.Model
             }
 
             return respuesta;
+        }
+
+        public Notificacion GuardarEntradaCotizacion(EntradaCotizacion cotizacion)
+        {
+            Notificacion respuesta = new Notificacion();
+            IList<long> activos = new List<long>();
+
+            var aUpdatear = from cotizacionInterno in cotizacion.cotizacionesInternos where cotizacionInterno.id != 0 select cotizacionInterno;
+            var aInsertar = from cotizacionInterno in cotizacion.cotizacionesInternos where cotizacionInterno.id == 0 select cotizacionInterno;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd2 = new SqlCeCommand("UPDATE entrada_cotizacion SET mes = @mes, anio = @anio WHERE id = @id", con);
+            cmd2.Parameters.AddWithValue("@id", cotizacion.id);
+            cmd2.Parameters.AddWithValue("@mes", cotizacion.mes);
+            cmd2.Parameters.AddWithValue("@anio", cotizacion.anio);
+
+            try
+            {
+                cmd2.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            foreach (CotizacionInterno cotizacionInterno in aUpdatear)
+            {
+                if (cotizacionInterno != null)
+                {
+                    SqlCeCommand cmd = new SqlCeCommand("UPDATE cotizacion_interno SET interno = @interno, fecha_ingreso = @fecha_ingreso, pago = @pago, observacion = @observacion WHERE id=@id", con);
+                    cmd.Parameters.AddWithValue("@interno", cotizacionInterno.interno.id);
+                    cmd.Parameters.AddWithValue("@fecha_ingreso", cotizacionInterno.fecha_ingreso);
+                    cmd.Parameters.AddWithValue("@pago", cotizacionInterno.pago);
+                    cmd.Parameters.AddWithValue("@observacion", cotizacionInterno.observacion);
+
+                    activos.Add(cotizacionInterno.id);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+            }
+
+            SqlCeCommand cmd3 = new SqlCeCommand(@"
+                DELETE FROM cotizacion_interno 
+                WHERE entrada_cotizacion_id = " + cotizacion.id + (activos.Count > 0 ? " AND id NOT IN " + "(" + String.Join(",", activos.Select(x => x.ToString()).ToArray()) + ")" : ""), con);
+
+            try
+            {
+                cmd3.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            foreach (CotizacionInterno cotizacionInterno in aInsertar)
+            {
+                SqlCeCommand cmd = new SqlCeCommand("INSERT INTO cotizacion_interno (entrada_cotizacion_id, interno, fecha_ingreso, pago, observacion) VALUES (@entrada_cotizacion_id, @interno, @fecha_ingreso, @pago, @observacion)", con);
+                cmd.Parameters.AddWithValue("@entrada_cotizacion_id", cotizacion.id);
+                cmd.Parameters.AddWithValue("@interno", cotizacionInterno.interno.id);
+                cmd.Parameters.AddWithValue("@fecha_ingreso", cotizacionInterno.fecha_ingreso);
+                cmd.Parameters.AddWithValue("@pago", cotizacionInterno.pago);
+                cmd.Parameters.AddWithValue("@observacion", cotizacionInterno.observacion);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
+            return respuesta;
+        }
+
+        public EntradaGenerica ObtenerEntradaGenerica(long idEntrada)
+        {
+            EntradaGenerica entradaGenerica = new EntradaGenerica();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT eg.id, eg.data, ei.informe_id, ei.titulo, ei.informe_id
+                FROM entrada_generica eg 
+                INNER JOIN entrada_informe ei ON ei.id=eg.id 
+                WHERE ei.id=@id", con);
+            cmd.Parameters.AddWithValue("@id", idEntrada);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    entradaGenerica.id = rdr.GetInt64(0);
+                    entradaGenerica.data = rdr.GetString(1);
+                    entradaGenerica.idInforme = rdr.GetInt64(2);
+                    entradaGenerica.titulo = rdr.GetString(3);
+                    entradaGenerica.idInforme = rdr.GetInt64(4);
+                }
+            }
+
+            con.Close();
+
+            return entradaGenerica;
+        }
+
+        public EntradaCotizacion ObtenerEntradaCotizacion(long idEntrada)
+        {
+            EntradaCotizacion entradaCotizacion = new EntradaCotizacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT ec.id, ec.mes, ec.anio, ei.informe_id, ei.titulo, ei.informe_id
+                FROM entrada_cotizacion ec
+                INNER JOIN entrada_informe ei ON ei.id = ec.id 
+                WHERE ei.id=@id", con);
+            cmd.Parameters.AddWithValue("@id", idEntrada);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    entradaCotizacion.id = rdr.GetInt64(0);
+                    entradaCotizacion.mes = rdr.GetInt32(1);
+                    entradaCotizacion.anio = rdr.GetInt32(2);
+                    entradaCotizacion.idInforme = rdr.GetInt64(3);
+                    entradaCotizacion.cotizacionesInternos = new List<CotizacionInterno>();
+                }
+            }
+
+            SqlCeCommand cmd2 = new SqlCeCommand("SELECT * FROM cotizacion_interno WHERE entrada_cotizacion_id=@entrada_cotizacion_id", con);
+            cmd2.Parameters.AddWithValue("@entrada_cotizacion_id", idEntrada);
+
+            using (SqlCeDataReader rdr = cmd2.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    CotizacionInterno cotizacionInterno = new CotizacionInterno();
+                    cotizacionInterno.id = rdr.GetInt64(0);
+                    cotizacionInterno.interno = ObtenerInterno(rdr.GetInt64(2), false);
+                    cotizacionInterno.fecha_ingreso = rdr.GetDateTime(3);
+                    cotizacionInterno.pago = rdr.GetInt32(4);
+                    cotizacionInterno.observacion = rdr.GetString(5);
+                    entradaCotizacion.cotizacionesInternos.Add(cotizacionInterno);
+                }
+            }
+
+            con.Close();
+
+            return entradaCotizacion;
+        }
+
+        private Interno ObtenerInterno(long internoId, bool closeConnection)
+        {
+            Interno interno = null;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM interno 
+                WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", internoId);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    interno = new Interno();
+                    interno.id = rdr.GetInt64(0);
+                    interno.nombre = rdr.GetString(1);
+                    interno.circulo = rdr.GetString(2);
+                }
+            }
+
+            if (closeConnection)
+                con.Close();
+
+            return interno;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace ReportCreator.View
         public NuevoBorrador(long idInforme)
         {
             InitializeComponent();
-            informe = repo.GetInforme(idInforme);
+            informe = repo.ObtenerInforme(idInforme);
             this.idInforme = idInforme;
             Entradas.ItemsSource = informe.entradas;
             Asunto.Text = informe.asunto;
@@ -59,6 +59,52 @@ namespace ReportCreator.View
             else
                 repo.GuardarInforme(idInforme, Asunto.Text);
             MainWindow.self.Content = new EnvioInforme();
+        }
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            Entrada entrada = (Entrada)row.Item;
+
+            switch (entrada.tipo.id)
+            {
+                case 1:
+                    MainWindow.self.Content = new EntradaGenerica(entrada.id);
+                    break;
+                case 2:
+                    //MainWindow.self.Content = new NuevoBorrador();
+                    break;
+                case 3:
+                    //MainWindow.self.Content = new NuevoBorrador();
+                    break;
+                case 4:
+                    //MainWindow.self.Content = new NuevoBorrador();
+                    break;
+                case 5:
+                    //MainWindow.self.Content = new NuevoBorrador();
+                    break;
+                case 6:
+                    //MainWindow.self.Content = new NuevoBorrador();
+                    break;
+                case 7:
+                    //MainWindow.self.Content = new NuevoBorrador();
+                    break;
+                case 8:
+                    //MainWindow.self.Content = new NuevoBorrador();
+                    break;
+                case 9:
+                    MainWindow.self.Content = new EntradaCotizacion(entrada.id);
+                    break;
+                case 10:
+                    //MainWindow.self.Content = new NuevoBorrador();
+                    break;
+                case 11:
+                    //MainWindow.self.Content = new NuevoBorrador();
+                    break;
+            }
+
+
+            long slsa = 0;
         }
     }
 }

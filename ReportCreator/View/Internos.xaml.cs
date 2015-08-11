@@ -28,7 +28,7 @@ namespace ReportCreator.View
         public Internos()
         {
             InitializeComponent();
-            internos = repo.GetInternos();
+            internos = repo.ObtenerInternos();
             InternosDG.ItemsSource = internos;
         }
 
