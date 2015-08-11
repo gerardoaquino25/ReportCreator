@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Button Content="Destinatarios" HorizontalAlignment="Left" Margin="100,76,0,0" VerticalAlignment="Top" Width="117"/>
-        <Button Content="Mail" HorizontalAlignment="Left" Margin="100,103,0,0" VerticalAlignment="Top" Width="117"/>
+        <Button Content="Mail" HorizontalAlignment="Left" Margin="100,103,0,0" VerticalAlignment="Top" Width="117" Click="Button_Click_2"/>
         <Button Content="Asunto por defecto" HorizontalAlignment="Left" Margin="100,130,0,0" VerticalAlignment="Top" Width="117"/>
         <Button Content="Google Drive" HorizontalAlignment="Left" Margin="100,157,0,0" VerticalAlignment="Top" Width="117"/>
         <Button Content="Outlook" HorizontalAlignment="Left" Margin="100,184,0,0" VerticalAlignment="Top" Width="117"/>

@@ -11,14 +11,22 @@ namespace ReportCreator.Model
     {
         long AgregarInforme(string titulo);
         long AgregarEntrada(long idInforme, string titulo, int tipo);
-        Notificacion GuardarEntradaGenerica(EntradaGenerica entradaGenerica);
+        long AgregarMailSender(string email, string password, int puerto, string smtp);
+        
         Informe ObtenerInforme(long id);
-        Notificacion GuardarInforme(long idInforme, string asunto);
         IList<Informe> ObtenerInformesBorrador();
         IList<Interno> ObtenerInternos();
-        Notificacion GuardarInternos(IList<Interno> internos);
-        Notificacion GuardarEntradaCotizacion(EntradaCotizacion cotizacion);
         EntradaCotizacion ObtenerEntradaCotizacion(long idEntrada);
         EntradaGenerica ObtenerEntradaGenerica(long idEntrada);
+        IList<MailSender> ObtenerMailSenders();
+        MailSender ObtenerMailSender(int id);
+        
+        Notificacion GuardarEntradaGenerica(EntradaGenerica entradaGenerica);
+        Notificacion GuardarInforme(long idInforme, string asunto);
+        Notificacion GuardarInternos(IList<Interno> internos);
+        Notificacion GuardarEntradaCotizacion(EntradaCotizacion cotizacion);
+        Notificacion GuardarMailSender(int id, string email, string password, int puerto, string smtp);
+        
+        Notificacion BorrarMailSender(int id);
     }
 }
