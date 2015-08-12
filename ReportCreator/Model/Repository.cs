@@ -979,11 +979,125 @@ namespace ReportCreator.Model
             return externos;
         }
 
-        public IList<CampaniaFinanciera> ObtenerCFExistentes()
+        public IList<CampaniaFinanciera> ObtenerCFs(string orderBy)
         {
             IList<CampaniaFinanciera> campaniasFinancieras = new List<CampaniaFinanciera>();
 
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            string orderbyAux = "id";
+            switch (orderBy)
+            {
+                case "NOMBRE":
+                    orderbyAux = "nombre";
+                    break;
+                case "FECHA_CREACION":
+                    orderbyAux = "fecha_creacion";
+                    break;
+            }
+
+            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM campania_financiera ORDER BY " + orderbyAux + " DESC", con);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    CampaniaFinanciera campaniaFinanciera = new CampaniaFinanciera();
+                    campaniaFinanciera.id = rdr.GetInt64(0);
+                    campaniaFinanciera.nombre = rdr.GetString(1);
+                    campaniaFinanciera.fechaCreacion = rdr.GetDateTime(2);
+                    campaniasFinancieras.Add(campaniaFinanciera);
+                }
+            }
+
             return campaniasFinancieras;
+        }
+
+        public long AgregarCF(string nombre)
+        {
+            long resultado = 0;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO campania_financiera (nombre) VALUES (@nombre)", con);
+            cmd.Parameters.AddWithValue("@nombre", nombre);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT @@IDENTITY";
+                resultado = Convert.ToInt64(cmd.ExecuteScalar());
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public IList<Externo> ObtenerExternos()
+        {
+            IList<Externo> externos = new List<Externo>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM externo", con);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    Externo externo = new Externo();
+                    externo.id = rdr.GetInt64(0);
+                    externo.nombre = rdr.GetString(1);
+                    externo.observacion = rdr.GetString(2);
+                    externos.Add(externo);
+                }
+            }
+
+            con.Close();
+
+            return externos;
+        }
+
+        long AgregarExterno(string nombre, string observacion)
+        {
+            long resultado = 0;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO externo (nombre, observacion) VALUES (@nombre, @observacion)", con);
+            cmd.Parameters.AddWithValue("@nombre", 1);
+            object param1 = observacion;
+            if (param1 == null)
+                param1 = DBNull.Value;
+            cmd.Parameters.AddWithValue("@observacion", param1);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT @@IDENTITY";
+                resultado = Convert.ToInt64(cmd.ExecuteScalar());
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
         }
     }
 }
