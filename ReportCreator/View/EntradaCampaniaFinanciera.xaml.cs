@@ -51,6 +51,7 @@ namespace ReportCreator.View
             this.idEntrada = idEntrada;
             this.nuevo = nuevo;
             entradaCampaniaFinanciera = repo.ObtenerEntradaCampaniaFinanciera(idEntrada);
+            this.idInforme = entradaCampaniaFinanciera.idInforme;
             iniciar(true);
         }
 

@@ -104,13 +104,15 @@ namespace ReportCreator.View
             Externo.ItemsSource = repo.ObtenerExternos();
             listaTipoAportante.Add("Externo");
 
-            listaTipoAporte.Add("Padrón");
-            listaTipoAporte.Add("Padrón y Cuota");
-
             if (!this.padron)
             {
-                if (Interno.Items.Count > 0 || Externo.Items.Count > 0)
-                    listaTipoAporte.Add("Cuota");
+                listaTipoAporte.Add("Padrón y Cuota");
+                listaTipoAporte.Add("Cuota");
+            }
+            else
+            {
+                listaTipoAporte.Add("Padrón");
+                listaTipoAporte.Add("Padrón y Cuota");
             }
 
             TipoAporte.ItemsSource = listaTipoAporte;
@@ -214,6 +216,7 @@ namespace ReportCreator.View
                 NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
                 ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
                 ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
+                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
 
                 InternoLabel.Visibility = System.Windows.Visibility.Visible;
                 Interno.Visibility = System.Windows.Visibility.Visible;
@@ -307,7 +310,8 @@ namespace ReportCreator.View
 
         private void SelectionChangedTipoAporte(object sender, SelectionChangedEventArgs e)
         {
-            switch (TipoAporte.SelectedIndex)
+            int suma = padron ? 0 : 1;
+            switch (TipoAporte.SelectedIndex + suma)
             {
                 case 0:
                     LimpiarParaPadron();
@@ -352,9 +356,127 @@ namespace ReportCreator.View
             }
         }
 
+        private void SelectionChangedTipoAportante(object sender, SelectionChangedEventArgs e)
+        {
+            int suma = padron ? 0 : 1;
+            if (!cargaInicial)
+            {
+                switch (TipoAportante.SelectedIndex)
+                {
+                    case 0:
+                        switch (TipoAporte.SelectedIndex + suma)
+                        {
+                            case 0:
+                                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
+                                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Externo.Visibility = System.Windows.Visibility.Collapsed;
+                                PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Pago.Visibility = System.Windows.Visibility.Collapsed;
+
+                                CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Compromiso.Visibility = System.Windows.Visibility.Visible;
+                                InternoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Interno.Visibility = System.Windows.Visibility.Visible;
+                                break;
+                            case 1:
+                                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
+                                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Externo.Visibility = System.Windows.Visibility.Collapsed;
+
+                                CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Compromiso.Visibility = System.Windows.Visibility.Visible;
+                                PagoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Pago.Visibility = System.Windows.Visibility.Visible;
+                                InternoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Interno.Visibility = System.Windows.Visibility.Visible;
+                                break;
+                            case 2:
+                                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
+                                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Externo.Visibility = System.Windows.Visibility.Collapsed;
+                                CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Compromiso.Visibility = System.Windows.Visibility.Collapsed;
+
+                                PagoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Pago.Visibility = System.Windows.Visibility.Visible;
+                                InternoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Interno.Visibility = System.Windows.Visibility.Visible;
+                                break;
+                        }
+                        break;
+                    case 1:
+                        switch (TipoAporte.SelectedIndex + suma)
+                        {
+                            case 0:
+                                PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Pago.Visibility = System.Windows.Visibility.Collapsed;
+                                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Interno.Visibility = System.Windows.Visibility.Collapsed;
+
+                                ExternoExistente.IsChecked = true;
+                                CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Compromiso.Visibility = System.Windows.Visibility.Visible;
+                                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                                ExternoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Externo.Visibility = System.Windows.Visibility.Visible;
+                                break;
+                            case 1:
+                                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Interno.Visibility = System.Windows.Visibility.Collapsed;
+
+                                ExternoExistente.IsChecked = true;
+                                CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Compromiso.Visibility = System.Windows.Visibility.Visible;
+                                PagoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Pago.Visibility = System.Windows.Visibility.Visible;
+                                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                                ExternoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Externo.Visibility = System.Windows.Visibility.Visible;
+                                break;
+                            case 2:
+                                CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Compromiso.Visibility = System.Windows.Visibility.Collapsed;
+                                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+                                Interno.Visibility = System.Windows.Visibility.Collapsed;
+
+                                ExternoExistente.IsChecked = true;
+                                PagoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Pago.Visibility = System.Windows.Visibility.Visible;
+                                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                                ExternoLabel.Visibility = System.Windows.Visibility.Visible;
+                                Externo.Visibility = System.Windows.Visibility.Visible;
+                                break;
+                        }
+                        break;
+                }
+            }
+        }
+
         private void VolverClick(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo);
+        }
+
+        private void ExternoExistenteCheck(object sender, RoutedEventArgs e)
+        {
+            NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+            NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
+            ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+            ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
+
+            ExternoLabel.Visibility = System.Windows.Visibility.Visible;
+            Externo.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void ExternoExistenteUncheck(object sender, RoutedEventArgs e)
+        {
+            ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+            Externo.Visibility = System.Windows.Visibility.Collapsed;
+
+            NombreExternoLabel.Visibility = System.Windows.Visibility.Visible;
+            NombreExterno.Visibility = System.Windows.Visibility.Visible;
+            ObservacionExternoLabel.Visibility = System.Windows.Visibility.Visible;
+            ObservacionExterno.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

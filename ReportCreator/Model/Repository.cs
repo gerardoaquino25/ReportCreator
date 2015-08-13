@@ -182,7 +182,7 @@ namespace ReportCreator.Model
             object param1 = idCampaniaFinanciera;
             if (param1 == null)
                 param1 = DBNull.Value;
-            cmd.Parameters.AddWithValue("@campania_financiera_id", idCampaniaFinanciera);
+            cmd.Parameters.AddWithValue("@campania_financiera_id", param1);
 
             try
             {
@@ -1335,7 +1335,8 @@ namespace ReportCreator.Model
             SqlCeCommand cmd = new SqlCeCommand(@"
                 SELECT ei.informe_id, ei.titulo, ecf.campania_financiera_id
                 FROM entrada_campania_financiera ecf
-                INNER JOIN entrada_informe ei ON ei.id = ecf.id", con);
+                INNER JOIN entrada_informe ei ON ei.id = ecf.id
+                WHERE ecf.id = " + idEntrada, con);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
             {
@@ -1345,7 +1346,7 @@ namespace ReportCreator.Model
                     entradaCampaniaFinanciera.id = idEntrada;
                     entradaCampaniaFinanciera.idInforme = rdr.GetInt64(0);
                     entradaCampaniaFinanciera.titulo = rdr.GetString(1);
-                    entradaCampaniaFinanciera.campaniaFinanciera = ObtenerCF(rdr.GetInt64(2), false);
+                    entradaCampaniaFinanciera.campaniaFinanciera = rdr.IsDBNull(2) ? null : ObtenerCF(rdr.GetInt64(2), false);
                 }
             }
 

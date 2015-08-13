@@ -12,7 +12,7 @@
         <ComboBox Name="TipoAportante" HorizontalAlignment="Left" Margin="146,41,0,0" VerticalAlignment="Top" Width="121" Height="26" SelectionChanged="SelectionChangedTipoAportante"/>
         <Label Name="InternoLabel" Content="Interno:" HorizontalAlignment="Left" Margin="33,72,0,0" VerticalAlignment="Top" Width="108" HorizontalContentAlignment="Right"/>
         <ComboBox DisplayMemberPath="nombreCompleto" Name="Interno" HorizontalAlignment="Left" Margin="146,72,0,0" VerticalAlignment="Top" Width="121" Height="26"/>
-        <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Left" Margin="146,105,0,0" VerticalAlignment="Top" Height="17"/>
+        <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Left" Margin="146,105,0,0" VerticalAlignment="Top" Height="17" Checked="ExternoExistenteCheck" Unchecked="ExternoExistenteUncheck"/>
         <Label Name="ExternoLabel" Content="Externo:" HorizontalAlignment="Left" Margin="33,127,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
         <ListBox DisplayMemberPath="nombre" Name="Externo" HorizontalAlignment="Left" Height="78" Margin="145,127,0,0" VerticalAlignment="Top" Width="119"/>
         <Label Name="NombreExternoLabel" Content="Nombre:" HorizontalAlignment="Left" Margin="33,210,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
