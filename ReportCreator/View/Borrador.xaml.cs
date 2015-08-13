@@ -118,8 +118,6 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
             }
-
-            long slsa = 0;
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)

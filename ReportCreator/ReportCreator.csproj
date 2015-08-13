@@ -88,9 +88,9 @@
     <Compile Include="DB\DestinatarioInforme.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\AportanteCF.cs" />
-    <Compile Include="Entities\AportanteCFExterno.cs" />
-    <Compile Include="Entities\AportanteCFInterno.cs" />
+    <Compile Include="Entities\AporteCF.cs" />
+    <Compile Include="Entities\EntradaCampaniaFinanciera.cs" />
+    <Compile Include="Entities\PadronCF.cs" />
     <Compile Include="Entities\EntradaCotizacion.cs" />
     <Compile Include="Entities\CotizacionInterno.cs" />
     <Compile Include="Entities\Entrada.cs" />
@@ -114,8 +114,8 @@
     <Compile Include="Entities\CampaniaFinanciera.cs" />
     <Compile Include="Model\IRepository.cs" />
     <Compile Include="Entities\MailSender.cs" />
-    <Compile Include="Model\MailReceiver.cs" />
-    <Compile Include="Model\Notificacion.cs" />
+    <Compile Include="Entities\MailReceiver.cs" />
+    <Compile Include="Entities\Notificacion.cs" />
     <Compile Include="Model\Repository.cs" />
     <Compile Include="DB\Remitente.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
@@ -131,6 +131,14 @@
     <Compile Include="DB\ReporteEnvio.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
+    <Page Include="View\AgregarCF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AgregarPadronAporte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Borradores.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -180,6 +188,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\Logger.cs" />
+    <Compile Include="View\AgregarCF.xaml.cs">
+      <DependentUpon>AgregarCF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AgregarPadronAporte.xaml.cs">
+      <DependentUpon>AgregarPadronAporte.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Borradores.xaml.cs">
       <DependentUpon>Borradores.xaml</DependentUpon>
     </Compile>

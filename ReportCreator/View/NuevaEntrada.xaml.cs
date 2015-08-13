@@ -24,6 +24,7 @@ namespace ReportCreator.View
         int seleccionado = 0;
         long idInforme;
         private bool nuevo;
+        IRepository repo = new Repository();
 
         public NuevaEntrada(bool nuevo)
         {
@@ -56,7 +57,8 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 3:
-                    MainWindow.self.Content = new EntradaCampaniaFinanciera(idInforme, asunto.Text, nuevo);
+                    long idEntrada = repo.AgregarEntrada(idInforme, asunto.Text, 3);
+                    MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo);
                     break;
                 case 4:
                     //MainWindow.self.Content = new NuevoBorrador();

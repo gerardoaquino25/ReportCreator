@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ReportCreator.Entities
 {
-    public class AportanteCFExterno : AportanteCF
+    public class EntradaCampaniaFinanciera : Entrada
     {
-        public Interno interno { get; set; }
+        public CampaniaFinanciera campaniaFinanciera { get; set; }
     }
 }

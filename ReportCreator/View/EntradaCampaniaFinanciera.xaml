@@ -4,34 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="300" Height="513">
+             d:DesignHeight="400" d:DesignWidth="300" Height="518" Width="452">
     <Grid>
-        <Label Content="Tipo de aporte:" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top" Width="108" HorizontalContentAlignment="Right"/>
-        <ComboBox Name="TipoAporte" HorizontalAlignment="Left" Margin="146,10,0,0" VerticalAlignment="Top" Width="120" Height="26" SelectionChanged="SelectionChangedTipoAporte"/>
-        <Label Name="CampaniaAsociadaLabel" Content="Campaña asociada:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,41,0,0" Width="108" HorizontalContentAlignment="Right"/>
-        <ComboBox DisplayMemberPath="nombreAMostar" Name="CampaniaAsociada" HorizontalAlignment="Left" Margin="146,41,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
-        <Label Name="NombreCampaniaLabel" Content="Nombre campaña:" HorizontalAlignment="Left" Margin="33,72,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <TextBox Name="NombreCampania" HorizontalAlignment="Left" Height="26" Margin="147,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"/>
-        <Label Name="TipoAportanteLabel"  Content="Tipo aportante:" HorizontalAlignment="Left" Margin="33,105,0,0" VerticalAlignment="Top" Width="108" HorizontalContentAlignment="Right"/>
-        <ComboBox Name="TipoAportante" HorizontalAlignment="Left" Margin="146,105,0,0" VerticalAlignment="Top" Width="121" Height="26" SelectionChanged="SelectionChangedTipoAportante"/>
-        <Label Name="InternoLabel" Content="Interno:" HorizontalAlignment="Left" Margin="33,136,0,0" VerticalAlignment="Top" Width="108" HorizontalContentAlignment="Right"/>
-        <ComboBox DisplayMemberPath="nombreCompleto" Name="Interno" HorizontalAlignment="Left" Margin="146,136,0,0" VerticalAlignment="Top" Width="121" Height="26"/>
-        <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Left" Margin="146,169,0,0" VerticalAlignment="Top" Height="17"/>
-        <Label Name="ExternoLabel" Content="Externo:" HorizontalAlignment="Left" Margin="33,191,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <ListBox DisplayMemberPath="nombre" Name="Externo" HorizontalAlignment="Left" Height="78" Margin="145,191,0,0" VerticalAlignment="Top" Width="119"/>
-        <Label Name="NombreExternoLabel" Content="Nombre:" HorizontalAlignment="Left" Margin="33,274,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <TextBox Name="NombreExterno" HorizontalAlignment="Left" Height="26" Margin="145,274,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"/>
-        <Label Name="ObservacionExternoLabel" Content="Observación externo:" HorizontalAlignment="Left" Margin="10,305,0,0" VerticalAlignment="Top" Width="132" HorizontalContentAlignment="Right"/>
-        <TextBox Name="ObservacionExterno" HorizontalAlignment="Left" Height="26" Margin="145,305,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
-        <Label Name="CompromisoLabel" Content="Compromiso:" HorizontalAlignment="Left" Margin="35,371,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <TextBox Name="Compromiso" HorizontalAlignment="Left" Height="26" Margin="147,371,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
-        <Label Name="PagoLabel" Content="Pago:" HorizontalAlignment="Left" Margin="34,340,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <TextBox Name="Pago" HorizontalAlignment="Left" Height="26" Margin="146,340,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
-        <Label Name="FechaAporteLabel" Content="Fecha:" HorizontalAlignment="Left" Margin="34,401,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <DatePicker Name="FechaAporte" HorizontalAlignment="Left" Margin="147,401,0,0" VerticalAlignment="Top" Height="26"/>
-        <Label Name="ObservacionLabel" Content="Observación:" HorizontalAlignment="Left" Margin="35,432,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <TextBox Name="Observacion" HorizontalAlignment="Left" Height="26" Margin="147,432,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"/>
-        <Button Content="Guardar" HorizontalAlignment="Left" Margin="63,481,0,0" VerticalAlignment="Top" Width="90" Click="GuardarClick"/>
-        <Button Content="Volver" HorizontalAlignment="Left" Margin="158,481,0,0" VerticalAlignment="Top" Width="90" Click="VolverClick"/>
+        <Label Name="CampaniaAsociadaLabel" Content="Campaña asociada:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="59,42,0,0" Width="113" HorizontalContentAlignment="Right"/>
+        <ComboBox DisplayMemberPath="nombreAMostar" Name="CampaniaAsociada" HorizontalAlignment="Left" Margin="177,42,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
+        <Button Content="Guardar" HorizontalAlignment="Left" Margin="134,475,0,0" VerticalAlignment="Top" Width="90" Click="GuardarClick"/>
+        <Button Content="Volver" HorizontalAlignment="Left" Margin="229,475,0,0" VerticalAlignment="Top" Width="90" Click="VolverClick"/>
+        <Label Content="Padron:" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="75"/>
+        <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Padrones" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Height="140" Width="432">
+            <DataGrid.Columns >
+                <DataGridTextColumn Binding="{Binding Path=asunto}" Header="Asunto" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=fechaCreacion}" Header="Fecha de creación" MinWidth="100" />
+            </DataGrid.Columns>
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="RowPadronesDoubleClick"/>
+                    <EventSetter Event="KeyDown" Handler="RowPadronesKeyDown"/>
+                </Style>
+            </DataGrid.Resources>
+        </DataGrid>
+        <Label Content="Aporte:" HorizontalAlignment="Left" Margin="10,275,0,0" VerticalAlignment="Top" Width="75"/>
+        <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Aportes" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Height="140" Width="432">
+            <DataGrid.Columns >
+                <DataGridTextColumn Binding="{Binding Path=asunto}" Header="Asunto" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=fechaCreacion}" Header="Fecha de creación" MinWidth="100" />
+            </DataGrid.Columns>
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="RowAportesDoubleClick"/>
+                    <EventSetter Event="KeyDown" Handler="RowAportesKeyDown"/>
+                </Style>
+            </DataGrid.Resources>
+        </DataGrid>
+        <Button Name="AgregarPadronBtn" Content="+" HorizontalAlignment="Left" Margin="63,84,0,0" VerticalAlignment="Top" Width="22" Height="26" Click="AgregarPadron"/>
+        <Button Name="AgregarAporteBtn" Content="+" HorizontalAlignment="Left" Margin="63,275,0,0" VerticalAlignment="Top" Width="22" RenderTransformOrigin="0.298,10.129" Height="26" Click="AgregarAporte"/>
+        <Button Name="AgregarCFBtn" Content="+" HorizontalAlignment="Left" Margin="334,42,0,0" VerticalAlignment="Top" Width="22" Height="26" Click="AgregarCF" RenderTransformOrigin="14.18,-0.621"/>
+        <Label Content="Titulo:" HorizontalAlignment="Left" Margin="129,10,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="Titulo" HorizontalAlignment="Left" Height="26" Margin="177,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
     </Grid>
 </UserControl>

@@ -23,10 +23,10 @@ namespace ReportCreator.View
     public partial class EntradaCampaniaFinanciera : UserControl
     {
         private long idInforme;
-        private string asunto;
-        private bool nuevaEntrada;
+        private bool nuevo;
         private long idEntrada;
         private bool cargaInicial = true;
+        Entities.EntradaCampaniaFinanciera entradaCampaniaFinanciera;
         IRepository repo = new Repository();
 
         //public EntradaCampaniaFinanciera(long idEntrada, bool nuevo)
@@ -45,418 +45,113 @@ namespace ReportCreator.View
         //    this.nuevo = nuevo;
         //}
 
-        public EntradaCampaniaFinanciera(long idInforme, string asunto, bool nuevo)
+        public EntradaCampaniaFinanciera(long idEntrada, bool nuevo)
         {
             InitializeComponent();
-            this.idInforme = idInforme;
-            this.asunto = asunto;
-            this.nuevaEntrada = nuevo;
+            this.idEntrada = idEntrada;
+            this.nuevo = nuevo;
+            entradaCampaniaFinanciera = repo.ObtenerEntradaCampaniaFinanciera(idEntrada);
             iniciar(true);
         }
 
         private void iniciar(bool nuevo)
         {
             CampaniaAsociada.ItemsSource = repo.ObtenerCFs("FECHA_CREACION");
-            IList<string> listaTipoAportante = new List<string>();
-            IList<string> listaTipoAporte = new List<string>();
-            int seleccionTipoAporte = 0;
-            int seleccionTipoAportante = 0;
+            Aportes.ItemsSource = repo.ObtenerAportesCF(idEntrada);
+            Padrones.ItemsSource = repo.ObtenerPadronesCF(idEntrada);
+
             bool asignarCampania = false;
 
-            listaTipoAporte.Add("Campaña");
             if (CampaniaAsociada.Items.Count > 0)
-            {
                 asignarCampania = true;
-                CampaniaFinanciera primerCampania = ((CampaniaFinanciera)CampaniaAsociada.Items[0]);
-                if (DateTime.UtcNow.AddMonths(-6) < primerCampania.fechaCreacion)
-                {
-                    seleccionTipoAporte = 1;
-                    if (Interno.Items.Count <= 0)
-                        seleccionTipoAportante = 1;
-                }
-
-                Interno.ItemsSource = repo.ObtenerInternos();
-                if (Interno.Items.Count > 0)
-                    listaTipoAportante.Add("Interno");
-
-                Externo.ItemsSource = repo.ObtenerExternos();
-                listaTipoAportante.Add("Externo");
-
-
-
-                listaTipoAporte.Add("Padrón");
-                listaTipoAporte.Add("Padrón y Cuota");
-
-                if (Interno.Items.Count > 0 || Externo.Items.Count > 0)
-                    listaTipoAporte.Add("Cuota");
+            else
+            {
+                AgregarAporteBtn.Visibility = System.Windows.Visibility.Hidden;
+                AgregarCFBtn.Visibility = System.Windows.Visibility.Hidden;
             }
-
-            TipoAporte.ItemsSource = listaTipoAporte;
-            TipoAportante.ItemsSource = listaTipoAportante;
 
             if (nuevo)
             {
-                TipoAporte.SelectedIndex = seleccionTipoAporte;
                 if (asignarCampania)
                     CampaniaAsociada.SelectedIndex = 0;
-                else
-                {
-                    TipoAportante.SelectedItem = seleccionTipoAportante;
-                    if (seleccionTipoAportante == 1 && Externo.Items.Count <= 0)
-                        ExternoExistente.IsChecked = false;
-                }
             }
             else
             {
-
+                Titulo.Text = entradaCampaniaFinanciera.titulo;
+                CampaniaAsociada.SelectedItem = entradaCampaniaFinanciera.campaniaFinanciera;
             }
 
             cargaInicial = false;
         }
 
+        private void AgregarPadron(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new AgregarPadronAporte(idEntrada, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id, true, true, nuevo);
+        }
+
+        private void AgregarAporte(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new AgregarPadronAporte(idEntrada, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id, true, false, nuevo);
+        }
+
+        private void AgregarCF(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new AgregarCF(idEntrada, nuevo);
+        }
+
         private void GuardarClick(object sender, RoutedEventArgs e)
         {
-            if (NombreExterno.IsVisible)
-                repo.AgregarExterno(NombreExterno.Text, ObservacionExterno.Text);
 
-            if (TipoAporte.SelectedIndex != 0)
+            if (ValidarDatos())
             {
-
+                MainWindow.self.Content = new Borrador(idInforme, nuevo);
             }
+        }
 
-            switch (TipoAporte.SelectedIndex)
-            {
-                case 0:
-                    repo.AgregarCF(NombreCampania.Text);
-                    break;
-                case 1:
-                    repo.AgregarPadronCF(NombreCampania.Text);
-                    break;
-                case 2:
-                    repo.AgregarPadronCF(NombreCampania.Text);
-                    repo.AgregarAporteCF(NombreCampania.Text);
-                    break;
-                case 3:
-                    repo.AgregarAporteCF(NombreCampania.Text);
-                    break;
-            }
-
-            MainWindow.self.Content = new Borrador(idInforme, nuevaEntrada);
+        private bool ValidarDatos()
+        {
+            return true;
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Borrador(idInforme, nuevaEntrada);
+            MainWindow.self.Content = new Borrador(idInforme, nuevo);
         }
 
-        private void LimpiarParaCampania()
+        private void RowPadronesKeyDown(object sender, KeyEventArgs e)
         {
-            CampaniaAsociadaLabel.Visibility = System.Windows.Visibility.Collapsed;
-            CampaniaAsociada.Visibility = System.Windows.Visibility.Collapsed;
-            InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Interno.Visibility = System.Windows.Visibility.Collapsed;
-            ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Externo.Visibility = System.Windows.Visibility.Collapsed;
-            PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Pago.Visibility = System.Windows.Visibility.Collapsed;
-            NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
-            FechaAporteLabel.Visibility = System.Windows.Visibility.Collapsed;
-            FechaAporte.Visibility = System.Windows.Visibility.Collapsed;
-            TipoAportanteLabel.Visibility = System.Windows.Visibility.Collapsed;
-            TipoAportante.Visibility = System.Windows.Visibility.Collapsed;
-            ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-            ObservacionLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Observacion.Visibility = System.Windows.Visibility.Collapsed;
-            ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
-            CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Compromiso.Visibility = System.Windows.Visibility.Collapsed;
-
-            NombreCampaniaLabel.Visibility = System.Windows.Visibility.Visible;
-            NombreCampania.Visibility = System.Windows.Visibility.Visible;
-            NombreCampania.Text = "";
-        }
-
-        private void LimpiarParaPadron()
-        {
-            if (Interno.Items.Count > 0)
+            if (Key.Delete == e.Key)
             {
-                TipoAportante.SelectedIndex = 0;
-                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
-
-                InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                Interno.Visibility = System.Windows.Visibility.Visible;
-            }
-            else if (Externo.Items.Count > 0)
-            {
-                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-
-                TipoAportante.SelectedIndex = 1;
-                ExternoExistente.IsChecked = true;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
-                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
-
-                TipoAportante.SelectedIndex = 1;
-                ExternoExistente.IsChecked = false;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
-            }
-
-            PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Pago.Visibility = System.Windows.Visibility.Collapsed;
-            FechaAporteLabel.Visibility = System.Windows.Visibility.Collapsed;
-            FechaAporte.Visibility = System.Windows.Visibility.Collapsed;
-            NombreCampaniaLabel.Visibility = System.Windows.Visibility.Collapsed;
-            NombreCampania.Visibility = System.Windows.Visibility.Collapsed;
-
-            TipoAportanteLabel.Visibility = System.Windows.Visibility.Visible;
-            TipoAportante.Visibility = System.Windows.Visibility.Visible;
-            CampaniaAsociadaLabel.Visibility = System.Windows.Visibility.Visible;
-            CampaniaAsociada.Visibility = System.Windows.Visibility.Visible;
-            CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-            Compromiso.Visibility = System.Windows.Visibility.Visible;
-        }
-
-        private void LimpiarParaPadronYCuota()
-        {
-            if (Interno.Items.Count > 0)
-            {
-                TipoAportante.SelectedIndex = 0;
-                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-
-                InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                Interno.Visibility = System.Windows.Visibility.Visible;
-            }
-            else if (Externo.Items.Count > 0)
-            {
-                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-
-                TipoAportante.SelectedIndex = 1;
-                ExternoExistente.IsChecked = true;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
-                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
-
-                TipoAportante.SelectedIndex = 1;
-                ExternoExistente.IsChecked = false;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
-            }
-
-            NombreCampaniaLabel.Visibility = System.Windows.Visibility.Collapsed;
-            NombreCampania.Visibility = System.Windows.Visibility.Collapsed;
-
-            TipoAportanteLabel.Visibility = System.Windows.Visibility.Visible;
-            TipoAportante.Visibility = System.Windows.Visibility.Visible;
-            CampaniaAsociadaLabel.Visibility = System.Windows.Visibility.Visible;
-            CampaniaAsociada.Visibility = System.Windows.Visibility.Visible;
-            CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-            Compromiso.Visibility = System.Windows.Visibility.Visible;
-            PagoLabel.Visibility = System.Windows.Visibility.Visible;
-            Pago.Visibility = System.Windows.Visibility.Visible;
-            FechaAporteLabel.Visibility = System.Windows.Visibility.Visible;
-            FechaAporte.Visibility = System.Windows.Visibility.Visible;
-        }
-
-        private void LimpiarParaCuota()
-        {
-            if (Interno.Items.Count > 0)
-            {
-                TipoAportante.SelectedIndex = 0;
-                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
-
-                InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                Interno.Visibility = System.Windows.Visibility.Visible;
-            }
-            else if (Externo.Items.Count > 0)
-            {
-                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-
-                TipoAportante.SelectedIndex = 1;
-                ExternoExistente.IsChecked = true;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
-                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
-
-                TipoAportante.SelectedIndex = 1;
-                ExternoExistente.IsChecked = false;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
-            }
-
-            NombreCampaniaLabel.Visibility = System.Windows.Visibility.Collapsed;
-            NombreCampania.Visibility = System.Windows.Visibility.Collapsed;
-            CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Compromiso.Visibility = System.Windows.Visibility.Collapsed;
-
-            TipoAportanteLabel.Visibility = System.Windows.Visibility.Visible;
-            TipoAportante.Visibility = System.Windows.Visibility.Visible;
-            CampaniaAsociadaLabel.Visibility = System.Windows.Visibility.Visible;
-            CampaniaAsociada.Visibility = System.Windows.Visibility.Visible;
-            PagoLabel.Visibility = System.Windows.Visibility.Visible;
-            Pago.Visibility = System.Windows.Visibility.Visible;
-            FechaAporteLabel.Visibility = System.Windows.Visibility.Visible;
-            FechaAporte.Visibility = System.Windows.Visibility.Visible;
-        }
-
-        private void SelectionChangedTipoAporte(object sender, SelectionChangedEventArgs e)
-        {
-            switch (TipoAporte.SelectedIndex)
-            {
-                case 0:
-                    LimpiarParaCampania();
-                    break;
-                case 1:
-                    LimpiarParaPadron();
-                    break;
-                case 2:
-                    LimpiarParaPadronYCuota();
-                    break;
-                case 3:
-                    LimpiarParaCuota();
-                    break;
+                DataGridRow row = sender as DataGridRow;
+                PadronCF entrada = (PadronCF)row.Item;
+                //repo.BorrarEntrada(entrada.id, entrada.tipo.id);
+                //entradas.Remove(entrada);
             }
         }
 
-        private void SelectionChangedTipoAportante(object sender, SelectionChangedEventArgs e)
+        private void RowAportesKeyDown(object sender, KeyEventArgs e)
         {
-            if (!cargaInicial)
+            if (Key.Delete == e.Key)
             {
-                switch (TipoAportante.SelectedIndex)
-                {
-                    case 0:
-                        switch (TipoAporte.SelectedIndex)
-                        {
-                            case 1:
-                                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
-                                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Externo.Visibility = System.Windows.Visibility.Collapsed;
-                                PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Pago.Visibility = System.Windows.Visibility.Collapsed;
-
-                                CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Compromiso.Visibility = System.Windows.Visibility.Visible;
-                                InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Interno.Visibility = System.Windows.Visibility.Visible;
-                                break;
-                            case 2:
-                                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
-                                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Externo.Visibility = System.Windows.Visibility.Collapsed;
-
-                                CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Compromiso.Visibility = System.Windows.Visibility.Visible;
-                                PagoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Pago.Visibility = System.Windows.Visibility.Visible;
-                                InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Interno.Visibility = System.Windows.Visibility.Visible;
-                                break;
-                            case 3:
-                                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
-                                ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Externo.Visibility = System.Windows.Visibility.Collapsed;
-                                CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Compromiso.Visibility = System.Windows.Visibility.Collapsed;
-
-                                PagoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Pago.Visibility = System.Windows.Visibility.Visible;
-                                InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Interno.Visibility = System.Windows.Visibility.Visible;
-                                break;
-                        }
-                        break;
-                    case 1:
-                        switch (TipoAporte.SelectedIndex)
-                        {
-                            case 1:
-                                PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Pago.Visibility = System.Windows.Visibility.Collapsed;
-                                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Interno.Visibility = System.Windows.Visibility.Collapsed;
-
-                                ExternoExistente.IsChecked = true;
-                                CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Compromiso.Visibility = System.Windows.Visibility.Visible;
-                                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
-                                ExternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Externo.Visibility = System.Windows.Visibility.Visible;
-                                break;
-                            case 2:
-                                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Interno.Visibility = System.Windows.Visibility.Collapsed;
-
-                                ExternoExistente.IsChecked = true;
-                                CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Compromiso.Visibility = System.Windows.Visibility.Visible;
-                                PagoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Pago.Visibility = System.Windows.Visibility.Visible;
-                                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
-                                ExternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Externo.Visibility = System.Windows.Visibility.Visible;
-                                break;
-                            case 3:
-                                CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Compromiso.Visibility = System.Windows.Visibility.Collapsed;
-                                InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Interno.Visibility = System.Windows.Visibility.Collapsed;
-
-                                ExternoExistente.IsChecked = true;
-                                PagoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Pago.Visibility = System.Windows.Visibility.Visible;
-                                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
-                                ExternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Externo.Visibility = System.Windows.Visibility.Visible;
-                                break;
-                        }
-                        break;
-                }
+                DataGridRow row = sender as DataGridRow;
+                AporteCF entrada = (AporteCF)row.Item;
+                //repo.BorrarEntrada(entrada.id, entrada.tipo.id);
+                //entradas.Remove(entrada);
             }
+        }
+
+        private void RowPadronesDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            PadronCF entrada = (PadronCF)row.Item;
+            MainWindow.self.Content = new AgregarPadronAporte(entrada, false, nuevo);
+        }
+
+        private void RowAportesDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            AporteCF entrada = (AporteCF)row.Item;
+            MainWindow.self.Content = new AgregarPadronAporte(entrada, false, nuevo);
         }
     }
 }

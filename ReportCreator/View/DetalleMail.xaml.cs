@@ -1,4 +1,5 @@
-﻿using ReportCreator.Model;
+﻿using ReportCreator.Entities;
+using ReportCreator.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
