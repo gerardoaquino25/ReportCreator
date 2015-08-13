@@ -29,7 +29,7 @@ namespace ReportCreator.View
         private long campaniaAsociadaId;
         private bool entradaNueva;
         private bool padron;
-        private long idPadronAporte;
+        //private long idPadronAporte;
         private object aportador;
 
         public AgregarPadronAporte()
@@ -130,18 +130,13 @@ namespace ReportCreator.View
                 if (padron)
                 {
                     TipoAportanteLabel.Visibility = System.Windows.Visibility.Collapsed;
-                    TipoAportante.Visibility = System.Windows.Visibility.Collapsed;
                     PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                    Pago.Visibility = System.Windows.Visibility.Collapsed;
                     FechaAporteLabel.Visibility = System.Windows.Visibility.Collapsed;
-                    FechaAporte.Visibility = System.Windows.Visibility.Collapsed;
                 }
                 else
                 {
                     TipoAportanteLabel.Visibility = System.Windows.Visibility.Collapsed;
-                    TipoAportante.Visibility = System.Windows.Visibility.Collapsed;
                     CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                    Compromiso.Visibility = System.Windows.Visibility.Collapsed;
                 }
             }
 
@@ -159,50 +154,37 @@ namespace ReportCreator.View
             {
                 TipoAportante.SelectedIndex = 0;
                 ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
                 NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
                 ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
+                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Collapsed;
 
                 InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                Interno.Visibility = System.Windows.Visibility.Visible;
             }
             else if (Externo.Items.Count > 0)
             {
                 InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
                 NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
                 ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
 
                 TipoAportante.SelectedIndex = 1;
                 ExternoExistente.IsChecked = true;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
             }
             else
             {
                 InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
                 ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
 
                 TipoAportante.SelectedIndex = 1;
                 ExternoExistente.IsChecked = false;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
             }
 
             PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Pago.Visibility = System.Windows.Visibility.Collapsed;
             FechaAporteLabel.Visibility = System.Windows.Visibility.Collapsed;
-            FechaAporte.Visibility = System.Windows.Visibility.Collapsed;
 
             TipoAportanteLabel.Visibility = System.Windows.Visibility.Visible;
-            TipoAportante.Visibility = System.Windows.Visibility.Visible;
             CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-            Compromiso.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void LimpiarParaPadronYCuota()
@@ -211,49 +193,36 @@ namespace ReportCreator.View
             {
                 TipoAportante.SelectedIndex = 0;
                 ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
                 NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
                 ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
+                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Collapsed;
 
                 InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                Interno.Visibility = System.Windows.Visibility.Visible;
             }
             else if (Externo.Items.Count > 0)
             {
                 InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
                 NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
                 ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
 
                 TipoAportante.SelectedIndex = 1;
                 ExternoExistente.IsChecked = true;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
             }
             else
             {
                 InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
                 ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
 
                 TipoAportante.SelectedIndex = 1;
                 ExternoExistente.IsChecked = false;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
             }
 
             TipoAportanteLabel.Visibility = System.Windows.Visibility.Visible;
-            TipoAportante.Visibility = System.Windows.Visibility.Visible;
             CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-            Compromiso.Visibility = System.Windows.Visibility.Visible;
             PagoLabel.Visibility = System.Windows.Visibility.Visible;
-            Pago.Visibility = System.Windows.Visibility.Visible;
             FechaAporteLabel.Visibility = System.Windows.Visibility.Visible;
-            FechaAporte.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void LimpiarParaCuota()
@@ -262,50 +231,37 @@ namespace ReportCreator.View
             {
                 TipoAportante.SelectedIndex = 0;
                 ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
                 NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
                 ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
-                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
+                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Collapsed;
 
                 InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                Interno.Visibility = System.Windows.Visibility.Visible;
             }
             else if (Externo.Items.Count > 0)
             {
                 InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
                 NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
                 ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
 
                 TipoAportante.SelectedIndex = 1;
                 ExternoExistente.IsChecked = true;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
             }
             else
             {
                 InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Interno.Visibility = System.Windows.Visibility.Collapsed;
                 ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                Externo.Visibility = System.Windows.Visibility.Collapsed;
 
                 TipoAportante.SelectedIndex = 1;
                 ExternoExistente.IsChecked = false;
-                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
             }
 
             CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Compromiso.Visibility = System.Windows.Visibility.Collapsed;
 
             TipoAportanteLabel.Visibility = System.Windows.Visibility.Visible;
-            TipoAportante.Visibility = System.Windows.Visibility.Visible;
             PagoLabel.Visibility = System.Windows.Visibility.Visible;
-            Pago.Visibility = System.Windows.Visibility.Visible;
             FechaAporteLabel.Visibility = System.Windows.Visibility.Visible;
-            FechaAporte.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void SelectionChangedTipoAporte(object sender, SelectionChangedEventArgs e)
@@ -367,40 +323,31 @@ namespace ReportCreator.View
                         switch (TipoAporte.SelectedIndex + suma)
                         {
                             case 0:
-                                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
+                                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Collapsed;
                                 ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Externo.Visibility = System.Windows.Visibility.Collapsed;
                                 PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Pago.Visibility = System.Windows.Visibility.Collapsed;
+                                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
 
                                 CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Compromiso.Visibility = System.Windows.Visibility.Visible;
                                 InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Interno.Visibility = System.Windows.Visibility.Visible;
                                 break;
                             case 1:
-                                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
+                                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Collapsed;
                                 ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Externo.Visibility = System.Windows.Visibility.Collapsed;
+                                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
 
                                 CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Compromiso.Visibility = System.Windows.Visibility.Visible;
                                 PagoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Pago.Visibility = System.Windows.Visibility.Visible;
                                 InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Interno.Visibility = System.Windows.Visibility.Visible;
                                 break;
                             case 2:
-                                ExternoExistente.Visibility = System.Windows.Visibility.Collapsed;
+                                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Collapsed;
                                 ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Externo.Visibility = System.Windows.Visibility.Collapsed;
                                 CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Compromiso.Visibility = System.Windows.Visibility.Collapsed;
+                                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
 
                                 PagoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Pago.Visibility = System.Windows.Visibility.Visible;
                                 InternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Interno.Visibility = System.Windows.Visibility.Visible;
                                 break;
                         }
                         break;
@@ -409,42 +356,33 @@ namespace ReportCreator.View
                         {
                             case 0:
                                 PagoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Pago.Visibility = System.Windows.Visibility.Collapsed;
                                 InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Interno.Visibility = System.Windows.Visibility.Collapsed;
+                                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
 
                                 ExternoExistente.IsChecked = true;
                                 CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Compromiso.Visibility = System.Windows.Visibility.Visible;
-                                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
                                 ExternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Externo.Visibility = System.Windows.Visibility.Visible;
                                 break;
                             case 1:
                                 InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Interno.Visibility = System.Windows.Visibility.Collapsed;
+                                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
 
                                 ExternoExistente.IsChecked = true;
                                 CompromisoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Compromiso.Visibility = System.Windows.Visibility.Visible;
                                 PagoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Pago.Visibility = System.Windows.Visibility.Visible;
-                                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
                                 ExternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Externo.Visibility = System.Windows.Visibility.Visible;
                                 break;
                             case 2:
                                 CompromisoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Compromiso.Visibility = System.Windows.Visibility.Collapsed;
                                 InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-                                Interno.Visibility = System.Windows.Visibility.Collapsed;
+                                NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
 
                                 ExternoExistente.IsChecked = true;
                                 PagoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Pago.Visibility = System.Windows.Visibility.Visible;
-                                ExternoExistente.Visibility = System.Windows.Visibility.Visible;
+                                ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
                                 ExternoLabel.Visibility = System.Windows.Visibility.Visible;
-                                Externo.Visibility = System.Windows.Visibility.Visible;
                                 break;
                         }
                         break;
@@ -460,23 +398,17 @@ namespace ReportCreator.View
         private void ExternoExistenteCheck(object sender, RoutedEventArgs e)
         {
             NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            NombreExterno.Visibility = System.Windows.Visibility.Collapsed;
             ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            ObservacionExterno.Visibility = System.Windows.Visibility.Collapsed;
 
             ExternoLabel.Visibility = System.Windows.Visibility.Visible;
-            Externo.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void ExternoExistenteUncheck(object sender, RoutedEventArgs e)
         {
             ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            Externo.Visibility = System.Windows.Visibility.Collapsed;
 
             NombreExternoLabel.Visibility = System.Windows.Visibility.Visible;
-            NombreExterno.Visibility = System.Windows.Visibility.Visible;
             ObservacionExternoLabel.Visibility = System.Windows.Visibility.Visible;
-            ObservacionExterno.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

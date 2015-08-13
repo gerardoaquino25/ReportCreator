@@ -4,30 +4,68 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Height="461">
+             Height="Auto" Width="Auto" MinHeight="600" MinWidth="800" MaxHeight="1080" MaxWidth="1980">
     <Grid>
-        <Label Content="Tipo de aporte:" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top" Width="108" HorizontalContentAlignment="Right"/>
-        <ComboBox Name="TipoAporte" HorizontalAlignment="Left" Margin="146,10,0,0" VerticalAlignment="Top" Width="120" Height="26" SelectionChanged="SelectionChangedTipoAporte"/>
-        <Label Name="TipoAportanteLabel"  Content="Tipo aportante:" HorizontalAlignment="Left" Margin="33,41,0,0" VerticalAlignment="Top" Width="108" HorizontalContentAlignment="Right"/>
-        <ComboBox Name="TipoAportante" HorizontalAlignment="Left" Margin="146,41,0,0" VerticalAlignment="Top" Width="121" Height="26" SelectionChanged="SelectionChangedTipoAportante"/>
-        <Label Name="InternoLabel" Content="Interno:" HorizontalAlignment="Left" Margin="33,72,0,0" VerticalAlignment="Top" Width="108" HorizontalContentAlignment="Right"/>
-        <ComboBox DisplayMemberPath="nombreCompleto" Name="Interno" HorizontalAlignment="Left" Margin="146,72,0,0" VerticalAlignment="Top" Width="121" Height="26"/>
-        <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Left" Margin="146,105,0,0" VerticalAlignment="Top" Height="17" Checked="ExternoExistenteCheck" Unchecked="ExternoExistenteUncheck"/>
-        <Label Name="ExternoLabel" Content="Externo:" HorizontalAlignment="Left" Margin="33,127,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <ListBox DisplayMemberPath="nombre" Name="Externo" HorizontalAlignment="Left" Height="78" Margin="145,127,0,0" VerticalAlignment="Top" Width="119"/>
-        <Label Name="NombreExternoLabel" Content="Nombre:" HorizontalAlignment="Left" Margin="33,210,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <TextBox Name="NombreExterno" HorizontalAlignment="Left" Height="26" Margin="145,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"/>
-        <Label Name="ObservacionExternoLabel" Content="Observación externo:" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="132" HorizontalContentAlignment="Right"/>
-        <TextBox Name="ObservacionExterno" HorizontalAlignment="Left" Height="26" Margin="145,241,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
-        <Label Name="CompromisoLabel" Content="Compromiso:" HorizontalAlignment="Left" Margin="35,307,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <TextBox Name="Compromiso" HorizontalAlignment="Left" Height="26" Margin="147,307,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
-        <Label Name="PagoLabel" Content="Pago:" HorizontalAlignment="Left" Margin="34,276,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <TextBox Name="Pago" HorizontalAlignment="Left" Height="26" Margin="146,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
-        <Label Name="FechaAporteLabel" Content="Fecha:" HorizontalAlignment="Left" Margin="34,337,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <DatePicker Name="FechaAporte" HorizontalAlignment="Left" Margin="147,337,0,0" VerticalAlignment="Top" Height="26"/>
-        <Label Name="ObservacionLabel" Content="Observación:" HorizontalAlignment="Left" Margin="35,368,0,0" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
-        <TextBox Name="Observacion" HorizontalAlignment="Left" Height="26" Margin="147,368,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"/>
-        <Button Content="Guardar" HorizontalAlignment="Left" Margin="63,429,0,0" VerticalAlignment="Top" Width="90" Click="GuardarClick"/>
-        <Button Content="Volver" HorizontalAlignment="Left" Margin="158,429,0,0" VerticalAlignment="Top" Width="90" Click="VolverClick"/>
+        <StackPanel HorizontalAlignment="Center" Margin="0,10" VerticalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type DockPanel}">
+                    <Style.Triggers>
+                        <Trigger Property="Visibility" Value="Collapsed">
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="Visibility" Value="Visible">
+                            <Setter Property="Margin" Value="20,0,20,5"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Resources>
+            <DockPanel>
+                <Label Content="Tipo de aporte:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
+                <ComboBox Name="TipoAporte" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="26" SelectionChanged="SelectionChangedTipoAporte"/>
+            </DockPanel>
+            <DockPanel Name="TipoAportanteLabel">
+                <Label Content="Tipo aportante:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
+                <ComboBox Name="TipoAportante" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Height="26" SelectionChanged="SelectionChangedTipoAportante"/>
+            </DockPanel>
+            <DockPanel Name="InternoLabel">
+                <Label Content="Interno:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
+                <ComboBox DisplayMemberPath="nombreCompleto" Name="Interno" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Height="26"/>
+            </DockPanel>
+            <DockPanel Name="ExternoExistenteLabel">
+                <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoExistenteCheck" Unchecked="ExternoExistenteUncheck" Width="144"/>
+            </DockPanel>
+            <DockPanel Name="ExternoLabel">
+                <Label Content="Externo:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
+                <ListBox DisplayMemberPath="nombre" Name="Externo" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="119"/>
+            </DockPanel>
+            <DockPanel Name="NombreExternoLabel">
+                <Label Content="Nombre:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
+                <TextBox Name="NombreExterno" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"/>
+            </DockPanel>
+            <DockPanel Name="ObservacionExternoLabel">
+                <Label Content="Observación externo:" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="122"/>
+                <TextBox Name="ObservacionExterno" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
+            </DockPanel>
+            <DockPanel Name="CompromisoLabel">
+                <Label Content="Compromiso:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
+                <TextBox Name="Compromiso" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
+            </DockPanel>
+            <DockPanel Name="PagoLabel">
+                <Label Content="Pago:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
+                <TextBox Name="Pago" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
+            </DockPanel>
+            <DockPanel Name="FechaAporteLabel">
+                <Label Content="Fecha:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
+                <DatePicker Name="FechaAporte" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26"/>
+            </DockPanel>
+            <DockPanel Name="ObservacionLabel">
+                <Label Content="Observación:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
+                <TextBox Name="Observacion" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"/>
+            </DockPanel>
+            <DockPanel Margin="0,0,0,10" HorizontalAlignment="Center">
+                <Button Content="Guardar" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Click="GuardarClick"/>
+                <Button Content="Volver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Click="VolverClick"/>
+            </DockPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

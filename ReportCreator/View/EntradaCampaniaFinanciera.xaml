@@ -13,8 +13,9 @@
         <Label Content="Padron:" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="75"/>
         <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Padrones" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Height="140" Width="432">
             <DataGrid.Columns >
-                <DataGridTextColumn Binding="{Binding Path=asunto}" Header="Asunto" MinWidth="50" />
-                <DataGridTextColumn Binding="{Binding Path=fechaCreacion}" Header="Fecha de creación" MinWidth="100" />
+                <DataGridTextColumn Binding="{Binding Path=aportante.type}" Header="Tipo" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=aportante.nombre}" Header="Nombre" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=compromiso}" Header="Compromiso" MinWidth="100" />
             </DataGrid.Columns>
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
@@ -26,8 +27,11 @@
         <Label Content="Aporte:" HorizontalAlignment="Left" Margin="10,275,0,0" VerticalAlignment="Top" Width="75"/>
         <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Aportes" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Height="140" Width="432">
             <DataGrid.Columns >
-                <DataGridTextColumn Binding="{Binding Path=asunto}" Header="Asunto" MinWidth="50" />
-                <DataGridTextColumn Binding="{Binding Path=fechaCreacion}" Header="Fecha de creación" MinWidth="100" />
+                <DataGridTextColumn Binding="{Binding Path=aportante.type}" Header="Tipo" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=aportante.nombre}" Header="Nombre" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=pago}" Header="Compromiso" MinWidth="100" />
+                <DataGridTextColumn Binding="{Binding Path=fechaAporte}" Header="Fecha" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=rechazo}" Header="Rechazo" MinWidth="100" />
             </DataGrid.Columns>
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">

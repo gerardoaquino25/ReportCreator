@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             Height="Auto" Width="Auto" MinHeight="600" MinWidth="800" MaxHeight="1080" MaxWidth="1980">
     <Grid>
-        <Button Content="Nuevo" HorizontalAlignment="Left" Margin="91,125,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click_1"/>
-        <Button Content="Borrador" HorizontalAlignment="Left" Margin="91,101,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click_3"/>
-        <Button Content="Pendiente de Envio" HorizontalAlignment="Left" Margin="91,149,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click"/>
-        <Button Content="Enviados" HorizontalAlignment="Left" Margin="91,173,0,0" VerticalAlignment="Top" Width="125"/>
-        <Button Content="Volver" HorizontalAlignment="Left" Margin="91,197,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click_2"/>
-
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Content="Nuevo" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Click="Button_Click_1" Padding="1" Margin="0,0,0,5"/>
+            <Button Content="Borrador" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Click="Button_Click_3" Margin="0,0,0,5"/>
+            <Button Content="Pendiente de Envio" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Click="Button_Click" Margin="0,0,0,5"/>
+            <Button Content="Enviados" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Margin="0,0,0,5"/>
+            <Button Content="Volver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Click="Button_Click_2" Margin="0,0,0,5"/>
+        </StackPanel>
     </Grid>
 </UserControl>

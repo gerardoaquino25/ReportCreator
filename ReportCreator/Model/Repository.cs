@@ -717,7 +717,7 @@ namespace ReportCreator.Model
 
             SqlCeCommand cmd = new SqlCeCommand(@"
                 SELECT * 
-                FROM interno 
+                FROM externo 
                 WHERE id=@id", con);
             cmd.Parameters.AddWithValue("@id", externoId);
 
@@ -1162,7 +1162,7 @@ namespace ReportCreator.Model
                 con.Open();
 
             SqlCeCommand cmd = new SqlCeCommand("INSERT INTO externo (nombre, observacion) VALUES (@nombre, @observacion)", con);
-            cmd.Parameters.AddWithValue("@nombre", 1);
+            cmd.Parameters.AddWithValue("@nombre", nombre);
             object param1 = observacion;
             if (param1 == null)
                 param1 = DBNull.Value;
@@ -1194,7 +1194,7 @@ namespace ReportCreator.Model
                 con.Open();
 
             SqlCeCommand cmd = new SqlCeCommand(@"INSERT INTO campania_financiera_padron (aportante_id, compromiso, tipo_aportante, campania_financiera_id, observacion, entrada_campania_financiera_id) 
-                VALUES (@compromiso, @aportante_id, @tipo_aportante, @campania_financiera_id, @observacion, @entrada_campania_financiera_id)", con);
+                VALUES (@aportante_id, @compromiso, @tipo_aportante, @campania_financiera_id, @observacion, @entrada_campania_financiera_id)", con);
             cmd.Parameters.AddWithValue("@aportante_id", padron.aportanteId);
             cmd.Parameters.AddWithValue("@compromiso", padron.compromiso);
             cmd.Parameters.AddWithValue("@tipo_aportante", padron.tipoAportante);
@@ -1287,9 +1287,9 @@ namespace ReportCreator.Model
             switch (tipo)
             {
                 case 1:
-                    return ObtenerInterno(id, false);
+                    return ObtenerInterno(id, closeConn);
                 case 2:
-                    return ObtenerExterno(id, false);
+                    return ObtenerExterno(id, closeConn);
 
             }
 
@@ -1311,7 +1311,7 @@ namespace ReportCreator.Model
                 {
                     PadronCF padron = new PadronCF();
                     padron.id = rdr.GetInt64(0);
-                    padron.aportante = ObtenerAportanteCF(rdr.GetInt32(1), rdr.GetInt32(3));
+                    padron.aportante = ObtenerAportanteCF(rdr.GetInt64(1), rdr.GetInt32(3));
                     padron.compromiso = rdr.GetInt32(2);
                     padron.campaniaFinancieraId = rdr.GetInt64(4);
                     padron.observacion = rdr.GetString(5);

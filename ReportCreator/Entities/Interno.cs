@@ -19,6 +19,14 @@ namespace ReportCreator.Entities
             }
         }
 
+        public string type
+        {
+            get
+            {
+                return this.GetType().Name;
+            }
+        }
+
         public override bool Equals(Object interno)
         {
             // If parameter is null return false.
