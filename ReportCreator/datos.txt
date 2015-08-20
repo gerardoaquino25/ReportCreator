@@ -1,5 +1,21 @@
 INICIO
 
+-BORRADO DE DATOS
+DELETE FROM cotizacion_interno
+DELETE FROM entrada_cotizacion
+DELETE FROM entrada_generica
+DELETE FROM entrada_informe
+DELETE FROM informe
+DELETE FROM campania_financiera
+DELETE FROM campania_financiera_aporte
+DELETE FROM campania_financiera_padron
+DELETE FROM cotizacion_interno
+DELETE FROM entrada_campania_financiera
+DELETE FROM externo
+DELETE FROM interno
+DELETE FROM mail_receiver
+DELETE FROM mail_sender
+
 -CREACION DE TABLAS
 
 CREATE TABLE [configuracion_general] (

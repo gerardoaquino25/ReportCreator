@@ -58,7 +58,7 @@ namespace ReportCreator.View
                     break;
                 case 3:
                     long idEntrada = repo.AgregarEntrada(idInforme, asunto.Text, 3);
-                    MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo);
+                    MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo, true);
                     break;
                 case 4:
                     //MainWindow.self.Content = new NuevoBorrador();

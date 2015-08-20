@@ -91,7 +91,7 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 3:
-                    MainWindow.self.Content = new EntradaCampaniaFinanciera(entrada.id, nuevo);
+                    MainWindow.self.Content = new EntradaCampaniaFinanciera(entrada.id, nuevo, false);
                     break;
                 case 4:
                     //MainWindow.self.Content = new NuevoBorrador();

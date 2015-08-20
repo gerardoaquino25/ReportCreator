@@ -45,21 +45,19 @@ namespace ReportCreator.View
         //    this.nuevo = nuevo;
         //}
 
-        public EntradaCampaniaFinanciera(long idEntrada, bool nuevo)
+        public EntradaCampaniaFinanciera(long idEntrada, bool nuevo, bool nuevaEntrada)
         {
             InitializeComponent();
             this.idEntrada = idEntrada;
             this.nuevo = nuevo;
             entradaCampaniaFinanciera = repo.ObtenerEntradaCampaniaFinanciera(idEntrada);
             this.idInforme = entradaCampaniaFinanciera.idInforme;
-            iniciar(true);
+            iniciar(nuevaEntrada);
         }
 
         private void iniciar(bool nuevo)
         {
             CampaniaAsociada.ItemsSource = repo.ObtenerCFs("FECHA_CREACION");
-            Aportes.ItemsSource = repo.ObtenerAportesCF(idEntrada);
-            Padrones.ItemsSource = repo.ObtenerPadronesCF(idEntrada);
 
             bool asignarCampania = false;
 
@@ -71,15 +69,20 @@ namespace ReportCreator.View
                 AgregarCFBtn.Visibility = System.Windows.Visibility.Hidden;
             }
 
+            Titulo.Text = entradaCampaniaFinanciera.titulo;
             if (nuevo)
             {
                 if (asignarCampania)
                     CampaniaAsociada.SelectedIndex = 0;
             }
             else
+                if (asignarCampania)
+                    CampaniaAsociada.SelectedItem = entradaCampaniaFinanciera.campaniaFinanciera;
+
+            if (asignarCampania)
             {
-                Titulo.Text = entradaCampaniaFinanciera.titulo;
-                CampaniaAsociada.SelectedItem = entradaCampaniaFinanciera.campaniaFinanciera;
+                Aportes.ItemsSource = repo.ObtenerAportesCF(((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
+                Padrones.ItemsSource = repo.ObtenerPadronesCF(((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
             }
 
             cargaInicial = false;
@@ -105,6 +108,9 @@ namespace ReportCreator.View
 
             if (ValidarDatos())
             {
+                entradaCampaniaFinanciera.titulo = Titulo.Text;
+                entradaCampaniaFinanciera.campaniaFinanciera = (CampaniaFinanciera)CampaniaAsociada.SelectedItem;
+                repo.GuardarEntradaCampaniaFinanciera(entradaCampaniaFinanciera);
                 MainWindow.self.Content = new Borrador(idInforme, nuevo);
             }
         }

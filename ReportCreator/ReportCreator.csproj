@@ -132,11 +132,6 @@
     <Compile Include="DB\RemitenteInforme.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ReportCreatorDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ReportCreatorDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="DB\ReporteEnvio.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
@@ -328,29 +323,18 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="ReportCreatorDataSet.xsc">
-      <DependentUpon>ReportCreatorDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="ReportCreatorDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ReportCreatorDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="ReportCreatorDataSet.xss">
-      <DependentUpon>ReportCreatorDataSet.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="datos.txt" />
-    <Content Include="ReportCreator.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="ReportCreator.sdf" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
