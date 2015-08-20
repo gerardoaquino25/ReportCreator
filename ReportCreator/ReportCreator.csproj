@@ -95,6 +95,9 @@
     <Compile Include="Entities\Authentication\CustomIdentity.cs" />
     <Compile Include="Entities\Authentication\CustomPrincipal.cs" />
     <Compile Include="Entities\Authentication\DelegateCommand.cs" />
+    <Compile Include="View\Authentication\CrearNuevoUsuario.xaml.cs">
+      <DependentUpon>CrearNuevoUsuario.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Authentication\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Usuario.cs" />
+    <Page Include="View\Authentication\CrearNuevoUsuario.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Authentication\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AgregarPadronAporte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Authentication\RecuperarContrasenia.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,6 +213,9 @@
     </Compile>
     <Compile Include="View\AgregarPadronAporte.xaml.cs">
       <DependentUpon>AgregarPadronAporte.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Authentication\RecuperarContrasenia.xaml.cs">
+      <DependentUpon>RecuperarContrasenia.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Borradores.xaml.cs">
       <DependentUpon>Borradores.xaml</DependentUpon>

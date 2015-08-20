@@ -10,6 +10,7 @@ using ReportCreator.Entities;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.IO;
+using System.Net.Mail;
 
 namespace ReportCreator.Model
 {
@@ -1480,25 +1481,128 @@ namespace ReportCreator.Model
             return respuesta;
         }
 
+        public bool ExisteUsuario(string username)
+        {
+            return ObtenerUsuarioByUsername(username) != null;
+        }
+
+        public Usuario ObtenerUsuarioByUsername(string username, bool closeConn = false)
+        {
+            Usuario usuario = null;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT *
+                FROM usuario
+                WHERE username = @username", con);
+            cmd.Parameters.Add("@username", username);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    usuario = new Usuario();
+                    usuario.id = rdr.GetInt32(0);
+                    usuario.username = rdr.GetString(1);
+                    usuario.email = rdr.GetString(2);
+                }
+            }
+
+            if (closeConn)
+                con.Close();
+
+            return usuario;
+        }
+
+        public Usuario ObtenerUsuarioByEmail(string email, bool closeConn = false)
+        {
+            Usuario usuario = null;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT *
+                FROM usuario
+                WHERE email = @email", con);
+            cmd.Parameters.Add("@email", email);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    usuario = new Usuario();
+                    usuario.id = rdr.GetInt32(0);
+                    usuario.username = rdr.GetString(1);
+                    usuario.email = rdr.GetString(2);
+                }
+            }
+
+            if (closeConn)
+                con.Close();
+
+            return usuario;
+        }
+
         public Notificacion AgregarUsuario(string username, string email, string password)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!ExisteUsuario(username))
+            {
+
+                if (!con.State.Equals(ConnectionState.Open))
+                    con.Open();
+
+                SqlCeCommand cmd = new SqlCeCommand("INSERT INTO usuario (username, email, password) VALUES (@username, @email, @password)", con);
+                cmd.Parameters.AddWithValue("@username", username);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@password", Encrypt(password));
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    resultado.Detalle = Notificacion.USUARIO_CREADO;
+                }
+                catch (Exception e)
+                {
+                    resultado.Detalle = Notificacion.USUARIO_CREADO_KO;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+            else
+                resultado.Detalle = Notificacion.USUARIO_YA_EXISTENTE;
+
+            return resultado;
+        }
+
+        public Notificacion CambiarContrasenia(int usuarioId, string nuevaContrasenia)
         {
             Notificacion resultado = new Notificacion();
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO usuario (username, email, password) VALUES (@username, @email, @password)", con);
-            cmd.Parameters.AddWithValue("@username", username);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@password", Encrypt(password));
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                UPDATE usuario 
+                SET password = @password
+                WHERE id = @id", con);
+            cmd.Parameters.AddWithValue("@id", usuarioId);
+            cmd.Parameters.AddWithValue("@password", Encrypt(nuevaContrasenia));
 
             try
             {
                 cmd.ExecuteNonQuery();
+                resultado.Detalle = Notificacion.CAMBIO_CONTRASENIA;
             }
             catch (Exception e)
             {
-
+                resultado.Detalle = Notificacion.CAMBIO_CONTRASENIA_KO;
             }
             finally
             {
@@ -1506,6 +1610,61 @@ namespace ReportCreator.Model
             }
 
             return resultado;
+
+        }
+
+        public Notificacion EnviarEmail(string emailFrom, string password, string smtp, string puerto, string emailTo, string subject, string html)
+        {
+            Notificacion resultado = new Notificacion();
+
+            try
+            {
+                SmtpClient client = new SmtpClient();
+                client.Port = Convert.ToInt32(puerto);
+                client.Host = smtp;
+                client.EnableSsl = true;
+                client.Timeout = 10000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new System.Net.NetworkCredential(emailFrom, password);
+
+                MailMessage mm = new MailMessage(emailFrom, emailTo, subject, html);
+                mm.BodyEncoding = UTF8Encoding.UTF8;
+                mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+                client.Send(mm);
+                resultado.Detalle = Notificacion.EMAIL_ENVIADO;
+            }
+            catch (Exception e)
+            {
+                resultado.Detalle = Notificacion.EMAIL_ENVIADO_KO;
+            }
+
+            return resultado;
+        }
+
+        public Notificacion RecuperarContraseña(string username)
+        {
+            Usuario usuario = ObtenerUsuarioByUsername(username);
+
+            if (usuario != null)
+            {
+                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var random = new Random();
+                var nuevaContrasenia = new string(
+                    Enumerable.Repeat(chars, 8)
+                              .Select(s => s[random.Next(s.Length)])
+                              .ToArray());
+
+                if (CambiarContrasenia(usuario.id, nuevaContrasenia).Detalle == Notificacion.CAMBIO_CONTRASENIA_KO)
+                    return new Notificacion() { Detalle = Notificacion.CAMBIO_CONTRASENIA_KO };
+
+                return EnviarEmail("gerardo.aquino25@gmail.com", "17244793", "smtp.googlemail.com", "587", usuario.email, "Recuperar Contraseña", "Nueva contraseña:" + nuevaContrasenia);
+            }
+            else
+            {
+                return new Notificacion() { Detalle = Notificacion.USUARIO_NO_ENCONTRADO };
+            }
         }
     }
 }

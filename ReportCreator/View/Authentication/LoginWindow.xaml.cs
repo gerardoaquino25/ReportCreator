@@ -30,5 +30,15 @@ namespace ReportCreator.View.Authentication
             set { DataContext = value; }
         }
         #endregion
+
+        private void CrearNuevoUsuarioClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            MainWindow.self.Content = new CrearNuevoUsuario();
+        }
+
+        private void RecuperarContraseniaClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            MainWindow.self.Content = new RecuperarContrasenia(Username.Text);
+        }
     }
 }

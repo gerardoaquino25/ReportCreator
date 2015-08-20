@@ -67,27 +67,7 @@ namespace ReportCreator.View
 
         private void ProbarClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                SmtpClient client = new SmtpClient();
-                client.Port = Convert.ToInt32(Puerto.Text);
-                client.Host = Smtp.Text;
-                client.EnableSsl = true;
-                client.Timeout = 10000;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new System.Net.NetworkCredential(Email.Text, Password.Password);
-
-                MailMessage mm = new MailMessage(Email.Text, EmailPrueba.Text, "Prueba", "Esto es una prueba.");
-                mm.BodyEncoding = UTF8Encoding.UTF8;
-                mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-
-                client.Send(mm);
-            }
-            catch (Exception exc)
-            {
-
-            }
+            Notificacion resultado = repo.EnviarEmail(Email.Text, Password.Password, Smtp.Text, Puerto.Text, EmailPrueba.Text, "Prueba", "Esto es una prueba.");
         }
     }
 }

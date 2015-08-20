@@ -17,7 +17,7 @@ namespace ReportCreator.Model
         Notificacion AgregarPadronCF(PadronCF padron);
         Notificacion AgregarAporteCF(AporteCF aporte);
         Notificacion AgregarUsuario(string username, string email, string password);
-        
+
         Informe ObtenerInforme(long id);
         IList<Informe> ObtenerInformesBorrador();
         IList<Interno> ObtenerInternos();
@@ -31,7 +31,7 @@ namespace ReportCreator.Model
         IList<AporteCF> ObtenerAportesCF(long idEntrada);
         IList<PadronCF> ObtenerPadronesCF(long idEntrada);
         EntradaCampaniaFinanciera ObtenerEntradaCampaniaFinanciera(long idEntrada);
-        
+
         Notificacion GuardarEntradaGenerica(EntradaGenerica entradaGenerica);
         Notificacion GuardarInforme(long idInforme, string asunto);
         Notificacion GuardarInternos(IList<Interno> internos);
@@ -45,5 +45,8 @@ namespace ReportCreator.Model
         Notificacion BorrarMailSender(int id);
         Notificacion BorrarEntrada(long id, int tipo);
         Notificacion BorrarInforme(long id);
+
+        Notificacion RecuperarContraseña(string username);
+        Notificacion EnviarEmail(string emailFrom, string password, string smtp, string puerto, string emailTo, string subject, string html);
     }
 }

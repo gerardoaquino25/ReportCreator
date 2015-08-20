@@ -19,19 +19,19 @@ namespace ReportCreator.Entities.Authentication
     {
         private class InternalUserData
         {
-            public InternalUserData(int id, string username, string email, string hashedPassword, string[] roles)
+            public InternalUserData(int id, string username, string email, string password, string[] roles)
             {
                 Id = id;
                 Username = username;
                 Email = email;
-                HashedPassword = hashedPassword;
+                Password = password;
                 Roles = roles;
             }
-            public InternalUserData(string username, string email, string hashedPassword, string[] roles)
+            public InternalUserData(string username, string email, string password, string[] roles)
             {
                 Username = username;
                 Email = email;
-                HashedPassword = hashedPassword;
+                Password = password;
                 Roles = roles;
             }
             public int Id
@@ -51,7 +51,7 @@ namespace ReportCreator.Entities.Authentication
                 private set;
             }
 
-            public string HashedPassword
+            public string Password
             {
                 get;
                 private set;
@@ -94,7 +94,7 @@ namespace ReportCreator.Entities.Authentication
         public User AuthenticateUser(string username, string clearTextPassword)
         {
             InternalUserData userData = GetUsers().FirstOrDefault(u => u.Username.Equals(username)
-                && u.HashedPassword.Equals(Encrypt(clearTextPassword)));
+                && u.Password.Equals(Encrypt(clearTextPassword)));
 
             if (userData == null)
                 throw new UnauthorizedAccessException("Acceso denegado, por favor ingrese credenciales válidas.");
@@ -108,7 +108,7 @@ namespace ReportCreator.Entities.Authentication
         private string Encrypt(string pass)
         {
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(pass);
-            using (PasswordDeriveBytes password = new PasswordDeriveBytes("RO-SOFTWARE-GDA-2", null))
+            using (PasswordDeriveBytes password = new PasswordDeriveBytes("RO-SOFTWARE-GDA", null))
             {
                 byte[] keyBytes = password.GetBytes(keysize / 8);
                 using (RijndaelManaged symmetricKey = new RijndaelManaged())

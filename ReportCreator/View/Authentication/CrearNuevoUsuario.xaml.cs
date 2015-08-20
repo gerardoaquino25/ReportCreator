@@ -41,10 +41,12 @@ namespace ReportCreator.View.Authentication
             {
                 if (respuesta.Detalle.Equals(Notificacion.USUARIO_CREADO_KO))
                 {
+
                 }
 
                 if (respuesta.Detalle.Equals(Notificacion.USUARIO_YA_EXISTENTE))
                 {
+
                 }
             }
         }
