@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ReportCreator.Model;
+using ReportCreator.View.Authentication;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,24 +22,27 @@ namespace ReportCreator.View
     /// </summary>
     public partial class Main : UserControl
     {
+        IRepository repo = new Repository();
+
         public Main()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void EnvioInformeClick(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new EnvioInforme();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void OpcionesClick(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new Opciones();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void CerrarSesion(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            MainWindow.viewModel.Logout(new object());
+            MainWindow.self.Content = new LoginWindow(MainWindow.viewModel);
         }
     }
 }

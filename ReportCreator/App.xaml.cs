@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ReportCreator.Entities.Authentication;
+using ReportCreator.View.Authentication;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,12 @@ namespace ReportCreator
     /// </summary>
     public partial class App : Application
     {
+        public static CustomPrincipal customPrincipal = customPrincipal = new CustomPrincipal();
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            AppDomain.CurrentDomain.SetThreadPrincipal(customPrincipal);
+            base.OnStartup(e);
+        }
     }
 }

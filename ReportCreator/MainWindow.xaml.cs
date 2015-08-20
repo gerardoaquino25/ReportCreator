@@ -1,4 +1,6 @@
-﻿using ReportCreator.View;
+﻿using ReportCreator.Entities.Authentication;
+using ReportCreator.View;
+using ReportCreator.View.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +24,15 @@ namespace ReportCreator
     public partial class MainWindow : Window
     {
         public static Window self;
+        //public AuthenticationViewModel viewModel;
+        public static AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
 
         public MainWindow()
         {
             InitializeComponent();
             self = this;
-            this.Content = new Main();
+
+            this.Content = new LoginWindow(viewModel);
         }
     }
 }

@@ -88,7 +88,16 @@
     <Compile Include="DB\DestinatarioInforme.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Authentication\AnonymousIdentity.cs" />
     <Compile Include="Entities\AporteCF.cs" />
+    <Compile Include="Entities\Authentication\AuthentationService.cs" />
+    <Compile Include="Entities\Authentication\AuthenticationViewModel.cs" />
+    <Compile Include="Entities\Authentication\CustomIdentity.cs" />
+    <Compile Include="Entities\Authentication\CustomPrincipal.cs" />
+    <Compile Include="Entities\Authentication\DelegateCommand.cs" />
+    <Compile Include="View\Authentication\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entities\EntradaCampaniaFinanciera.cs" />
     <Compile Include="Entities\PadronCF.cs" />
     <Compile Include="Entities\EntradaCotizacion.cs" />
@@ -131,6 +140,11 @@
     <Compile Include="DB\ReporteEnvio.cs">
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Usuario.cs" />
+    <Page Include="View\Authentication\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AgregarCF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -360,6 +374,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

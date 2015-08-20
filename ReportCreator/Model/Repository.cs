@@ -37,10 +37,11 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO informe (estado_id, fecha_creacion, asunto) VALUES (@estado_id, @fecha_creacion, @asunto)", con);
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO informe (estado_id, fecha_creacion, asunto, usuario_id) VALUES (@estado_id, @fecha_creacion, @asunto, @usuario_id)", con);
             cmd.Parameters.AddWithValue("@estado_id", 1);
             cmd.Parameters.AddWithValue("@fecha_creacion", DateTime.UtcNow);
             cmd.Parameters.AddWithValue("@asunto", titulo);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             try
             {
@@ -326,7 +327,8 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM informe", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM informe WHERE usuario_id = @usuario_id", con);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
             {
@@ -353,7 +355,11 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM interno WHERE activo = 1", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM interno 
+                WHERE activo = 1 AND usuario_id = @usuario_id", con);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
             {
@@ -551,11 +557,12 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO mail_sender (email, password, puerto, smtp) VALUES (@email, @password, @puerto, @smtp)", con);
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO mail_sender (email, password, puerto, smtp, usuario_id) VALUES (@email, @password, @puerto, @smtp, @usuario_id)", con);
             cmd.Parameters.AddWithValue("@email", email);
             cmd.Parameters.AddWithValue("@password", Encrypt(password));
             cmd.Parameters.AddWithValue("@puerto", puerto);
             cmd.Parameters.AddWithValue("@smtp", smtp);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             try
             {
@@ -582,7 +589,11 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM mail_sender", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM mail_sender
+                WHERE usuario_id = @usuario_id", con);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
             {
@@ -923,7 +934,11 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM mail_receiver WHERE activo = 1", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM mail_receiver 
+                WHERE activo = 1 AND usuario_id = @usuario_id", con);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
             {
@@ -1010,30 +1025,6 @@ namespace ReportCreator.Model
             return respuesta;
         }
 
-        public IList<Externo> ObtenerAportantesCF()
-        {
-            IList<Externo> externos = new List<Externo>();
-
-            if (!con.State.Equals(ConnectionState.Open))
-                con.Open();
-
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM campania_financiera_aportante", con);
-
-            using (SqlCeDataReader rdr = cmd.ExecuteReader())
-            {
-                while (rdr.Read())
-                {
-                    Externo externo = new Externo();
-                    externo.id = rdr.GetInt32(0);
-                    externo.nombre = rdr.GetString(1);
-                    externo.observacion = !rdr.IsDBNull(3) ? rdr.GetString(3) : "";
-                    externos.Add(externo);
-                }
-            }
-
-            return externos;
-        }
-
         public IList<CampaniaFinanciera> ObtenerCFs(string orderBy)
         {
             IList<CampaniaFinanciera> campaniasFinancieras = new List<CampaniaFinanciera>();
@@ -1052,7 +1043,12 @@ namespace ReportCreator.Model
                     break;
             }
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM campania_financiera ORDER BY " + orderbyAux + " DESC", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM campania_financiera
+                WHERE usuario_id = @usuario_id 
+                ORDER BY " + orderbyAux + " DESC", con);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
             {
@@ -1105,8 +1101,11 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO campania_financiera (nombre) VALUES (@nombre)", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                INSERT INTO campania_financiera (nombre, usuario_id) 
+                VALUES (@nombre, @usuario_id)", con);
             cmd.Parameters.AddWithValue("@nombre", nombre);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             try
             {
@@ -1133,7 +1132,11 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM externo", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM externo
+                WHERE usuario_id = @usuario_id", con);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
             {
@@ -1161,12 +1164,15 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO externo (nombre, observacion) VALUES (@nombre, @observacion)", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                INSERT INTO externo (nombre, observacion, usuario_id) 
+                VALUES (@nombre, @observacion, @usuario_id)", con);
             cmd.Parameters.AddWithValue("@nombre", nombre);
             object param1 = observacion;
             if (param1 == null)
                 param1 = DBNull.Value;
             cmd.Parameters.AddWithValue("@observacion", param1);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
             try
             {
@@ -1353,6 +1359,34 @@ namespace ReportCreator.Model
             con.Close();
 
             return entradaCampaniaFinanciera;
+        }
+
+        public Notificacion AgregarUsuario(string username, string email, string password)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO usuario (username, email, password) VALUES (@username, @email, @password)", con);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@password", Encrypt(password));
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
         }
     }
 }
