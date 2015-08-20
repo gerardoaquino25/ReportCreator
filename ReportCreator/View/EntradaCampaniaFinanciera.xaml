@@ -47,9 +47,9 @@
                 </Style>
             </DataGrid.Resources>
         </DataGrid>
-        <Button Name="AgregarPadronBtn" Content="+" HorizontalAlignment="Left" Margin="63,84,0,0" VerticalAlignment="Top" Width="22" Height="26" Click="AgregarPadron"/>
-        <Button Name="AgregarAporteBtn" Content="+" HorizontalAlignment="Left" Margin="63,275,0,0" VerticalAlignment="Top" Width="22" RenderTransformOrigin="0.298,10.129" Height="26" Click="AgregarAporte"/>
-        <Button Name="AgregarCFBtn" Content="+" HorizontalAlignment="Left" Margin="334,42,0,0" VerticalAlignment="Top" Width="22" Height="26" Click="AgregarCF" RenderTransformOrigin="14.18,-0.621"/>
+        <Button Name="AgregarPadronBtn" Content="+" HorizontalAlignment="Left" Margin="63,84,0,0" VerticalAlignment="Top" Width="22" Height="26" Click="AgregarPadronClick"/>
+        <Button Name="AgregarAporteBtn" Content="+" HorizontalAlignment="Left" Margin="63,275,0,0" VerticalAlignment="Top" Width="22" RenderTransformOrigin="0.298,10.129" Height="26" Click="AgregarAporteClick"/>
+        <Button Name="AgregarCFBtn" Content="+" HorizontalAlignment="Left" Margin="334,42,0,0" VerticalAlignment="Top" Width="22" Height="26" Click="AgregarCFClick" RenderTransformOrigin="14.18,-0.621"/>
         <Label Content="Titulo:" HorizontalAlignment="Left" Margin="129,10,0,0" VerticalAlignment="Top"/>
         <TextBox Name="Titulo" HorizontalAlignment="Left" Height="26" Margin="177,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179"/>
     </Grid>

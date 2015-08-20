@@ -66,7 +66,7 @@ namespace ReportCreator.View
             else
             {
                 AgregarAporteBtn.Visibility = System.Windows.Visibility.Hidden;
-                AgregarCFBtn.Visibility = System.Windows.Visibility.Hidden;
+                AgregarPadronBtn.Visibility = System.Windows.Visibility.Hidden;
             }
 
             Titulo.Text = entradaCampaniaFinanciera.titulo;
@@ -76,8 +76,19 @@ namespace ReportCreator.View
                     CampaniaAsociada.SelectedIndex = 0;
             }
             else
+            {
                 if (asignarCampania)
-                    CampaniaAsociada.SelectedItem = entradaCampaniaFinanciera.campaniaFinanciera;
+                {
+                    if (entradaCampaniaFinanciera.campaniaFinanciera != null)
+                        CampaniaAsociada.SelectedItem = entradaCampaniaFinanciera.campaniaFinanciera;
+                    else
+                    {
+                        CampaniaAsociada.SelectedIndex = 0;
+                        entradaCampaniaFinanciera.campaniaFinanciera = (CampaniaFinanciera)CampaniaAsociada.SelectedItem;
+                    }
+                }
+
+            }
 
             if (asignarCampania)
             {
@@ -88,17 +99,17 @@ namespace ReportCreator.View
             cargaInicial = false;
         }
 
-        private void AgregarPadron(object sender, RoutedEventArgs e)
+        private void AgregarPadronClick(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new AgregarPadronAporte(idEntrada, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id, true, true, nuevo);
         }
 
-        private void AgregarAporte(object sender, RoutedEventArgs e)
+        private void AgregarAporteClick(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new AgregarPadronAporte(idEntrada, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id, true, false, nuevo);
         }
 
-        private void AgregarCF(object sender, RoutedEventArgs e)
+        private void AgregarCFClick(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new AgregarCF(idEntrada, nuevo);
         }

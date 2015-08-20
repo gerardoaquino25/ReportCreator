@@ -31,6 +31,7 @@ namespace ReportCreator.View
         private bool padron;
         //private long idPadronAporte;
         private object entrada;
+        private bool ceroInterno = true;
 
         //public AgregarPadronAporte()
         //{
@@ -94,12 +95,15 @@ namespace ReportCreator.View
             IList<string> listaTipoAporte = new List<string>();
             int seleccionTipoAporte = 0;
             int seleccionTipoAportante = 0;
+            int resta = 1;
 
             Interno.ItemsSource = repo.ObtenerInternos();
             if (Interno.Items.Count > 0)
+            {
+                ceroInterno = false;
+                resta = 0;
                 listaTipoAportante.Add("Interno");
-            else
-                seleccionTipoAportante = 1;
+            }
 
             Externo.ItemsSource = repo.ObtenerExternos();
             listaTipoAportante.Add("Externo");
@@ -121,8 +125,9 @@ namespace ReportCreator.View
             if (nuevo)
             {
                 TipoAporte.SelectedIndex = seleccionTipoAporte;
-                TipoAportante.SelectedItem = seleccionTipoAportante;
-                if (seleccionTipoAportante == 1 && Externo.Items.Count <= 0)
+                TipoAportante.SelectedIndex = seleccionTipoAportante;
+                if (seleccionTipoAportante == (1 - resta) && Externo.Items.Count <= 0)
+                    //TODO: Ejecutar CHECKED
                     ExternoExistente.IsChecked = false;
             }
             else
@@ -497,16 +502,16 @@ namespace ReportCreator.View
         {
             NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
             ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+            InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
 
-            InternoLabel.Visibility = System.Windows.Visibility.Visible;
             ExternoLabel.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void ExternoExistenteUncheck(object sender, RoutedEventArgs e)
         {
             ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
 
+            InternoLabel.Visibility = System.Windows.Visibility.Visible;
             NombreExternoLabel.Visibility = System.Windows.Visibility.Visible;
             ObservacionExternoLabel.Visibility = System.Windows.Visibility.Visible;
         }

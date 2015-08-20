@@ -1,5 +1,7 @@
 INICIO
 
+gerardo.aquino25
+
 -BORRADO DE DATOS
 DELETE FROM cotizacion_interno
 DELETE FROM entrada_cotizacion

@@ -423,9 +423,10 @@ namespace ReportCreator.Model
 
             foreach (Interno interno in aInsertar)
             {
-                SqlCeCommand cmd = new SqlCeCommand("INSERT INTO interno (nombre, circulo) VALUES (@nombre, @circulo)", con);
+                SqlCeCommand cmd = new SqlCeCommand("INSERT INTO interno (nombre, circulo, usuario_id) VALUES (@nombre, @circulo, @usuario_id)", con);
                 cmd.Parameters.AddWithValue("@nombre", interno.nombre);
                 cmd.Parameters.AddWithValue("@circulo", interno.circulo);
+                cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
 
                 try
                 {

@@ -27,6 +27,7 @@ namespace ReportCreator.View
 
         public AgregarCF(long idEntrada, bool nuevo)
         {
+            InitializeComponent();
             this.nuevo = nuevo;
             this.idEntrada = idEntrada;
         }
@@ -42,13 +43,13 @@ namespace ReportCreator.View
             if (ValidarDatos())
             {
                 repo.AgregarCF(NombreCampania.Text);
-                MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo, false);
+                MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo, this.nuevo);
             }
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo, false);
+            MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo, this.nuevo);
         }
     }
 }

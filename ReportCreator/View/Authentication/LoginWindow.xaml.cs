@@ -1,6 +1,7 @@
 ﻿using ReportCreator.Entities.Authentication;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ReportCreator.View.Authentication
 {
@@ -31,14 +32,24 @@ namespace ReportCreator.View.Authentication
         }
         #endregion
 
-        private void CrearNuevoUsuarioClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void CrearNuevoUsuarioClick(object sender, MouseButtonEventArgs e)
         {
             MainWindow.self.Content = new CrearNuevoUsuario();
         }
 
-        private void RecuperarContraseniaClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void RecuperarContraseniaClick(object sender, MouseButtonEventArgs e)
         {
             MainWindow.self.Content = new RecuperarContrasenia(Username.Text);
+        }
+
+        private void LabelMouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+        }
+
+        private void LabelMouseLeave(object sender, MouseEventArgs e)
+        {
+            this.Cursor = Cursors.Arrow;
         }
     }
 }
