@@ -13,7 +13,7 @@ namespace ReportCreator.Model
         long AgregarEntrada(long idInforme, string titulo, int tipo);
         long AgregarMailSender(string email, string password, int puerto, string smtp);
         long AgregarCF(string cf);
-        Externo AgregarExterno(string nombre, string observacion);
+        Externo AgregarExterno(string nombre, string observacion, Interno interno);
         Notificacion AgregarPadronCF(PadronCF padron);
         Notificacion AgregarAporteCF(AporteCF aporte);
         
@@ -25,7 +25,7 @@ namespace ReportCreator.Model
         IList<MailSender> ObtenerMailSenders();
         IList<MailReceiver> ObtenerMailReceivers();
         MailSender ObtenerMailSender(int id);
-        IList<Externo> ObtenerAportantesCF();
+        //IList<Externo> ObtenerAportantesCF();
         IList<CampaniaFinanciera> ObtenerCFs(string orderBy);
         IList<Externo> ObtenerExternos();
         IList<AporteCF> ObtenerAportesCF(long idEntrada);
@@ -38,6 +38,9 @@ namespace ReportCreator.Model
         Notificacion GuardarEntradaCotizacion(EntradaCotizacion cotizacion);
         Notificacion GuardarMailSender(MailSender mailSender);
         Notificacion GuardarMailReceivers(IList<MailReceiver> receivers);
+        Notificacion GuardarAporteCF(AporteCF aporte);
+        Notificacion GuardarPadronCF(PadronCF padron);
+        Notificacion GuardarEntradaCampaniaFinanciera(EntradaCampaniaFinanciera entradaCampaniaFinanciera);
 
         Notificacion BorrarMailSender(int id);
         Notificacion BorrarEntrada(long id, int tipo);

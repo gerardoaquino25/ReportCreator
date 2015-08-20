@@ -29,7 +29,7 @@ namespace ReportCreator.Entities
         public string observacion { get; set; }
         public long entradaCampaniaFinancieraId { get; set; }
         public object aportante { get; set; }
-        public bool rechazo;
+        public bool rechazo { get; set; }
         public int tipoAportante
         {
             get

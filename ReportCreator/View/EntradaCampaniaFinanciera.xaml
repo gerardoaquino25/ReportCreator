@@ -31,7 +31,14 @@
                 <DataGridTextColumn Binding="{Binding Path=aportante.nombre}" Header="Nombre" MinWidth="50" />
                 <DataGridTextColumn Binding="{Binding Path=pago}" Header="Compromiso" MinWidth="100" />
                 <DataGridTextColumn Binding="{Binding Path=fechaAporte}" Header="Fecha" MinWidth="50" />
-                <DataGridTextColumn Binding="{Binding Path=rechazo}" Header="Rechazo" MinWidth="100" />
+                <DataGridCheckBoxColumn Binding="{Binding Path=rechazo}" Header="Rechazo" MinWidth="50"/>
+                <!--<DataGridTemplateColumn  Header="Rechazo">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding Path=rechazo}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
             </DataGrid.Columns>
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">

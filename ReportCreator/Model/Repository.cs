@@ -728,7 +728,8 @@ namespace ReportCreator.Model
                     externo = new Externo();
                     externo.id = rdr.GetInt64(0);
                     externo.nombre = rdr.GetString(1);
-                    externo.observacion = rdr.GetString(2);
+                    externo.internoAsociado = ObtenerInterno(rdr.GetInt64(2), false);
+                    externo.observacion = rdr.GetString(3);
                 }
             }
 
@@ -1010,29 +1011,29 @@ namespace ReportCreator.Model
             return respuesta;
         }
 
-        public IList<Externo> ObtenerAportantesCF()
-        {
-            IList<Externo> externos = new List<Externo>();
+        //public IList<Externo> ObtenerAportantesCF()
+        //{
+        //    IList<Externo> externos = new List<Externo>();
 
-            if (!con.State.Equals(ConnectionState.Open))
-                con.Open();
+        //    if (!con.State.Equals(ConnectionState.Open))
+        //        con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM campania_financiera_aportante", con);
+        //    SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM campania_financiera_aportante", con);
 
-            using (SqlCeDataReader rdr = cmd.ExecuteReader())
-            {
-                while (rdr.Read())
-                {
-                    Externo externo = new Externo();
-                    externo.id = rdr.GetInt32(0);
-                    externo.nombre = rdr.GetString(1);
-                    externo.observacion = !rdr.IsDBNull(3) ? rdr.GetString(3) : "";
-                    externos.Add(externo);
-                }
-            }
+        //    using (SqlCeDataReader rdr = cmd.ExecuteReader())
+        //    {
+        //        while (rdr.Read())
+        //        {
+        //            Externo externo = new Externo();
+        //            externo.id = rdr.GetInt32(0);
+        //            externo.nombre = rdr.GetString(1);
+        //            externo.observacion = !rdr.IsDBNull(3) ? rdr.GetString(3) : "";
+        //            externos.Add(externo);
+        //        }
+        //    }
 
-            return externos;
-        }
+        //    return externos;
+        //}
 
         public IList<CampaniaFinanciera> ObtenerCFs(string orderBy)
         {
@@ -1142,7 +1143,8 @@ namespace ReportCreator.Model
                     Externo externo = new Externo();
                     externo.id = rdr.GetInt64(0);
                     externo.nombre = rdr.GetString(1);
-                    externo.observacion = rdr.GetString(2);
+                    externo.internoAsociado = ObtenerInterno(rdr.GetInt64(2), false);
+                    externo.observacion = rdr.GetString(3);
                     externos.Add(externo);
                 }
             }
@@ -1152,7 +1154,7 @@ namespace ReportCreator.Model
             return externos;
         }
 
-        public Externo AgregarExterno(string nombre, string observacion)
+        public Externo AgregarExterno(string nombre, string observacion, Interno interno)
         {
             Externo externo = new Externo();
             externo.nombre = nombre;
@@ -1161,8 +1163,11 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO externo (nombre, observacion) VALUES (@nombre, @observacion)", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                INSERT INTO externo (nombre, observacion, interno_asociado_id) 
+                VALUES (@nombre, @observacion, @interno_asociado_id)", con);
             cmd.Parameters.AddWithValue("@nombre", nombre);
+            cmd.Parameters.AddWithValue("@interno_asociado_id", interno.id);
             object param1 = observacion;
             if (param1 == null)
                 param1 = DBNull.Value;
@@ -1225,15 +1230,17 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"INSERT INTO campania_financiera_aporte (aportanteId, pago, tipo_aportante, campania_financiera_id, observacion, entrada_campania_financiera_id) 
-                VALUES (@compromiso, @aportante_id, @tipo_aportante, @campania_financiera_id, @observacion, @entrada_campania_financiera_id)", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                INSERT INTO campania_financiera_aporte (aportante_id, pago, tipo_aportante, fecha_aporte, campania_financiera_id, observacion, rechazo, entrada_campania_financiera_id) 
+                VALUES (@aportante_id, @pago, @tipo_aportante, @fecha_aporte, @campania_financiera_id, @observacion, @rechazo, @entrada_campania_financiera_id)", con);
             cmd.Parameters.AddWithValue("@aportante_id", aporte.aportanteId);
             cmd.Parameters.AddWithValue("@pago", aporte.pago);
             cmd.Parameters.AddWithValue("@tipo_aportante", aporte.tipoAportante);
+            cmd.Parameters.AddWithValue("@fecha_aporte", aporte.fechaAporte);
             cmd.Parameters.AddWithValue("@campania_financiera_id", aporte.campaniaFinancieraId);
             cmd.Parameters.AddWithValue("@observacion", aporte.observacion);
-            cmd.Parameters.AddWithValue("@entrada_campania_financiera_id", aporte.entradaCampaniaFinancieraId);
             cmd.Parameters.AddWithValue("@rechazo", aporte.rechazo);
+            cmd.Parameters.AddWithValue("@entrada_campania_financiera_id", aporte.entradaCampaniaFinancieraId);
 
             try
             {
@@ -1251,14 +1258,18 @@ namespace ReportCreator.Model
             return resultado;
         }
 
-        public IList<AporteCF> ObtenerAportesCF(long idEntrada)
+        public IList<AporteCF> ObtenerAportesCF(long campaniaFinancieraId)
         {
             IList<AporteCF> aportes = new List<AporteCF>();
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM campania_financiera_aporte", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM campania_financiera_aporte
+                WHERE campania_financiera_id=@campania_financiera_id", con);
+            cmd.Parameters.AddWithValue("@campania_financiera_id", campaniaFinancieraId);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
             {
@@ -1296,14 +1307,18 @@ namespace ReportCreator.Model
             return null;
         }
 
-        public IList<PadronCF> ObtenerPadronesCF(long idEntrada)
+        public IList<PadronCF> ObtenerPadronesCF(long campaniaFinancieraId)
         {
             IList<PadronCF> padrones = new List<PadronCF>();
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand(@"SELECT * FROM campania_financiera_padron", con);
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM campania_financiera_padron 
+                WHERE campania_financiera_id=@campania_financiera_id", con);
+            cmd.Parameters.AddWithValue("@campania_financiera_id", campaniaFinancieraId);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
             {
@@ -1353,6 +1368,114 @@ namespace ReportCreator.Model
             con.Close();
 
             return entradaCampaniaFinanciera;
+        }
+
+        public Notificacion GuardarAporteCF(AporteCF aporte)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                UPDATE campania_financiera_aporte 
+                SET aportante_id = @aportante_id, pago = @pago, tipo_aportante = @tipo_aportante, fecha_aporte = @fecha_aporte, campania_financiera_id = @campania_financiera_id, observacion = @observacion, rechazo = @rechazo, entrada_campania_financiera_id = @entrada_campania_financiera_id 
+                 WHERE id = @id", con);
+            cmd.Parameters.AddWithValue("@id", aporte.id);
+            cmd.Parameters.AddWithValue("@aportante_id", aporte.aportanteId);
+            cmd.Parameters.AddWithValue("@pago", aporte.pago);
+            cmd.Parameters.AddWithValue("@tipo_aportante", aporte.tipoAportante);
+            cmd.Parameters.AddWithValue("@fecha_aporte", aporte.fechaAporte);
+            cmd.Parameters.AddWithValue("@campania_financiera_id", aporte.campaniaFinancieraId);
+            cmd.Parameters.AddWithValue("@observacion", aporte.observacion);
+            cmd.Parameters.AddWithValue("@rechazo", aporte.rechazo);
+            cmd.Parameters.AddWithValue("@entrada_campania_financiera_id", aporte.entradaCampaniaFinancieraId);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public Notificacion GuardarPadronCF(PadronCF padron)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"UPDATE campania_financiera_padron 
+                SET aportante_id = @aportante_id, compromiso = @compromiso, tipo_aportante = @tipo_aportante, campania_financiera_id = @campania_financiera_id, observacion = @observacion, entrada_campania_financiera_id = @entrada_campania_financiera_id
+                WHERE id = @id", con);
+            cmd.Parameters.AddWithValue("@id", padron.id);
+            cmd.Parameters.AddWithValue("@aportante_id", padron.aportanteId);
+            cmd.Parameters.AddWithValue("@compromiso", padron.compromiso);
+            cmd.Parameters.AddWithValue("@tipo_aportante", padron.tipoAportante);
+            cmd.Parameters.AddWithValue("@campania_financiera_id", padron.campaniaFinancieraId);
+            cmd.Parameters.AddWithValue("@observacion", padron.observacion);
+            cmd.Parameters.AddWithValue("@entrada_campania_financiera_id", padron.entradaCampaniaFinancieraId);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public Notificacion GuardarEntradaCampaniaFinanciera(EntradaCampaniaFinanciera entradaCampaniaFinanciera)
+        {
+            Notificacion respuesta = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                UPDATE entrada_campania_financiera 
+                SET campania_financiera_id=@campania_financiera_id 
+                WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", entradaCampaniaFinanciera.id);
+            cmd.Parameters.AddWithValue("@campania_financiera_id", entradaCampaniaFinanciera.campaniaFinanciera.id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                cmd = new SqlCeCommand(@"
+                UPDATE entrada_informe 
+                SET titulo=@titulo 
+                WHERE id=@id", con);
+                cmd.Parameters.AddWithValue("@id", entradaCampaniaFinanciera.id);
+                cmd.Parameters.AddWithValue("@titulo", entradaCampaniaFinanciera.titulo);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return respuesta;
         }
     }
 }
