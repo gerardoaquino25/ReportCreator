@@ -1,5 +1,6 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Model;
+using ReportCreator.View.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,12 +58,12 @@ namespace ReportCreator.View
                     smtp = Smtp.Text
                 });
 
-            MainWindow.self.Content = new MailSenders();
+            MainWindow.self.Content = new OpcionMailSenders();
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new MailSenders();
+            MainWindow.self.Content = new OpcionMailSenders();
         }
 
         private void ProbarClick(object sender, RoutedEventArgs e)

@@ -127,8 +127,10 @@ namespace ReportCreator.View
                 TipoAporte.SelectedIndex = seleccionTipoAporte;
                 TipoAportante.SelectedIndex = seleccionTipoAportante;
                 if (seleccionTipoAportante == (1 - resta) && Externo.Items.Count <= 0)
-                    //TODO: Ejecutar CHECKED
+                {
+                    ExternoExistenteUncheck(null, null);
                     ExternoExistente.IsChecked = false;
+                }
             }
             else
             {

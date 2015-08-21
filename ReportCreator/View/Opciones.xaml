@@ -3,16 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Button Content="Internos" HorizontalAlignment="Left" Margin="100,49,0,0" VerticalAlignment="Top" Width="117" Click="InternosClick"/>
-        <Button Content="Destinatarios" HorizontalAlignment="Left" Margin="100,76,0,0" VerticalAlignment="Top" Width="117" Click="MailReceiversClick"/>
-        <Button Content="Mail" HorizontalAlignment="Left" Margin="100,103,0,0" VerticalAlignment="Top" Width="117" Click="MailSendersClick"/>
-        <Button Content="Asunto por defecto" HorizontalAlignment="Left" Margin="100,130,0,0" VerticalAlignment="Top" Width="117"/>
-        <Button Content="Google Drive" HorizontalAlignment="Left" Margin="100,157,0,0" VerticalAlignment="Top" Width="117"/>
-        <Button Content="Outlook" HorizontalAlignment="Left" Margin="100,184,0,0" VerticalAlignment="Top" Width="117"/>
-        <Button Content="Dropbox" HorizontalAlignment="Left" Margin="100,211,0,0" VerticalAlignment="Top" Width="117"/>
-        <Button Content="Volver" HorizontalAlignment="Left" Margin="100,268,0,0" VerticalAlignment="Top" Width="117" Click="VolverClick"/>
-    </Grid>
+             mc:Ignorable="d">
+    <Border>
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="General" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Click="GeneralClick"/>
+            <Button Content="Internos" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Click="InternosClick"/>
+            <Button Content="Destinatarios" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Click="MailReceiversClick"/>
+            <Button Content="Mail" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Click="MailSendersClick"/>
+            <Button Content="Google Drive" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117"/>
+            <Button Content="Outlook" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117"/>
+            <Button Content="Dropbox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117"/>
+            <Button Content="Volver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Margin="0,0,0,0"  Click="VolverClick"/>
+        </StackPanel>
+    </Border>
 </UserControl>

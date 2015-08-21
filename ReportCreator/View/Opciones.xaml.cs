@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReportCreator.View.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,17 +33,22 @@ namespace ReportCreator.View
 
         private void InternosClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Internos();
+            MainWindow.self.Content = new OpcionInternos();
         }
 
         private void MailSendersClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new MailSenders();
+            MainWindow.self.Content = new OpcionMailSenders();
         }
 
         private void MailReceiversClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new MailReceivers();
+            MainWindow.self.Content = new OpcionMailReceivers();
+        }
+
+        private void GeneralClick(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new OpcionGeneralUC();
         }
     }
 }

@@ -1667,5 +1667,22 @@ namespace ReportCreator.Model
                 return new Notificacion() { Detalle = Notificacion.USUARIO_NO_ENCONTRADO };
             }
         }
+
+        public Notificacion GuardarOpcionesGenerales(IList<OpcionGeneral> listaOpcionesGenerales)
+        {
+            Notificacion resultado = new Notificacion();
+
+            foreach(OpcionGeneral opcion in listaOpcionesGenerales){
+                switch(opcion.nombre){
+                    case OpcionGeneral.ASUNTO_DEFAULT:
+                        break;
+                    case OpcionGeneral.CAMBIO_CONTRASENIA:
+                        break;
+
+                }
+            }
+
+            return resultado;
+        }
     }
 }

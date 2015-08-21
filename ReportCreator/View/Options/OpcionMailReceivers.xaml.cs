@@ -1,5 +1,4 @@
-﻿using ReportCreator.Entities;
-using ReportCreator.Model;
+﻿using ReportCreator.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,30 +14,30 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ReportCreator.View
+namespace ReportCreator.View.Options
 {
     /// <summary>
-    /// Lógica de interacción para Internos.xaml
+    /// Lógica de interacción para MailReceivers.xaml
     /// </summary>
-    public partial class Internos : UserControl
+    public partial class OpcionMailReceivers : UserControl
     {
-        IList<Interno> internos;
+        IList<MailReceiver> mailReceivers;
         IRepository repo = new Repository();
 
-        public Internos()
+        public OpcionMailReceivers()
         {
             InitializeComponent();
-            internos = repo.ObtenerInternos();
-            InternosDG.ItemsSource = internos;
+            mailReceivers = repo.ObtenerMailReceivers();
+            MailReceiversDG.ItemsSource = mailReceivers;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void GuardarClick(object sender, RoutedEventArgs e)
         {
-            repo.GuardarInternos((List<Interno>)InternosDG.ItemsSource);
+            repo.GuardarMailReceivers((List<MailReceiver>)MailReceiversDG.ItemsSource);
             MainWindow.self.Content = new Opciones();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void VolverClick(object sender, RoutedEventArgs e)
         {
             MainWindow.self.Content = new Opciones();
         }

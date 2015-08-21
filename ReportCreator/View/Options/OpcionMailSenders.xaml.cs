@@ -15,16 +15,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ReportCreator.View
+namespace ReportCreator.View.Options
 {
     /// <summary>
     /// Lógica de interacción para Mail.xaml
     /// </summary>
-    public partial class MailSenders : UserControl
+    public partial class OpcionMailSenders : UserControl
     {
         IRepository repo = new Repository();
 
-        public MailSenders()
+        public OpcionMailSenders()
         {
             InitializeComponent();
             MailSendersDG.ItemsSource = repo.ObtenerMailSenders();

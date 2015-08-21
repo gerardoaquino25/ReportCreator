@@ -6,15 +6,19 @@
              mc:Ignorable="d" 
              Height="Auto" Width="Auto">
     <Grid>
-        <StackPanel>
-            <Label>Nombre de usuario</Label>
-            <TextBox Name="Username"></TextBox>
-            <Label>E-mail</Label>
-            <TextBox Name="Email"></TextBox>
-            <Label>Contraseña</Label>
-            <PasswordBox Name="Password"></PasswordBox>
-            <Label>Repetir Contraseña</Label>
-            <PasswordBox Name="RepeatPassword"></PasswordBox>
+        <Border Style="{StaticResource CentroStyle}">
+            <StackPanel>
+                <Label>Nombre de usuario</Label>
+                <TextBox Style="{StaticResource DefaultTB}" Name="Username"></TextBox>
+                <Label>E-mail</Label>
+                <TextBox Style="{StaticResource DefaultTB}" Name="Email"></TextBox>
+                <Label>Contraseña</Label>
+                <PasswordBox Style="{StaticResource PasswordPB}" Name="Password"></PasswordBox>
+                <Label>Repetir Contraseña</Label>
+                <PasswordBox Style="{StaticResource PasswordPB}" Name="RepeatPassword"></PasswordBox>
+            </StackPanel>
+        </Border>
+        <StackPanel Style="{StaticResource RightBottomStyle}">
             <DockPanel HorizontalAlignment="Center">
                 <DockPanel.Resources>
                     <Style TargetType="{x:Type Button}">

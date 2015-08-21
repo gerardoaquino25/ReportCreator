@@ -41,6 +41,7 @@ namespace ReportCreator.Model
         Notificacion GuardarAporteCF(AporteCF aporte);
         Notificacion GuardarPadronCF(PadronCF padron);
         Notificacion GuardarEntradaCampaniaFinanciera(EntradaCampaniaFinanciera entradaCampaniaFinanciera);
+        Notificacion GuardarOpcionesGenerales(IList<OpcionGeneral> listaOpcionesGenerales);
 
         Notificacion BorrarMailSender(int id);
         Notificacion BorrarEntrada(long id, int tipo);
