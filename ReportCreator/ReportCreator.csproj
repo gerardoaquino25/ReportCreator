@@ -103,6 +103,13 @@
     <Compile Include="Entities\Authentication\CustomPrincipal.cs" />
     <Compile Include="Entities\Authentication\DelegateCommand.cs" />
     <Compile Include="Entities\OpcionGeneral.cs" />
+    <Compile Include="Entities\Actividad.cs" />
+    <Compile Include="View\AgregarActividad.xaml.cs">
+      <DependentUpon>AgregarActividad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AgregarPrensa.xaml.cs">
+      <DependentUpon>AgregarPrensa.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Authentication\CrearNuevoUsuario.xaml.cs">
       <DependentUpon>CrearNuevoUsuario.xaml</DependentUpon>
     </Compile>
@@ -147,6 +154,17 @@
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Usuario.cs" />
+    <Compile Include="View\Prensa.xaml.cs">
+      <DependentUpon>Prensa.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\AgregarActividad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AgregarPrensa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Authentication\CrearNuevoUsuario.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -280,6 +298,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PendienteEnvio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Prensa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

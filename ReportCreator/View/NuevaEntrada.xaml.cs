@@ -46,10 +46,11 @@ namespace ReportCreator.View
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            long idEntrada = 0;
             switch (seleccionado)
             {
-                case 0:
-                    break;
+                //case 0:
+                //    break;
                 case 1:
                     MainWindow.self.Content = new EntradaGenerica(idInforme, asunto.Text, nuevo);
                     break;
@@ -57,7 +58,7 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 3:
-                    long idEntrada = repo.AgregarEntrada(idInforme, asunto.Text, 3);
+                    idEntrada = repo.AgregarEntrada(idInforme, asunto.Text, 3);
                     MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo, true);
                     break;
                 case 4:
@@ -73,7 +74,8 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 8:
-                    //MainWindow.self.Content = new NuevoBorrador();
+                    idEntrada = repo.AgregarEntrada(idInforme, asunto.Text, 8);
+                    MainWindow.self.Content = new Prensa(idInforme, asunto.Text, nuevo);
                     break;
                 case 9:
                     MainWindow.self.Content = new EntradaCotizacion(idInforme, asunto.Text, nuevo);

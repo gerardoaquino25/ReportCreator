@@ -103,7 +103,7 @@ namespace ReportCreator.Model
                         //MainWindow.self.Content = new NuevoBorrador();
                         break;
                     case 8:
-                        //MainWindow.self.Content = new NuevoBorrador();
+                        AgregarEntradaPrensa(resultado);
                         break;
                     case 9:
                         AgregarEntradaCotizacion(resultado);
@@ -1686,6 +1686,60 @@ namespace ReportCreator.Model
                         break;
 
                 }
+            }
+
+            return resultado;
+        }
+
+        private void AgregarEntradaPrensa(long idEntrada)
+        {
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO entrada_prensa (id, mes, anio) VALUES (@id, 0, 0)", con);
+            cmd.Parameters.AddWithValue("@id", idEntrada);
+            int ejecuto = 0;
+
+            try
+            {
+                ejecuto = cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public long AgregarActividad(Actividad actividad)
+        {
+            long resultado = 0;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO actividad (nombre, detalle, fecha) VALUES (@nombre, @detalle, @fecha)", con);
+            cmd.Parameters.AddWithValue("@nombre", actividad.nombre);
+            cmd.Parameters.AddWithValue("@detalle", actividad.detalle);
+            cmd.Parameters.AddWithValue("@fecha", actividad.fecha);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT @@IDENTITY";
+                resultado = Convert.ToInt64(cmd.ExecuteScalar());
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                con.Close();
             }
 
             return resultado;

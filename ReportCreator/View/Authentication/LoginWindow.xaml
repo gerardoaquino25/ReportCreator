@@ -23,8 +23,8 @@
                 <TextBlock Text="Username:"/>
                 <TextBox MinWidth="300" Name="Username" Text="{Binding Username}"/>
                 <TextBlock Text="Password:"/>
-                <PasswordBox MinWidth="300" x:Name="passwordBox"/>
-                <Button Content="Iniciar Sesión" Command="{Binding LoginCommand, Mode=OneTime}" CommandParameter="{Binding ElementName=passwordBox}" HorizontalAlignment="Right"/>
+                <PasswordBox MinWidth="300" Name="PasswordBox"/>
+                <Button Content="Iniciar Sesión" Command="{Binding LoginCommand, Mode=OneTime}" CommandParameter="{Binding ElementName=PasswordBox}" HorizontalAlignment="Right"/>
                 <TextBlock Text="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" TextWrapping="Wrap" />
             </StackPanel>
         </Border>

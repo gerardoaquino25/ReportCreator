@@ -17,6 +17,13 @@
     <Style x:Key="InsideTB" TargetType="{x:Type TextBox}">
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
+    <Style x:Key="DefaultB" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="100"/>
+    </Style>
+    <Style x:Key="DefaultButtonDP" TargetType="{x:Type DockPanel}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
     <!--<Style TargetType="{x:Type Window}">
         <Setter Property="Height" Value="600"/>
         <Setter Property="Width" Value="800"/>

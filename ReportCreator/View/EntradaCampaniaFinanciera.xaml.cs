@@ -173,14 +173,16 @@ namespace ReportCreator.View
         {
             DataGridRow row = sender as DataGridRow;
             PadronCF entrada = (PadronCF)row.Item;
-            MainWindow.self.Content = new AgregarPadronAporte(entrada, false, nuevo);
+            if (entrada.entradaCampaniaFinancieraId == entradaCampaniaFinanciera.id)
+                MainWindow.self.Content = new AgregarPadronAporte(entrada, false, nuevo);
         }
 
         private void RowAportesDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow row = sender as DataGridRow;
             AporteCF entrada = (AporteCF)row.Item;
-            MainWindow.self.Content = new AgregarPadronAporte(entrada, false, nuevo);
+            if (entrada.entradaCampaniaFinancieraId == entradaCampaniaFinanciera.id)
+                MainWindow.self.Content = new AgregarPadronAporte(entrada, false, nuevo);
         }
     }
 }

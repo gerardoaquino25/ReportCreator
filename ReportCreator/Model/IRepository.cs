@@ -17,6 +17,7 @@ namespace ReportCreator.Model
         Notificacion AgregarPadronCF(PadronCF padron);
         Notificacion AgregarAporteCF(AporteCF aporte);
         Notificacion AgregarUsuario(string username, string email, string password);
+        long AgregarActividad(Actividad actividad);
 
         Informe ObtenerInforme(long id);
         IList<Informe> ObtenerInformesBorrador();

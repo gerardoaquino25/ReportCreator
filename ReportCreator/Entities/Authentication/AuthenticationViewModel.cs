@@ -64,8 +64,8 @@ namespace ReportCreator.Entities.Authentication
 
         private void Login(object parameter)
         {
-            PasswordBox passwordBox = parameter as PasswordBox;
-            string clearTextPassword = passwordBox.Password;
+            PasswordBox PasswordBox = parameter as PasswordBox;
+            string clearTextPassword = PasswordBox.Password;
             try
             {
                 //Validate credentials through the authentication service
@@ -83,7 +83,7 @@ namespace ReportCreator.Entities.Authentication
                 _loginCommand.RaiseCanExecuteChanged();
                 _logoutCommand.RaiseCanExecuteChanged();
                 Username = string.Empty; //reset
-                passwordBox.Password = string.Empty; //reset
+                PasswordBox.Password = string.Empty; //reset
                 Status = string.Empty;
                 MainWindow.self.Content = new Main();
             }
