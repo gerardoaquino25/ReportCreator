@@ -2,6 +2,7 @@
 using ReportCreator.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,9 +93,12 @@ namespace ReportCreator.View
 
             if (asignarCampania)
             {
-                Aportes.ItemsSource = repo.ObtenerAportesCF(((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
-                Padrones.ItemsSource = repo.ObtenerPadronesCF(((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
+                entradaCampaniaFinanciera.padrones = repo.ObtenerPadronesCF(entradaCampaniaFinanciera.id, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
+                entradaCampaniaFinanciera.aportes = repo.ObtenerAportesCF(entradaCampaniaFinanciera.id, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
             }
+
+            Padrones.ItemsSource = entradaCampaniaFinanciera.padrones;
+            Aportes.ItemsSource = entradaCampaniaFinanciera.aportes;
 
             cargaInicial = false;
         }
@@ -142,8 +146,12 @@ namespace ReportCreator.View
             {
                 DataGridRow row = sender as DataGridRow;
                 PadronCF entrada = (PadronCF)row.Item;
-                //repo.BorrarEntrada(entrada.id, entrada.tipo.id);
-                //entradas.Remove(entrada);
+
+                if (entrada.entradaCampaniaFinancieraId == entradaCampaniaFinanciera.id)
+                {
+                    entradaCampaniaFinanciera.padrones.Remove(entrada);
+                    //repo.BorrarEntrada(entrada.id, entrada.tipo.id);
+                }
             }
         }
 
@@ -153,8 +161,11 @@ namespace ReportCreator.View
             {
                 DataGridRow row = sender as DataGridRow;
                 AporteCF entrada = (AporteCF)row.Item;
-                //repo.BorrarEntrada(entrada.id, entrada.tipo.id);
-                //entradas.Remove(entrada);
+                if (entrada.entradaCampaniaFinancieraId == entradaCampaniaFinanciera.id)
+                {
+                    entradaCampaniaFinanciera.aportes.Remove(entrada);
+                    //repo.BorrarEntrada(entrada.id, entrada.tipo.id);
+                }
             }
         }
 

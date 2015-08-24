@@ -28,8 +28,8 @@ namespace ReportCreator.Model
         MailSender ObtenerMailSender(int id);
         IList<CampaniaFinanciera> ObtenerCFs(string orderBy);
         IList<Externo> ObtenerExternos();
-        IList<AporteCF> ObtenerAportesCF(long idEntrada);
-        IList<PadronCF> ObtenerPadronesCF(long idEntrada);
+        IList<AporteCF> ObtenerAportesCF(long entradaId, long campaniaFinancieraId);
+        IList<PadronCF> ObtenerPadronesCF(long entradaId, long campaniaFinancieraId);
         EntradaCampaniaFinanciera ObtenerEntradaCampaniaFinanciera(long idEntrada);
 
         Notificacion GuardarEntradaGenerica(EntradaGenerica entradaGenerica);

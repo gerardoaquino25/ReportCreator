@@ -30,6 +30,7 @@ namespace ReportCreator.Entities
         public long entradaCampaniaFinancieraId { get; set; }
         public object aportante { get; set; }
         public bool rechazo { get; set; }
+        public bool perteneceEntrada { get; set; }
         public int tipoAportante
         {
             get

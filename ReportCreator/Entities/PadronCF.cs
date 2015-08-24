@@ -39,5 +39,24 @@ namespace ReportCreator.Entities
                 return 0;
             }
         }
+        public bool perteneceEntrada { get; set; }
+        public override bool Equals(Object campaniaFinanciera)
+        {
+            // If parameter is null return false.
+            if (campaniaFinanciera == null)
+            {
+                return false;
+            }
+
+            // If parameter cannot be cast to Point return false.
+            PadronCF p = campaniaFinanciera as PadronCF;
+            if ((System.Object)p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return id == p.id;
+        }
     }
 }

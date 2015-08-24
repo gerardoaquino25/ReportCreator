@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ReportCreator.View"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300" Height="518" Width="452">
     <Grid>
@@ -12,17 +13,27 @@
         <Button Content="Volver" HorizontalAlignment="Left" Margin="229,475,0,0" VerticalAlignment="Top" Width="90" Click="VolverClick"/>
         <Label Content="Padron:" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="75"/>
         <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Padrones" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Height="140" Width="432">
-            <DataGrid.Columns >
-                <DataGridTextColumn Binding="{Binding Path=aportante.type}" Header="Tipo" MinWidth="50" />
-                <DataGridTextColumn Binding="{Binding Path=aportante.nombre}" Header="Nombre" MinWidth="50" />
-                <DataGridTextColumn Binding="{Binding Path=compromiso}" Header="Compromiso" MinWidth="100" />
-            </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding perteneceEntrada}" Value="False" >
+                            <Setter Property="Background" Value="LightGray" />
+                            <Setter Property="Foreground" Value="Gray" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="RowPadronesDoubleClick"/>
                     <EventSetter Event="KeyDown" Handler="RowPadronesKeyDown"/>
                 </Style>
             </DataGrid.Resources>
+            <DataGrid.Columns >
+                <DataGridTextColumn Binding="{Binding Path=aportante.type}" Header="Tipo" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=aportante.nombre}" Header="Nombre" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding Path=compromiso}" Header="Compromiso" MinWidth="100" />
+            </DataGrid.Columns>
         </DataGrid>
         <Label Content="Aporte:" HorizontalAlignment="Left" Margin="10,275,0,0" VerticalAlignment="Top" Width="75"/>
         <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Aportes" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Height="140" Width="432">

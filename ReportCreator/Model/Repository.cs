@@ -1262,7 +1262,7 @@ namespace ReportCreator.Model
             return resultado;
         }
 
-        public IList<AporteCF> ObtenerAportesCF(long campaniaFinancieraId)
+        public IList<AporteCF> ObtenerAportesCF(long entradaId, long campaniaFinancieraId)
         {
             IList<AporteCF> aportes = new List<AporteCF>();
 
@@ -1288,6 +1288,7 @@ namespace ReportCreator.Model
                     aporte.observacion = rdr.GetString(6);
                     aporte.rechazo = rdr.GetBoolean(7);
                     aporte.entradaCampaniaFinancieraId = rdr.GetInt64(8);
+                    aporte.perteneceEntrada = aporte.campaniaFinancieraId.Equals(entradaId);
                     aportes.Add(aporte);
                 }
             }
@@ -1311,7 +1312,7 @@ namespace ReportCreator.Model
             return null;
         }
 
-        public IList<PadronCF> ObtenerPadronesCF(long campaniaFinancieraId)
+        public IList<PadronCF> ObtenerPadronesCF(long entradaId, long campaniaFinancieraId)
         {
             IList<PadronCF> padrones = new List<PadronCF>();
 
@@ -1321,7 +1322,9 @@ namespace ReportCreator.Model
             SqlCeCommand cmd = new SqlCeCommand(@"
                 SELECT * 
                 FROM campania_financiera_padron 
-                WHERE campania_financiera_id=@campania_financiera_id", con);
+                WHERE entrada_campania_financiera_id=@entrada_campania_financiera_id OR campania_financiera_id=@campania_financiera_id
+                ORDER BY CASE entrada_campania_financiera_id WHEN @entrada_campania_financiera_id THEN 0 ELSE 1 END DESC", con);
+            cmd.Parameters.AddWithValue("@entrada_campania_financiera_id", entradaId);
             cmd.Parameters.AddWithValue("@campania_financiera_id", campaniaFinancieraId);
 
             using (SqlCeDataReader rdr = cmd.ExecuteReader())
@@ -1335,6 +1338,7 @@ namespace ReportCreator.Model
                     padron.campaniaFinancieraId = rdr.GetInt64(4);
                     padron.observacion = rdr.GetString(5);
                     padron.entradaCampaniaFinancieraId = rdr.GetInt64(6);
+                    padron.perteneceEntrada = padron.entradaCampaniaFinancieraId.Equals(entradaId);
                     padrones.Add(padron);
                 }
             }
@@ -1672,8 +1676,10 @@ namespace ReportCreator.Model
         {
             Notificacion resultado = new Notificacion();
 
-            foreach(OpcionGeneral opcion in listaOpcionesGenerales){
-                switch(opcion.nombre){
+            foreach (OpcionGeneral opcion in listaOpcionesGenerales)
+            {
+                switch (opcion.nombre)
+                {
                     case OpcionGeneral.ASUNTO_DEFAULT:
                         break;
                     case OpcionGeneral.CAMBIO_CONTRASENIA:
