@@ -1,4 +1,5 @@
 ﻿using ReportCreator.Entities;
+using ReportCreator.Entities.UtilityObject;
 using ReportCreator.Model;
 using System;
 using System.Collections.Generic;
@@ -24,23 +25,16 @@ namespace ReportCreator.View
     {
         public const string AGREGAR_PRENSA = "AGREGAR_PRENSA";
         public const string ABM_ACTIVIDAD = "ABM_ACTIVIDAD";
-        IRepository repo = new Repository();
 
-        public AgregarActividad()
+        public string proveniente;
+        public UserControl previous;
+        private IRepository repo = new Repository();
+
+        public AgregarActividad(string proveniente, AgregarPrensa previous)
         {
             InitializeComponent();
-        }
-
-        public AgregarActividad(string proveniente, object[] datos)
-        {
-            InitializeComponent();
-
-            switch(proveniente){
-                case AGREGAR_PRENSA:
-                    break;
-                case ABM_ACTIVIDAD:
-                    break;
-            }
+            this.proveniente = proveniente;
+            this.previous = previous;
         }
 
         private void GuardarClick(object sender, RoutedEventArgs e)
@@ -49,13 +43,27 @@ namespace ReportCreator.View
             actividad.nombre = Nombre.Text;
             actividad.detalle = Detalle.Text;
             actividad.fecha = (DateTime)Fecha.SelectedDate;
-
             repo.AgregarActividad(actividad);
+
+            this.VolverAOrigen();
+        }
+
+        private void VolverAOrigen()
+        {
+            switch (this.proveniente)
+            {
+                case AGREGAR_PRENSA:
+                    ((AgregarPrensa)previous).Actividades.ItemsSource = repo.ObtenerActividades();
+                    MainWindow.self.Content = previous;
+                    break;
+                case ABM_ACTIVIDAD:
+                    break;
+            }
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-
+            this.VolverAOrigen();
         }
     }
 }

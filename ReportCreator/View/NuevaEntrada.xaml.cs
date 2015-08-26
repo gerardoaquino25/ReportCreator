@@ -1,4 +1,5 @@
-﻿using ReportCreator.Model;
+﻿using ReportCreator.Entities;
+using ReportCreator.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,8 +75,7 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 8:
-                    idEntrada = repo.AgregarEntrada(idInforme, asunto.Text, 8);
-                    MainWindow.self.Content = new Prensa(idInforme, asunto.Text, nuevo);
+                    MainWindow.self.Content = new EntradaPrensa(idInforme, asunto.Text, true, nuevo);
                     break;
                 case 9:
                     MainWindow.self.Content = new EntradaCotizacion(idInforme, asunto.Text, nuevo);

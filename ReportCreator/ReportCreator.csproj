@@ -104,6 +104,11 @@
     <Compile Include="Entities\Authentication\DelegateCommand.cs" />
     <Compile Include="Entities\OpcionGeneral.cs" />
     <Compile Include="Entities\Actividad.cs" />
+    <Compile Include="Entities\PrensaUO.cs" />
+    <Compile Include="Entities\Suscripcion.cs" />
+    <Compile Include="Entities\Tipo.cs" />
+    <Compile Include="Entities\UtilityObject\EntradaPrensaUO.cs" />
+    <Compile Include="Utilities\ConvertirDGPrensas.cs" />
     <Compile Include="View\AgregarActividad.xaml.cs">
       <DependentUpon>AgregarActividad.xaml</DependentUpon>
     </Compile>
@@ -116,12 +121,12 @@
     <Compile Include="View\Authentication\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Entities\EntradaCampaniaFinanciera.cs" />
+    <Compile Include="Entities\UtilityObject\EntradaCampaniaFinancieraUO.cs" />
     <Compile Include="Entities\PadronCF.cs" />
-    <Compile Include="Entities\EntradaCotizacion.cs" />
+    <Compile Include="Entities\UtilityObject\EntradaCotizacionUO.cs" />
     <Compile Include="Entities\CotizacionInterno.cs" />
     <Compile Include="Entities\Entrada.cs" />
-    <Compile Include="Entities\EntradaGenerica.cs" />
+    <Compile Include="Entities\UtilityObject\EntradaGenericaUO.cs" />
     <Compile Include="Entities\Externo.cs" />
     <Compile Include="Entities\Informe.cs" />
     <Compile Include="DB\EntradaInforme.cs">
@@ -137,7 +142,6 @@
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Interno.cs" />
-    <Compile Include="Entities\TipoEntrada.cs" />
     <Compile Include="Entities\CampaniaFinanciera.cs" />
     <Compile Include="Model\IRepository.cs" />
     <Compile Include="Entities\MailSender.cs" />
@@ -154,8 +158,8 @@
       <DependentUpon>ModeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Usuario.cs" />
-    <Compile Include="View\Prensa.xaml.cs">
-      <DependentUpon>Prensa.xaml</DependentUpon>
+    <Compile Include="View\EntradaPrensa.xaml.cs">
+      <DependentUpon>EntradaPrensa.xaml</DependentUpon>
     </Compile>
     <Page Include="View\AgregarActividad.xaml">
       <SubType>Designer</SubType>
@@ -301,7 +305,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Prensa.xaml">
+    <Page Include="View\EntradaPrensa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

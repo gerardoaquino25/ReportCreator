@@ -29,29 +29,14 @@ namespace ReportCreator.Entities
 
         public override bool Equals(Object interno)
         {
-            // If parameter is null return false.
             if (interno == null)
-            {
                 return false;
-            }
 
-            // If parameter cannot be cast to Point return false.
             Interno p = interno as Interno;
             if ((System.Object)p == null)
-            {
                 return false;
-            }
 
-            // Return true if the fields match:
             return id == p.id;
-        }
-
-        public override Int32 GetHashCode()
-        {
-            if (id == 0)
-                return 0;
-
-            return id.GetHashCode() * nombre.GetHashCode() * circulo.GetHashCode() * activo.GetHashCode();
         }
     }
 }

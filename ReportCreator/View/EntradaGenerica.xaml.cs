@@ -1,4 +1,5 @@
-﻿using ReportCreator.Model;
+﻿using ReportCreator.Entities.UtilityObject;
+using ReportCreator.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace ReportCreator.View
     /// </summary>
     public partial class EntradaGenerica : UserControl
     {
-        private Entities.EntradaGenerica entradaGenerica;
+        private EntradaGenericaUO entradaGenerica;
         IRepository repo = new Repository();
         private bool nuevo;
 
@@ -38,7 +39,7 @@ namespace ReportCreator.View
         {
             InitializeComponent();
             iniciar();
-            entradaGenerica.idInforme = idInforme;
+            entradaGenerica.informeId = idInforme;
             entradaGenerica.titulo = titulo;
             this.nuevo = nuevo;
         }
@@ -46,21 +47,21 @@ namespace ReportCreator.View
         private void iniciar()
         {
             if (entradaGenerica == null)
-                entradaGenerica = new Entities.EntradaGenerica();
+                entradaGenerica = new EntradaGenericaUO();
         }
 
         private void GuardarClick(object sender, RoutedEventArgs e)
         {
             if (entradaGenerica.id == 0)
-                entradaGenerica.id = repo.AgregarEntrada(entradaGenerica.idInforme, entradaGenerica.titulo, 1);
+                entradaGenerica.id = repo.AgregarEntrada((long)entradaGenerica.informeId, entradaGenerica.titulo, 1);
             entradaGenerica.data = Texto.Text;
             repo.GuardarEntradaGenerica(entradaGenerica);
-            MainWindow.self.Content = new Borrador(entradaGenerica.idInforme, nuevo);
+            MainWindow.self.Content = new Borrador((long)entradaGenerica.informeId, nuevo);
         }
 
         private void CancelarClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Borrador(entradaGenerica.idInforme, nuevo);
+            MainWindow.self.Content = new Borrador((long)entradaGenerica.informeId, nuevo);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ReportCreator.Entities;
+using ReportCreator.Entities.UtilityObject;
 using ReportCreator.Model;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,11 @@ namespace ReportCreator.View
     /// </summary>
     public partial class EntradaCampaniaFinanciera : UserControl
     {
-        private long idInforme;
+        private long? idInforme;
         private bool nuevo;
         private long idEntrada;
         private bool cargaInicial = true;
-        Entities.EntradaCampaniaFinanciera entradaCampaniaFinanciera;
+        EntradaCampaniaFinancieraUO entradaCampaniaFinanciera;
         IRepository repo = new Repository();
 
         //public EntradaCampaniaFinanciera(long idEntrada, bool nuevo)
@@ -52,7 +53,7 @@ namespace ReportCreator.View
             this.idEntrada = idEntrada;
             this.nuevo = nuevo;
             entradaCampaniaFinanciera = repo.ObtenerEntradaCampaniaFinanciera(idEntrada);
-            this.idInforme = entradaCampaniaFinanciera.idInforme;
+            this.idInforme = entradaCampaniaFinanciera.informeId;
             iniciar(nuevaEntrada);
         }
 
@@ -93,8 +94,8 @@ namespace ReportCreator.View
 
             if (asignarCampania)
             {
-                entradaCampaniaFinanciera.padrones = repo.ObtenerPadronesCF(entradaCampaniaFinanciera.id, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
-                entradaCampaniaFinanciera.aportes = repo.ObtenerAportesCF(entradaCampaniaFinanciera.id, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
+                entradaCampaniaFinanciera.padrones = repo.ObtenerPadronesCF((long)entradaCampaniaFinanciera.id, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
+                entradaCampaniaFinanciera.aportes = repo.ObtenerAportesCF((long)entradaCampaniaFinanciera.id, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id);
             }
 
             Padrones.ItemsSource = entradaCampaniaFinanciera.padrones;
@@ -126,7 +127,7 @@ namespace ReportCreator.View
                 entradaCampaniaFinanciera.titulo = Titulo.Text;
                 entradaCampaniaFinanciera.campaniaFinanciera = (CampaniaFinanciera)CampaniaAsociada.SelectedItem;
                 repo.GuardarEntradaCampaniaFinanciera(entradaCampaniaFinanciera);
-                MainWindow.self.Content = new Borrador(idInforme, nuevo);
+                MainWindow.self.Content = new Borrador((long)idInforme, nuevo);
             }
         }
 
@@ -137,7 +138,7 @@ namespace ReportCreator.View
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Borrador(idInforme, nuevo);
+            MainWindow.self.Content = new Borrador((long)idInforme, nuevo);
         }
 
         private void RowPadronesKeyDown(object sender, KeyEventArgs e)

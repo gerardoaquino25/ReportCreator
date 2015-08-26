@@ -1,6 +1,8 @@
 ﻿using ReportCreator.Entities;
+using ReportCreator.Entities.UtilityObject;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,12 +20,13 @@ namespace ReportCreator.Model
         Notificacion AgregarAporteCF(AporteCF aporte);
         Notificacion AgregarUsuario(string username, string email, string password);
         long AgregarActividad(Actividad actividad);
+        Notificacion AgregarEntradaPrensa(EntradaPrensaUO prensaUO);
 
         Informe ObtenerInforme(long id);
         IList<Informe> ObtenerInformesBorrador();
         IList<Interno> ObtenerInternos();
-        EntradaCotizacion ObtenerEntradaCotizacion(long idEntrada);
-        EntradaGenerica ObtenerEntradaGenerica(long idEntrada);
+        EntradaCotizacionUO ObtenerEntradaCotizacion(long idEntrada);
+        EntradaGenericaUO ObtenerEntradaGenerica(long idEntrada);
         IList<MailSender> ObtenerMailSenders();
         IList<MailReceiver> ObtenerMailReceivers();
         MailSender ObtenerMailSender(int id);
@@ -31,22 +34,33 @@ namespace ReportCreator.Model
         IList<Externo> ObtenerExternos();
         IList<AporteCF> ObtenerAportesCF(long entradaId, long campaniaFinancieraId);
         IList<PadronCF> ObtenerPadronesCF(long entradaId, long campaniaFinancieraId);
-        EntradaCampaniaFinanciera ObtenerEntradaCampaniaFinanciera(long idEntrada);
+        EntradaCampaniaFinancieraUO ObtenerEntradaCampaniaFinanciera(long idEntrada);
+        PrensaUO ObtenerPrensa(long id, bool closeConnection = true);
+        Suscripcion ObtenerSuscripcion(long id, bool closeConnection = true);
+        ObservableCollection<Suscripcion> ObtenerSuscripciones(bool closeConnection = true);
+        EntradaPrensaUO ObtenerEntradaPrensa(long idEntrada);
+        IList<Tipo> ObtenerPrensaTipoPasaje();
+        IList<Actividad> ObtenerActividades();
+        ObservableCollection<PrensaUO> ObtenerPrensasByEntradaId(long entradaId, bool closeConnection = true);
 
-        Notificacion GuardarEntradaGenerica(EntradaGenerica entradaGenerica);
+        Notificacion GuardarEntradaGenerica(EntradaGenericaUO entradaGenerica);
         Notificacion GuardarInforme(long idInforme, string asunto);
         Notificacion GuardarInternos(IList<Interno> internos);
-        Notificacion GuardarEntradaCotizacion(EntradaCotizacion cotizacion);
+        Notificacion GuardarEntradaCotizacion(EntradaCotizacionUO cotizacion);
         Notificacion GuardarMailSender(MailSender mailSender);
         Notificacion GuardarMailReceivers(IList<MailReceiver> receivers);
         Notificacion GuardarAporteCF(AporteCF aporte);
         Notificacion GuardarPadronCF(PadronCF padron);
-        Notificacion GuardarEntradaCampaniaFinanciera(EntradaCampaniaFinanciera entradaCampaniaFinanciera);
+        Notificacion GuardarEntradaCampaniaFinanciera(EntradaCampaniaFinancieraUO entradaCampaniaFinanciera);
         Notificacion GuardarOpcionesGenerales(IList<OpcionGeneral> listaOpcionesGenerales);
+        Notificacion GuardarPrensa(PrensaUO prensa);
+        Notificacion GuardarSuscripcion(Suscripcion suscripcion);
 
         Notificacion BorrarMailSender(int id);
         Notificacion BorrarEntrada(long id, int tipo);
         Notificacion BorrarInforme(long id);
+        Notificacion BorrarPrensa(long id);
+        Notificacion BorrarSuscripcion(long id);
 
         Notificacion RecuperarContraseña(string username);
         Notificacion EnviarEmail(string emailFrom, string password, string smtp, string puerto, string emailTo, string subject, string html);

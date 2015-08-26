@@ -1,4 +1,5 @@
 ﻿using ReportCreator.Entities;
+using ReportCreator.Entities.UtilityObject;
 using ReportCreator.Model;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace ReportCreator.View
     public partial class EntradaCotizacion : UserControl
     {
         private IRepository repo = new Repository();
-        private ReportCreator.Entities.EntradaCotizacion cotizacion;
+        private EntradaCotizacionUO cotizacion;
         private bool nuevo;
         //private IList<Interno> Internos = new Repository().GetInternos();
 
@@ -39,7 +40,7 @@ namespace ReportCreator.View
         {
             InitializeComponent();
             iniciar();
-            cotizacion.idInforme = idInforme;
+            cotizacion.informeId = idInforme;
             cotizacion.titulo = asunto;
             this.nuevo = nuevo;
         }
@@ -58,7 +59,7 @@ namespace ReportCreator.View
 
             if (cotizacion == null)
             {
-                cotizacion = new ReportCreator.Entities.EntradaCotizacion();
+                cotizacion = new EntradaCotizacionUO();
                 cotizacion.cotizacionesInternos = new List<CotizacionInterno>();
                 cotizacion.anio = (int)Anio.Items[10];
                 cotizacion.mes = DateTime.UtcNow.Month;
@@ -71,18 +72,18 @@ namespace ReportCreator.View
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Borrador(cotizacion.idInforme, nuevo);
+            MainWindow.self.Content = new Borrador((long)cotizacion.informeId, nuevo);
         }
 
         private void GuardarClick(object sender, RoutedEventArgs e)
         {
             if (cotizacion.id == 0)
-                cotizacion.id = repo.AgregarEntrada(cotizacion.idInforme, cotizacion.titulo, 9);
+                cotizacion.id = repo.AgregarEntrada((long)cotizacion.informeId, cotizacion.titulo, 9);
             cotizacion.mes = Mes.SelectedIndex + 1;
             cotizacion.anio = (int)Anio.SelectedItem;
             repo.GuardarEntradaCotizacion(cotizacion);
 
-            MainWindow.self.Content = new Borrador(cotizacion.idInforme, nuevo);
+            MainWindow.self.Content = new Borrador((long)cotizacion.informeId, nuevo);
         }
     }
 }

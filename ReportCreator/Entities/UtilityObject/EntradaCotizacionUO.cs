@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReportCreator.Entities
+namespace ReportCreator.Entities.UtilityObject
 {
-    public class EntradaCotizacion : Entrada
+    public class EntradaCotizacionUO : Entrada
     {
         public int mes { get; set; }
         public int anio { get; set; }

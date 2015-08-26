@@ -11,6 +11,8 @@ using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.IO;
 using System.Net.Mail;
+using ReportCreator.Entities.UtilityObject;
+using System.Collections.ObjectModel;
 
 namespace ReportCreator.Model
 {
@@ -200,7 +202,7 @@ namespace ReportCreator.Model
             }
         }
 
-        public Notificacion GuardarEntradaGenerica(EntradaGenerica entradaGenerica)
+        public Notificacion GuardarEntradaGenerica(EntradaGenericaUO entradaGenerica)
         {
             Notificacion respuesta = new Notificacion();
 
@@ -273,8 +275,8 @@ namespace ReportCreator.Model
                 {
                     Entrada entrada = new Entrada();
                     entrada.id = rdr.GetInt64(0);
-                    entrada.idInforme = rdr.GetInt64(1);
-                    entrada.tipo = new TipoEntrada(rdr.GetInt16(2), rdr.GetString(4));
+                    entrada.informeId = rdr.GetInt64(1);
+                    entrada.tipo = new Tipo(rdr.GetInt16(2), rdr.GetString(4));
                     entrada.titulo = rdr.GetString(3);
                     entrada.tipoDescripcion = entrada.tipo.descripcion;
                     entradas.Add(entrada);
@@ -441,7 +443,7 @@ namespace ReportCreator.Model
             return respuesta;
         }
 
-        public Notificacion GuardarEntradaCotizacion(EntradaCotizacion cotizacion)
+        public Notificacion GuardarEntradaCotizacion(EntradaCotizacionUO cotizacion)
         {
             Notificacion respuesta = new Notificacion();
             IList<long> activos = new List<long>();
@@ -613,9 +615,9 @@ namespace ReportCreator.Model
             return mailSenders;
         }
 
-        public EntradaGenerica ObtenerEntradaGenerica(long idEntrada)
+        public EntradaGenericaUO ObtenerEntradaGenerica(long idEntrada)
         {
-            EntradaGenerica entradaGenerica = new EntradaGenerica();
+            EntradaGenericaUO entradaGenerica = new EntradaGenericaUO();
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
@@ -633,9 +635,9 @@ namespace ReportCreator.Model
                 {
                     entradaGenerica.id = rdr.GetInt64(0);
                     entradaGenerica.data = rdr.GetString(1);
-                    entradaGenerica.idInforme = rdr.GetInt64(2);
+                    entradaGenerica.informeId = rdr.GetInt64(2);
                     entradaGenerica.titulo = rdr.GetString(3);
-                    entradaGenerica.idInforme = rdr.GetInt64(4);
+                    entradaGenerica.informeId = rdr.GetInt64(4);
                 }
             }
 
@@ -644,9 +646,9 @@ namespace ReportCreator.Model
             return entradaGenerica;
         }
 
-        public EntradaCotizacion ObtenerEntradaCotizacion(long idEntrada)
+        public EntradaCotizacionUO ObtenerEntradaCotizacion(long idEntrada)
         {
-            EntradaCotizacion entradaCotizacion = new EntradaCotizacion();
+            EntradaCotizacionUO entradaCotizacion = new EntradaCotizacionUO();
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
@@ -664,7 +666,7 @@ namespace ReportCreator.Model
                     entradaCotizacion.id = rdr.GetInt64(0);
                     entradaCotizacion.mes = rdr.GetInt32(1);
                     entradaCotizacion.anio = rdr.GetInt32(2);
-                    entradaCotizacion.idInforme = rdr.GetInt64(3);
+                    entradaCotizacion.informeId = rdr.GetInt64(3);
                     entradaCotizacion.cotizacionesInternos = new List<CotizacionInterno>();
                 }
             }
@@ -691,7 +693,7 @@ namespace ReportCreator.Model
             return entradaCotizacion;
         }
 
-        private Interno ObtenerInterno(long internoId, bool closeConnection)
+        private Interno ObtenerInterno(long internoId, bool closeConnection = false)
         {
             Interno interno = null;
 
@@ -721,7 +723,7 @@ namespace ReportCreator.Model
             return interno;
         }
 
-        private Externo ObtenerExterno(long externoId, bool closeConnection)
+        private Externo ObtenerExterno(long externoId, bool closeConnection = false)
         {
             Externo externo = null;
 
@@ -878,6 +880,15 @@ namespace ReportCreator.Model
                         cmd = new SqlCeCommand("DELETE FROM entrada_generica WHERE id=@id", con);
                         cmd.Parameters.AddWithValue("@id", id);
                         break;
+                    case 8:
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCeCommand("DELETE FROM entrada_prensa WHERE id=@id", con);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCeCommand("DELETE FROM prensa WHERE entrada_prensa_id=@id", con);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                        break;
                     case 9:
                         cmd.ExecuteNonQuery();
                         cmd = new SqlCeCommand("DELETE FROM entrada_cotizacion WHERE id=@id", con);
@@ -912,7 +923,7 @@ namespace ReportCreator.Model
             try
             {
                 foreach (Entrada entrada in informe.entradas)
-                    BorrarEntrada(entrada.id, entrada.tipo.id);
+                    BorrarEntrada((long)entrada.id, entrada.tipo.id);
 
                 SqlCeCommand cmd = new SqlCeCommand("DELETE FROM entrada_informe WHERE informe_id=@id", con);
                 cmd.Parameters.AddWithValue("@id", id);
@@ -1348,9 +1359,9 @@ namespace ReportCreator.Model
             return padrones;
         }
 
-        public EntradaCampaniaFinanciera ObtenerEntradaCampaniaFinanciera(long idEntrada)
+        public EntradaCampaniaFinancieraUO ObtenerEntradaCampaniaFinanciera(long idEntrada)
         {
-            EntradaCampaniaFinanciera entradaCampaniaFinanciera = null;
+            EntradaCampaniaFinancieraUO entradaCampaniaFinanciera = null;
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
@@ -1365,9 +1376,9 @@ namespace ReportCreator.Model
             {
                 while (rdr.Read())
                 {
-                    entradaCampaniaFinanciera = new EntradaCampaniaFinanciera();
+                    entradaCampaniaFinanciera = new EntradaCampaniaFinancieraUO();
                     entradaCampaniaFinanciera.id = idEntrada;
-                    entradaCampaniaFinanciera.idInforme = rdr.GetInt64(0);
+                    entradaCampaniaFinanciera.informeId = rdr.GetInt64(0);
                     entradaCampaniaFinanciera.titulo = rdr.GetString(1);
                     entradaCampaniaFinanciera.campaniaFinanciera = rdr.IsDBNull(2) ? null : ObtenerCF(rdr.GetInt64(2), false);
                 }
@@ -1449,7 +1460,7 @@ namespace ReportCreator.Model
             return resultado;
         }
 
-        public Notificacion GuardarEntradaCampaniaFinanciera(EntradaCampaniaFinanciera entradaCampaniaFinanciera)
+        public Notificacion GuardarEntradaCampaniaFinanciera(EntradaCampaniaFinancieraUO entradaCampaniaFinanciera)
         {
             Notificacion respuesta = new Notificacion();
 
@@ -1696,7 +1707,7 @@ namespace ReportCreator.Model
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
 
-            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO entrada_prensa (id, mes, anio) VALUES (@id, 0, 0)", con);
+            SqlCeCommand cmd = new SqlCeCommand("INSERT INTO entrada_prensa (id) VALUES (@id)", con);
             cmd.Parameters.AddWithValue("@id", idEntrada);
             int ejecuto = 0;
 
@@ -1743,6 +1754,523 @@ namespace ReportCreator.Model
             }
 
             return resultado;
+        }
+
+        public Notificacion AgregarEntradaPrensa(EntradaPrensaUO prensaUO)
+        {
+            Notificacion resultado = new Notificacion();
+
+            long entradaId = AgregarEntrada((long)prensaUO.informeId, prensaUO.titulo, 8);
+
+            if (entradaId != 0)
+            {
+                foreach (PrensaUO prensa in prensaUO.prensas)
+                {
+                    prensa.entradaPrensaId = entradaId;
+                    AgregarPrensa(prensa);
+                }
+
+                foreach (Suscripcion suscripcion in prensaUO.suscripciones)
+                    AgregarSuscripcion(suscripcion);
+            }
+            else
+                resultado.Detalle = Notificacion.FALTA_ASIGNAR_EXCEPCION;
+
+            return resultado;
+        }
+
+        public Notificacion AgregarSuscripcion(Suscripcion suscripcion)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                INSERT INTO suscripcion (tipo_suscripcion, tipo_suscriptor, suscriptor_id, fecha_suscripcion, fecha_vencimiento, observacion, usuario_id)
+                VALUES (@tipo_suscripcion, @tipo_suscriptor, @suscriptor_id, @fecha_suscripcion, @fecha_vencimiento, @observacion, @usuario_id)", con);
+            cmd.Parameters.AddWithValue("@tipo_suscripcion", suscripcion.tipoSuscripcion);
+            int param1 = suscripcion.suscriptor.GetType() == typeof(Interno) ? 1 : 2;
+            cmd.Parameters.AddWithValue("@tipo_suscriptor", param1);
+            long param2 = suscripcion.suscriptor.GetType() == typeof(Interno) ? ((Interno)suscripcion.suscriptor).id : ((Externo)suscripcion.suscriptor).id;
+            cmd.Parameters.AddWithValue("@suscriptor_id", param2);
+            cmd.Parameters.AddWithValue("@fecha_suscripcion", suscripcion.fechaSuscripcion);
+            cmd.Parameters.AddWithValue("@fecha_vencimiento", suscripcion.fechaVencimiento);
+            cmd.Parameters.AddWithValue("@observacion", suscripcion.observacion);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                resultado.Detalle = Notificacion.FALTA_ASIGNAR_EXCEPCION;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public Notificacion AgregarPrensa(PrensaUO prensa)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                INSERT INTO prensa (entrada_prensa_id, tipo_pasaje, tipo_comprador, interno_id, prensa_numero, aporte, comprador_id, actividad_id, observacion) 
+                VALUES (@entrada_prensa_id, @tipo_pasaje, @tipo_comprador, @interno_id, @prensa_numero, @aporte, @comprador_id, @actividad_id, @observacion)", con);
+            cmd.Parameters.AddWithValue("@entrada_prensa_id", prensa.entradaPrensaId);
+            cmd.Parameters.AddWithValue("@tipo_pasaje", prensa.tipoPasaje.id);
+            int param1 = prensa.comprador.GetType() == typeof(Interno) ? 1 : 2;
+            cmd.Parameters.AddWithValue("@comprador_id", param1);
+            cmd.Parameters.AddWithValue("@interno_id", prensa.interno.id);
+            cmd.Parameters.AddWithValue("@prensa_numero", prensa.prensaNumero);
+            cmd.Parameters.AddWithValue("@aporte", prensa.aporte);
+            long param2 = prensa.comprador.GetType() == typeof(Interno) ? ((Interno)prensa.comprador).id : ((Externo)prensa.comprador).id;
+            cmd.Parameters.AddWithValue("@comprador_id", param2);
+            object param3 = prensa.actividadId;
+            if (param3 == null)
+                param3 = DBNull.Value;
+            cmd.Parameters.AddWithValue("@actividad_id", param3);
+            cmd.Parameters.AddWithValue("@observacion", prensa.observacion);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                resultado.Detalle = Notificacion.FALTA_ASIGNAR_EXCEPCION;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public Notificacion GuardarPrensa(PrensaUO prensa)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                UPDATE prensa SET tipo_pasaje = @tipo_pasaje, tipo_comprador = @tipo_comprador, interno_id = @interno_id, 
+                prensa_numero = @prensa_numero, aporte = @aporte, comprador_id = @comprador_id, actividad_id = @actividad_id, observacion = @observacion) 
+                WHERE id = @id)", con);
+            cmd.Parameters.AddWithValue("@id", prensa.id);
+            cmd.Parameters.AddWithValue("@tipo_pasaje", prensa.tipoPasaje.id);
+            int param1 = prensa.comprador.GetType() == typeof(Interno) ? 1 : 2;
+            cmd.Parameters.AddWithValue("@comprador_id", param1);
+            cmd.Parameters.AddWithValue("@interno_id", prensa.interno.id);
+            cmd.Parameters.AddWithValue("@prensa_numero", prensa.prensaNumero);
+            cmd.Parameters.AddWithValue("@aporte", prensa.aporte);
+            long param2 = prensa.comprador.GetType() == typeof(Interno) ? ((Interno)prensa.comprador).id : ((Externo)prensa.comprador).id;
+            cmd.Parameters.AddWithValue("@comprador_id", param2);
+            object param3 = prensa.actividadId;
+            if (param3 == null)
+                param3 = DBNull.Value;
+            cmd.Parameters.AddWithValue("@actividad_id", param3);
+            cmd.Parameters.AddWithValue("@observacion", prensa.observacion);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                resultado.Detalle = Notificacion.FALTA_ASIGNAR_EXCEPCION;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public Notificacion GuardarSuscripcion(Suscripcion suscripcion)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                UPDATE suscripcion SET tipo_suscripcion = @tipo_suscripcion, tipo_suscriptor = @tipo_suscriptor, suscriptor_id = @suscriptor_id, 
+                fecha_suscripcion = @fecha_suscripcion, fecha_vencimiento = @fecha_vencimiento, observacion = @observacion, usuario_id = @usuario_id) 
+                WHERE id = @id)", con);
+            cmd.Parameters.AddWithValue("@id", suscripcion.id);
+            cmd.Parameters.AddWithValue("@tipo_suscripcion", suscripcion.tipoSuscripcion);
+            int param1 = suscripcion.suscriptor.GetType() == typeof(Interno) ? 1 : 2;
+            cmd.Parameters.AddWithValue("@tipo_suscriptor", param1);
+            long param2 = suscripcion.suscriptor.GetType() == typeof(Interno) ? ((Interno)suscripcion.suscriptor).id : ((Externo)suscripcion.suscriptor).id;
+            cmd.Parameters.AddWithValue("@suscriptor_id", param2);
+            cmd.Parameters.AddWithValue("@fecha_suscripcion", suscripcion.fechaSuscripcion);
+            cmd.Parameters.AddWithValue("@fecha_vencimiento", suscripcion.fechaVencimiento);
+            cmd.Parameters.AddWithValue("@observacion", suscripcion.observacion);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                resultado.Detalle = Notificacion.FALTA_ASIGNAR_EXCEPCION;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public PrensaUO ObtenerPrensa(long id, bool closeConnection = true)
+        {
+            PrensaUO prensa = null;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT p.id, p.entrada_prensa_id, p.tipo_pasaje, p.tipo_comprador, 
+                    p.interno_id, p.prensa_numero, p.aporte, p.comprador_id, p.actividad_id, 
+                    p.observacion, ppt.descripcion
+                FROM prensa p
+                INNER JOIN prensa_pasaje_tipo ppt ON p.tipo_pasaje = ppt.id
+                WHERE p.id=@id", con);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    prensa = new PrensaUO();
+                    prensa.id = rdr.GetInt64(0);
+                    prensa.entradaPrensaId = rdr.GetInt64(1);
+                    prensa.tipoPasaje = new Tipo(rdr.GetInt32(2), rdr.GetString(10));
+                    if (rdr.GetInt32(3) == 1)
+                        prensa.comprador = ObtenerInterno(rdr.GetInt64(7));
+                    else if (!rdr.IsDBNull(7))
+                        prensa.comprador = ObtenerExterno(rdr.GetInt64(7));
+                    prensa.interno = ObtenerInterno(rdr.GetInt64(4), false);
+                    prensa.prensaNumero = rdr.GetInt32(5);
+                    prensa.aporte = rdr.GetInt32(6);
+                    prensa.actividadId = rdr.GetInt64(8);
+                    prensa.observacion = rdr.GetString(9);
+                }
+            }
+
+            if (closeConnection)
+                con.Close();
+
+            return prensa;
+        }
+
+        public Suscripcion ObtenerSuscripcion(long id, bool closeConnection = true)
+        {
+            Suscripcion suscripcion = null;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM suscripcion 
+                WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    suscripcion = new Suscripcion();
+                    suscripcion.id = rdr.GetInt64(0);
+                    suscripcion.tipoSuscripcion = rdr.GetInt32(1);
+                    if (rdr.GetInt32(2) == 1)
+                        suscripcion.suscriptor = ObtenerInterno(rdr.GetInt64(3));
+                    else if (!rdr.IsDBNull(3))
+                        suscripcion.suscriptor = ObtenerExterno(rdr.GetInt64(3));
+                    suscripcion.fechaSuscripcion = rdr.GetDateTime(4);
+                    suscripcion.fechaVencimiento = rdr.GetDateTime(5);
+                    suscripcion.observacion = rdr.GetString(6);
+                    suscripcion.usuarioId = rdr.GetInt32(7);
+                }
+            }
+
+            if (closeConnection)
+                con.Close();
+
+            return suscripcion;
+        }
+
+        public ObservableCollection<PrensaUO> ObtenerPrensasByEntradaId(long entradaId, bool closeConnection = true)
+        {
+            ObservableCollection<PrensaUO> prensas = new ObservableCollection<PrensaUO>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT p.id, p.entrada_prensa_id, p.tipo_pasaje, p.tipo_comprador, 
+                    p.interno_id, p.prensa_numero, p.aporte, p.comprador_id, p.actividad_id, 
+                    p.observacion, ppt.descripcion
+                FROM prensa p
+                INNER JOIN prensa_pasaje_tipo ppt ON p.tipo_pasaje = ppt.id
+                WHERE p.entrada_prensa_id=@entrada_prensa_id", con);
+            cmd.Parameters.AddWithValue("@entrada_prensa_id", entradaId);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    PrensaUO prensa = new PrensaUO();
+                    prensa.id = rdr.GetInt64(0);
+                    prensa.entradaPrensaId = rdr.GetInt64(1);
+                    prensa.tipoPasaje = prensa.tipoPasaje = new Tipo(rdr.GetInt32(2), rdr.GetString(10));
+                    if (rdr.GetInt32(3) == 1)
+                        prensa.comprador = ObtenerInterno(rdr.GetInt64(7));
+                    else if (!rdr.IsDBNull(7))
+                        prensa.comprador = ObtenerExterno(rdr.GetInt64(7));
+                    prensa.interno = ObtenerInterno(rdr.GetInt64(4), false);
+                    prensa.prensaNumero = rdr.GetInt32(5);
+                    prensa.aporte = rdr.GetInt32(6);
+                    prensa.actividadId = rdr.GetInt64(8);
+                    prensa.observacion = rdr.GetString(9);
+                    prensas.Add(prensa);
+                }
+            }
+
+            if (closeConnection)
+                con.Close();
+
+            return prensas;
+        }
+
+        public ObservableCollection<Suscripcion> ObtenerSuscripciones(bool closeConnection = true)
+        {
+            ObservableCollection<Suscripcion> suscripciones = new ObservableCollection<Suscripcion>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM suscripcion 
+                WHERE usuario_id=@usuario_id", con);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    Suscripcion suscripcion = new Suscripcion();
+                    suscripcion.id = rdr.GetInt64(0);
+                    suscripcion.tipoSuscripcion = rdr.GetInt32(1);
+                    if (rdr.GetInt32(2) == 1)
+                        suscripcion.suscriptor = ObtenerInterno(rdr.GetInt64(3));
+                    else if (!rdr.IsDBNull(3))
+                        suscripcion.suscriptor = ObtenerExterno(rdr.GetInt64(3));
+                    suscripcion.fechaSuscripcion = rdr.GetDateTime(4);
+                    suscripcion.fechaVencimiento = rdr.GetDateTime(5);
+                    suscripcion.observacion = rdr.GetString(6);
+                    suscripcion.usuarioId = rdr.GetInt32(7);
+                    suscripciones.Add(suscripcion);
+                }
+            }
+
+            if (closeConnection)
+                con.Close();
+
+            return suscripciones;
+        }
+
+        public Notificacion BorrarPrensa(long id)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                DELETE FROM prensa 
+                WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                resultado.Detalle = Notificacion.FALTA_ASIGNAR_EXCEPCION;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public Notificacion BorrarPrensasByEntradaId(long entradaId)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                DELETE FROM prensa 
+                WHERE entrada_prensa_id=@entrada_prensa_id", con);
+            cmd.Parameters.AddWithValue("@entrada_prensa_id", entradaId);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                resultado.Detalle = Notificacion.FALTA_ASIGNAR_EXCEPCION;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public Notificacion BorrarSuscripcion(long id)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                DELETE FROM suscripcion 
+                WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                resultado.Detalle = Notificacion.FALTA_ASIGNAR_EXCEPCION;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return resultado;
+        }
+
+        public EntradaPrensaUO ObtenerEntradaPrensa(long idEntrada)
+        {
+            EntradaPrensaUO entradaPrensa = null;
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT ep.id, ei.informe_id, ei.titulo, et.descripcion
+                FROM entrada_prensa ep 
+                INNER JOIN entrada_informe ei ON ei.id = ep.id 
+                INNER JOIN entrada_tipo et ON et.id = ei.tipo 
+                WHERE ei.id=@id", con);
+            cmd.Parameters.AddWithValue("@id", idEntrada);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    entradaPrensa = new EntradaPrensaUO();
+                    entradaPrensa.id = rdr.GetInt64(0);
+                    entradaPrensa.informeId = rdr.GetInt64(1);
+                    entradaPrensa.titulo = rdr.GetString(2);
+                    entradaPrensa.tipo = new Tipo(8, rdr.GetString(3));
+                    entradaPrensa.tipoDescripcion = entradaPrensa.tipo.descripcion;
+                }
+            }
+
+            if (entradaPrensa.id != null)
+            {
+                entradaPrensa.prensas = ObtenerPrensasByEntradaId((long)entradaPrensa.id, false);
+                entradaPrensa.suscripciones = ObtenerSuscripciones();
+            }
+
+            con.Close();
+
+            return entradaPrensa;
+        }
+
+        public IList<Tipo> ObtenerPrensaTipoPasaje()
+        {
+            IList<Tipo> tipos = new List<Tipo>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM prensa_pasaje_tipo", con);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    tipos.Add(new Tipo(rdr.GetInt32(0), rdr.GetString(1)));
+                }
+            }
+
+            con.Close();
+
+            return tipos;
+        }
+
+        public IList<Actividad> ObtenerActividades()
+        {
+            IList<Actividad> actividades = new List<Actividad>();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand(@"
+                SELECT * 
+                FROM actividad
+                WHERE usuario_id = @usuario_id", con);
+            cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
+
+            using (SqlCeDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    Actividad actividad = new Actividad();
+                    actividad.id = rdr.GetInt64(0);
+                    actividad.nombre = rdr.GetString(1);
+                    actividad.detalle = rdr.GetString(2);
+                    actividad.fecha = rdr.GetDateTime(3);
+                    actividades.Add(actividad);
+                }
+            }
+
+            con.Close();
+
+            return actividades;
         }
     }
 }

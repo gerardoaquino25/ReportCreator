@@ -63,7 +63,7 @@ namespace ReportCreator.View
             {
                 DataGridRow row = sender as DataGridRow;
                 Entrada entrada = ((Entrada)row.Item);
-                repo.BorrarEntrada(entrada.id, entrada.tipo.id);
+                repo.BorrarEntrada((long)entrada.id, entrada.tipo.id);
                 entradas.Remove(entrada);
             }
         }
@@ -85,13 +85,13 @@ namespace ReportCreator.View
             switch (entrada.tipo.id)
             {
                 case 1:
-                    MainWindow.self.Content = new EntradaGenerica(entrada.id, nuevo);
+                    MainWindow.self.Content = new EntradaGenerica((long)entrada.id, nuevo);
                     break;
                 case 2:
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 3:
-                    MainWindow.self.Content = new EntradaCampaniaFinanciera(entrada.id, nuevo, false);
+                    MainWindow.self.Content = new EntradaCampaniaFinanciera((long)entrada.id, nuevo, false);
                     break;
                 case 4:
                     //MainWindow.self.Content = new NuevoBorrador();
@@ -106,10 +106,10 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 8:
-                    //MainWindow.self.Content = new NuevoBorrador();
+                    MainWindow.self.Content = new EntradaPrensa((long)entrada.id, nuevo);
                     break;
                 case 9:
-                    MainWindow.self.Content = new EntradaCotizacion(entrada.id, nuevo);
+                    MainWindow.self.Content = new EntradaCotizacion((long)entrada.id, nuevo);
                     break;
                 case 10:
                     //MainWindow.self.Content = new NuevoBorrador();

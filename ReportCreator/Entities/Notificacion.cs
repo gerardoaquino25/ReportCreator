@@ -19,5 +19,6 @@ namespace ReportCreator.Entities
         public static string USUARIO_NO_ENCONTRADO = "USUARIO_NO_ENCONTRADO";
         public static string CAMBIO_CONTRASENIA_KO = "CAMBIO_CONTRASENIA_KO";
         public static string CAMBIO_CONTRASENIA = "CAMBIO_CONTRASENIA";
+        public static string FALTA_ASIGNAR_EXCEPCION = "FALTA_ASIGNAR_EXCEPCION";
     }
 }

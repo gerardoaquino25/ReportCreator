@@ -16,22 +16,29 @@
                     </Style>
                 </StackPanel.Resources>
                 <DockPanel>
-                    <Label Content="Tipo:"/>
-                    <ComboBox Width="150">
+                    <Label Content="Tipo pasaje:"/>
+                    <ComboBox DisplayMemberPath="descripcion" Width="150" Name="TipoPasaje"/>
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Tipo aportante:"/>
+                    <ComboBox Name="TipoAportante" Width="150" SelectionChanged="TipoAportante_SelectionChanged">
                         <ComboBoxItem>Interno</ComboBoxItem>
                         <ComboBoxItem>Externo</ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
-                <DockPanel>
+                <DockPanel Name="InternosLabel">
                     <Label Content="Interno:" />
-                    <ComboBox Width="150" Name="Internos"/>
+                    <ComboBox DisplayMemberPath="nombreCompleto" Width="150" Name="Internos"/>
+                </DockPanel>
+                <DockPanel Name="ExternoDesconocidoLabel">
+                    <CheckBox Name="ExternoDesconocido" Content="Desconocido?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoDesconocido_Checked" Unchecked="ExternoDesconocido_Unchecked" Width="144"/>
                 </DockPanel>
                 <DockPanel Name="ExternoExistenteLabel">
                     <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoExistenteCheck" Unchecked="ExternoExistenteUncheck" Width="144"/>
                 </DockPanel>
                 <DockPanel Name="ExternoLabel">
                     <Label Content="Externo:"/>
-                    <ListBox DisplayMemberPath="nombre" Name="Externo" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="119"/>
+                    <ListBox DisplayMemberPath="nombre" Name="Externos" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="119"/>
                 </DockPanel>
                 <DockPanel Name="NombreExternoLabel">
                     <Label Content="Nombre:"/>
@@ -42,13 +49,25 @@
                     <TextBox Name="ObservacionExterno" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
                 </DockPanel>
                 <DockPanel>
+                    <Label Content="Aporte:"/>
+                    <TextBox Name="Aporte" Width="50" HorizontalAlignment="Left"/>
+                </DockPanel>
+                <DockPanel>
                     <Label Content="Numero de prensa:"/>
-                    <TextBox Width="50" HorizontalAlignment="Left"/>
+                    <TextBox Name="NumeroPrensa" Width="50" HorizontalAlignment="Left"/>
                 </DockPanel>
                 <DockPanel Name="ActividadLabel">
                     <Label Content="Actividad:"/>
                     <ListBox DisplayMemberPath="nombre" Name="Actividades" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="119"/>
                     <Button Content="+" Height="25" Width="25" Click="AgregarActividadClick"/>
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Observación:"/>
+                    <TextBox Name="Observacion" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
+                </DockPanel>
+                <DockPanel HorizontalAlignment="Center">
+                    <Button Name="Volver" Content="Volver" Click="Volver_Click"/>
+                    <Button Name="Guardar" Content="Guardar" Click="Guardar_Click"/>
                 </DockPanel>
             </StackPanel>
         </Border>

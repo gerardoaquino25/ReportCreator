@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReportCreator.Entities
+namespace ReportCreator.Entities.UtilityObject
 {
-    public class EntradaCampaniaFinanciera : Entrada
+    public class EntradaCampaniaFinancieraUO : Entrada
     {
         public CampaniaFinanciera campaniaFinanciera { get; set; }
         public IList<PadronCF> padrones { get; set; }
         public IList<AporteCF> aportes { get; set; }
 
-        public EntradaCampaniaFinanciera()
+        public EntradaCampaniaFinancieraUO()
         {
             this.padrones = new List<PadronCF>();
             this.aportes = new List<AporteCF>();
