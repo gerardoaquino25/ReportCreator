@@ -1760,18 +1760,31 @@ namespace ReportCreator.Model
         {
             Notificacion resultado = new Notificacion();
 
-            long entradaId = AgregarEntrada((long)prensaUO.informeId, prensaUO.titulo, 8);
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
 
+            long entradaId = AgregarEntrada((long)prensaUO.informeId, prensaUO.titulo, 8);
             if (entradaId != 0)
             {
-                foreach (PrensaUO prensa in prensaUO.prensas)
+                foreach (PrensaOB prensa in prensaUO.prensas)
                 {
                     prensa.entradaPrensaId = entradaId;
-                    AgregarPrensa(prensa);
+                    if (prensa.id == null)
+                        AgregarPrensa(prensa);
+                    else if (prensa.modificado)
+                        GuardarPrensa(prensa);
                 }
 
-                foreach (Suscripcion suscripcion in prensaUO.suscripciones)
-                    AgregarSuscripcion(suscripcion);
+                foreach (SuscripcionOB suscripcion in prensaUO.suscripciones)
+                {
+                    suscripcion.entradaPrensaId = entradaId;
+                    if (suscripcion.id == null)
+                        AgregarSuscripcion(suscripcion);
+                    else if (suscripcion.modificado)
+                        GuardarSuscripcion(suscripcion);
+                }
+
+                con.Close();
             }
             else
                 resultado.Detalle = Notificacion.FALTA_ASIGNAR_EXCEPCION;
@@ -1779,7 +1792,48 @@ namespace ReportCreator.Model
             return resultado;
         }
 
-        public Notificacion AgregarSuscripcion(Suscripcion suscripcion)
+        public Notificacion GuardarEntradaPrensa(EntradaPrensaUO prensaUO)
+        {
+            Notificacion resultado = new Notificacion();
+
+            if (!con.State.Equals(ConnectionState.Open))
+                con.Open();
+
+            SqlCeCommand cmd = new SqlCeCommand("UPDATE entrada_informe SET titulo=@titulo WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", prensaUO.id);
+            cmd.Parameters.AddWithValue("@titulo", prensaUO.titulo);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            foreach (PrensaOB prensa in prensaUO.prensas)
+            {
+                if (prensa.id == null)
+                    AgregarPrensa(prensa);
+                else if (prensa.modificado)
+                    GuardarPrensa(prensa);
+            }
+
+            foreach (SuscripcionOB suscripcion in prensaUO.suscripciones)
+            {
+                if (suscripcion.id == null)
+                    AgregarSuscripcion(suscripcion);
+                else if (suscripcion.modificado)
+                    GuardarSuscripcion(suscripcion);
+            }
+
+            con.Close();
+
+            return resultado;
+        }
+
+        public Notificacion AgregarSuscripcion(SuscripcionOB suscripcion, bool closeConnection = false)
         {
             Notificacion resultado = new Notificacion();
 
@@ -1787,8 +1841,8 @@ namespace ReportCreator.Model
                 con.Open();
 
             SqlCeCommand cmd = new SqlCeCommand(@"
-                INSERT INTO suscripcion (tipo_suscripcion, tipo_suscriptor, suscriptor_id, fecha_suscripcion, fecha_vencimiento, observacion, usuario_id)
-                VALUES (@tipo_suscripcion, @tipo_suscriptor, @suscriptor_id, @fecha_suscripcion, @fecha_vencimiento, @observacion, @usuario_id)", con);
+                INSERT INTO suscripcion (tipo_suscripcion, tipo_suscriptor, suscriptor_id, fecha_suscripcion, fecha_vencimiento, observacion, usuario_id, entrada_prensa_id)
+                VALUES (@tipo_suscripcion, @tipo_suscriptor, @suscriptor_id, @fecha_suscripcion, @fecha_vencimiento, @observacion, @usuario_id, @entrada_prensa_id)", con);
             cmd.Parameters.AddWithValue("@tipo_suscripcion", suscripcion.tipoSuscripcion);
             int param1 = suscripcion.suscriptor.GetType() == typeof(Interno) ? 1 : 2;
             cmd.Parameters.AddWithValue("@tipo_suscriptor", param1);
@@ -1798,6 +1852,7 @@ namespace ReportCreator.Model
             cmd.Parameters.AddWithValue("@fecha_vencimiento", suscripcion.fechaVencimiento);
             cmd.Parameters.AddWithValue("@observacion", suscripcion.observacion);
             cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
+            cmd.Parameters.AddWithValue("@entrada_prensa_id", suscripcion.entradaPrensaId);
 
             try
             {
@@ -1809,13 +1864,14 @@ namespace ReportCreator.Model
             }
             finally
             {
-                con.Close();
+                if (closeConnection)
+                    con.Close();
             }
 
             return resultado;
         }
 
-        public Notificacion AgregarPrensa(PrensaUO prensa)
+        public Notificacion AgregarPrensa(PrensaOB prensa, bool closeConnection = false)
         {
             Notificacion resultado = new Notificacion();
 
@@ -1827,12 +1883,21 @@ namespace ReportCreator.Model
                 VALUES (@entrada_prensa_id, @tipo_pasaje, @tipo_comprador, @interno_id, @prensa_numero, @aporte, @comprador_id, @actividad_id, @observacion)", con);
             cmd.Parameters.AddWithValue("@entrada_prensa_id", prensa.entradaPrensaId);
             cmd.Parameters.AddWithValue("@tipo_pasaje", prensa.tipoPasaje.id);
-            int param1 = prensa.comprador.GetType() == typeof(Interno) ? 1 : 2;
-            cmd.Parameters.AddWithValue("@comprador_id", param1);
+            int param1 = prensa.comprador == null || prensa.comprador.GetType() == typeof(Externo) ? 2 : 1;
+            cmd.Parameters.AddWithValue("@tipo_comprador", param1);
             cmd.Parameters.AddWithValue("@interno_id", prensa.interno.id);
             cmd.Parameters.AddWithValue("@prensa_numero", prensa.prensaNumero);
             cmd.Parameters.AddWithValue("@aporte", prensa.aporte);
-            long param2 = prensa.comprador.GetType() == typeof(Interno) ? ((Interno)prensa.comprador).id : ((Externo)prensa.comprador).id;
+            object param2 = prensa.comprador;
+            if (param2 != null)
+            {
+                if (param2.GetType() == typeof(Interno))
+                    param2 = ((Interno)param2).id;
+                else
+                    param2 = ((Externo)param2).id;
+            }
+            else
+                param2 = DBNull.Value;
             cmd.Parameters.AddWithValue("@comprador_id", param2);
             object param3 = prensa.actividadId;
             if (param3 == null)
@@ -1850,13 +1915,14 @@ namespace ReportCreator.Model
             }
             finally
             {
-                con.Close();
+                if (closeConnection)
+                    con.Close();
             }
 
             return resultado;
         }
 
-        public Notificacion GuardarPrensa(PrensaUO prensa)
+        public Notificacion GuardarPrensa(PrensaOB prensa, bool closeConnection = false)
         {
             Notificacion resultado = new Notificacion();
 
@@ -1865,16 +1931,25 @@ namespace ReportCreator.Model
 
             SqlCeCommand cmd = new SqlCeCommand(@"
                 UPDATE prensa SET tipo_pasaje = @tipo_pasaje, tipo_comprador = @tipo_comprador, interno_id = @interno_id, 
-                prensa_numero = @prensa_numero, aporte = @aporte, comprador_id = @comprador_id, actividad_id = @actividad_id, observacion = @observacion) 
-                WHERE id = @id)", con);
+                prensa_numero = @prensa_numero, aporte = @aporte, comprador_id = @comprador_id, actividad_id = @actividad_id, observacion = @observacion 
+                WHERE id = @id", con);
             cmd.Parameters.AddWithValue("@id", prensa.id);
             cmd.Parameters.AddWithValue("@tipo_pasaje", prensa.tipoPasaje.id);
-            int param1 = prensa.comprador.GetType() == typeof(Interno) ? 1 : 2;
-            cmd.Parameters.AddWithValue("@comprador_id", param1);
+            int param1 = prensa.comprador == null || prensa.comprador.GetType() == typeof(Externo) ? 2 : 1;
+            cmd.Parameters.AddWithValue("@tipo_comprador", param1);
             cmd.Parameters.AddWithValue("@interno_id", prensa.interno.id);
             cmd.Parameters.AddWithValue("@prensa_numero", prensa.prensaNumero);
             cmd.Parameters.AddWithValue("@aporte", prensa.aporte);
-            long param2 = prensa.comprador.GetType() == typeof(Interno) ? ((Interno)prensa.comprador).id : ((Externo)prensa.comprador).id;
+            object param2 = prensa.comprador;
+            if (param2 != null)
+            {
+                if (param2.GetType() == typeof(Interno))
+                    param2 = ((Interno)param2).id;
+                else
+                    param2 = ((Externo)param2).id;
+            }
+            else
+                param2 = DBNull.Value;
             cmd.Parameters.AddWithValue("@comprador_id", param2);
             object param3 = prensa.actividadId;
             if (param3 == null)
@@ -1892,13 +1967,14 @@ namespace ReportCreator.Model
             }
             finally
             {
-                con.Close();
+                if (closeConnection)
+                    con.Close();
             }
 
             return resultado;
         }
 
-        public Notificacion GuardarSuscripcion(Suscripcion suscripcion)
+        public Notificacion GuardarSuscripcion(SuscripcionOB suscripcion, bool closeConnection = false)
         {
             Notificacion resultado = new Notificacion();
 
@@ -1907,7 +1983,7 @@ namespace ReportCreator.Model
 
             SqlCeCommand cmd = new SqlCeCommand(@"
                 UPDATE suscripcion SET tipo_suscripcion = @tipo_suscripcion, tipo_suscriptor = @tipo_suscriptor, suscriptor_id = @suscriptor_id, 
-                fecha_suscripcion = @fecha_suscripcion, fecha_vencimiento = @fecha_vencimiento, observacion = @observacion, usuario_id = @usuario_id) 
+                fecha_suscripcion = @fecha_suscripcion, fecha_vencimiento = @fecha_vencimiento, observacion = @observacion, usuario_id = @usuario_id, entrada_prensa_id = @entrada_prensa_id) 
                 WHERE id = @id)", con);
             cmd.Parameters.AddWithValue("@id", suscripcion.id);
             cmd.Parameters.AddWithValue("@tipo_suscripcion", suscripcion.tipoSuscripcion);
@@ -1919,6 +1995,7 @@ namespace ReportCreator.Model
             cmd.Parameters.AddWithValue("@fecha_vencimiento", suscripcion.fechaVencimiento);
             cmd.Parameters.AddWithValue("@observacion", suscripcion.observacion);
             cmd.Parameters.AddWithValue("@usuario_id", App.customPrincipal.Identity.Id);
+            cmd.Parameters.AddWithValue("@entrada_prensa_id", suscripcion.entradaPrensaId);
 
             try
             {
@@ -1930,15 +2007,16 @@ namespace ReportCreator.Model
             }
             finally
             {
-                con.Close();
+                if (closeConnection)
+                    con.Close();
             }
 
             return resultado;
         }
 
-        public PrensaUO ObtenerPrensa(long id, bool closeConnection = true)
+        public PrensaOB ObtenerPrensa(long id, bool closeConnection = true)
         {
-            PrensaUO prensa = null;
+            PrensaOB prensa = null;
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
@@ -1956,7 +2034,7 @@ namespace ReportCreator.Model
             {
                 while (rdr.Read())
                 {
-                    prensa = new PrensaUO();
+                    prensa = new PrensaOB();
                     prensa.id = rdr.GetInt64(0);
                     prensa.entradaPrensaId = rdr.GetInt64(1);
                     prensa.tipoPasaje = new Tipo(rdr.GetInt32(2), rdr.GetString(10));
@@ -1978,9 +2056,9 @@ namespace ReportCreator.Model
             return prensa;
         }
 
-        public Suscripcion ObtenerSuscripcion(long id, bool closeConnection = true)
+        public SuscripcionOB ObtenerSuscripcion(long id, bool closeConnection = true)
         {
-            Suscripcion suscripcion = null;
+            SuscripcionOB suscripcion = null;
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
@@ -1995,7 +2073,7 @@ namespace ReportCreator.Model
             {
                 while (rdr.Read())
                 {
-                    suscripcion = new Suscripcion();
+                    suscripcion = new SuscripcionOB();
                     suscripcion.id = rdr.GetInt64(0);
                     suscripcion.tipoSuscripcion = rdr.GetInt32(1);
                     if (rdr.GetInt32(2) == 1)
@@ -2006,6 +2084,7 @@ namespace ReportCreator.Model
                     suscripcion.fechaVencimiento = rdr.GetDateTime(5);
                     suscripcion.observacion = rdr.GetString(6);
                     suscripcion.usuarioId = rdr.GetInt32(7);
+                    suscripcion.entradaPrensaId = rdr.GetInt64(8);
                 }
             }
 
@@ -2015,9 +2094,9 @@ namespace ReportCreator.Model
             return suscripcion;
         }
 
-        public ObservableCollection<PrensaUO> ObtenerPrensasByEntradaId(long entradaId, bool closeConnection = true)
+        public ObservableCollection<PrensaOB> ObtenerPrensasByEntradaId(long entradaId, bool closeConnection = true)
         {
-            ObservableCollection<PrensaUO> prensas = new ObservableCollection<PrensaUO>();
+            ObservableCollection<PrensaOB> prensas = new ObservableCollection<PrensaOB>();
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
@@ -2035,7 +2114,7 @@ namespace ReportCreator.Model
             {
                 while (rdr.Read())
                 {
-                    PrensaUO prensa = new PrensaUO();
+                    PrensaOB prensa = new PrensaOB();
                     prensa.id = rdr.GetInt64(0);
                     prensa.entradaPrensaId = rdr.GetInt64(1);
                     prensa.tipoPasaje = prensa.tipoPasaje = new Tipo(rdr.GetInt32(2), rdr.GetString(10));
@@ -2046,7 +2125,8 @@ namespace ReportCreator.Model
                     prensa.interno = ObtenerInterno(rdr.GetInt64(4), false);
                     prensa.prensaNumero = rdr.GetInt32(5);
                     prensa.aporte = rdr.GetInt32(6);
-                    prensa.actividadId = rdr.GetInt64(8);
+                    if (!rdr.IsDBNull(8))
+                        prensa.actividadId = rdr.GetInt64(8);
                     prensa.observacion = rdr.GetString(9);
                     prensas.Add(prensa);
                 }
@@ -2058,9 +2138,9 @@ namespace ReportCreator.Model
             return prensas;
         }
 
-        public ObservableCollection<Suscripcion> ObtenerSuscripciones(bool closeConnection = true)
+        public ObservableCollection<SuscripcionOB> ObtenerSuscripciones(bool closeConnection = true)
         {
-            ObservableCollection<Suscripcion> suscripciones = new ObservableCollection<Suscripcion>();
+            ObservableCollection<SuscripcionOB> suscripciones = new ObservableCollection<SuscripcionOB>();
 
             if (!con.State.Equals(ConnectionState.Open))
                 con.Open();
@@ -2075,7 +2155,7 @@ namespace ReportCreator.Model
             {
                 while (rdr.Read())
                 {
-                    Suscripcion suscripcion = new Suscripcion();
+                    SuscripcionOB suscripcion = new SuscripcionOB();
                     suscripcion.id = rdr.GetInt64(0);
                     suscripcion.tipoSuscripcion = rdr.GetInt32(1);
                     if (rdr.GetInt32(2) == 1)

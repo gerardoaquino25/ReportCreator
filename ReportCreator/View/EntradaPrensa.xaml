@@ -67,10 +67,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <DockPanel HorizontalAlignment="Center">
-                    <Button Content="Guardar" Click="GuardarClick" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button Content="Cancelar" Click="CancelarClick" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Content="Guardar" Click="Guardar_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Content="Cancelar" Click="Cancelar_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </DockPanel>
-                <Button Content="Prueba" Click="Button_Click"/>
             </StackPanel>
         </Border>
     </Grid>

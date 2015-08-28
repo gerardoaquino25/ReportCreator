@@ -104,11 +104,12 @@
     <Compile Include="Entities\Authentication\DelegateCommand.cs" />
     <Compile Include="Entities\OpcionGeneral.cs" />
     <Compile Include="Entities\Actividad.cs" />
-    <Compile Include="Entities\PrensaUO.cs" />
-    <Compile Include="Entities\Suscripcion.cs" />
+    <Compile Include="Entities\PrensaOB.cs" />
+    <Compile Include="Entities\SuscripcionOB.cs" />
     <Compile Include="Entities\Tipo.cs" />
     <Compile Include="Entities\UtilityObject\EntradaPrensaUO.cs" />
     <Compile Include="Utilities\ConvertirDGPrensas.cs" />
+    <Compile Include="Utilities\Validador.cs" />
     <Compile Include="View\AgregarActividad.xaml.cs">
       <DependentUpon>AgregarActividad.xaml</DependentUpon>
     </Compile>

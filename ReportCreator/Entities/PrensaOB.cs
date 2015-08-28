@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ReportCreator.Entities
 {
-    public class PrensaUO
+    public class PrensaOB
     {
-        public long id { get; set; }
+        public long? id { get; set; }
         public long? entradaPrensaId { get; set; }
         public Tipo tipoPasaje { get; set; }
         public Interno interno { get; set; }
@@ -18,7 +18,7 @@ namespace ReportCreator.Entities
         public string observacion { get; set; }
         public bool modificado { get; set; }
 
-        public PrensaUO()
+        public PrensaOB()
         {
             modificado = false;
         }
@@ -28,7 +28,7 @@ namespace ReportCreator.Entities
             if (prensaUO == null)
                 return false;
 
-            PrensaUO p = prensaUO as PrensaUO;
+            PrensaOB p = prensaUO as PrensaOB;
             if ((System.Object)p == null)
                 return false;
 

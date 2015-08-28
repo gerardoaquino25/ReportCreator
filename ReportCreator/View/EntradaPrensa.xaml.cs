@@ -28,10 +28,16 @@ namespace ReportCreator.View
 
         private bool entradaPrensaNueva;
         private bool informeNuevo;
-        private UserControl previous;
         public EntradaPrensaUO entradaPrensaUO;
-        private PrensaUO prensaUO = null;
 
+        #region INICIALIZADOR
+        /// <summary>
+        /// Inicializador para una entrada nueva.
+        /// </summary>
+        /// <param name="informeId"></param>
+        /// <param name="titulo"></param>
+        /// <param name="entradaPrensaNueva"></param>
+        /// <param name="informeNuevo"></param>
         public EntradaPrensa(long informeId, string titulo, bool entradaPrensaNueva, bool informeNuevo)
         {
             InitializeComponent();
@@ -43,24 +49,14 @@ namespace ReportCreator.View
             this.informeNuevo = informeNuevo;
             this.entradaPrensaNueva = entradaPrensaNueva;
 
-            this.Iniciar();
+            this.CargarInfo();
         }
 
-        public EntradaPrensa(long informeId, long entradaId, string titulo, bool informeNuevo)
-        {
-            InitializeComponent();
-
-            this.entradaPrensaUO = new EntradaPrensaUO();
-            this.entradaPrensaUO.titulo = titulo;
-            this.entradaPrensaUO.informeId = informeId;
-            this.entradaPrensaUO.id = entradaId;
-
-            this.informeNuevo = informeNuevo;
-            this.entradaPrensaNueva = false;
-
-            this.Iniciar();
-        }
-
+        /// <summary>
+        /// Inicializador para una entrada ya creada, o sea para la modificación de la misma.
+        /// </summary>
+        /// <param name="idEntrada"></param>
+        /// <param name="informeNuevo"></param>
         public EntradaPrensa(long idEntrada, bool informeNuevo)
         {
             InitializeComponent();
@@ -70,15 +66,14 @@ namespace ReportCreator.View
             this.informeNuevo = informeNuevo;
             this.entradaPrensaNueva = false;
 
-            this.Iniciar();
+            this.CargarInfo();
         }
+        #endregion
 
-        private void Iniciar()
+        private void CargarInfo()
         {
             if (!entradaPrensaNueva)
-            {
                 entradaPrensaUO.prensas = repo.ObtenerPrensasByEntradaId((long)this.entradaPrensaUO.id);
-            }
 
             entradaPrensaUO.suscripciones = repo.ObtenerSuscripciones();
 
@@ -87,42 +82,7 @@ namespace ReportCreator.View
             Suscripciones.DataContext = entradaPrensaUO;
         }
 
-        private void GuardarClick(object sender, RoutedEventArgs e)
-        {
-            if (this.entradaPrensaUO.id == null)
-                repo.AgregarEntradaPrensa(this.entradaPrensaUO);
-            else
-            {
-            }
-        }
-
-        private void CancelarClick(object sender, RoutedEventArgs e)
-        {
-            if (this.entradaPrensaUO.informeId == null && (Prensas.Items.Count > 0 || Suscripciones.Items.Count > 0))
-            {
-                //TODO: Mensaje de aviso
-            }
-
-            MainWindow.self.Content = new Borrador((long)entradaPrensaUO.informeId, informeNuevo);
-        }
-
-        private void AgregarPasajePrensa_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.self.Content = new AgregarPrensa(this, this.entradaPrensaUO.id == null);
-        }
-
-        private void AgregarSuscripcion_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void RowPrensa_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridRow row = sender as DataGridRow;
-            PrensaUO entrada = (PrensaUO)row.Item;
-            MainWindow.self.Content = new AgregarPrensa(this, entrada, row.GetIndex(), entrada.entradaPrensaId == null);
-        }
-
+        #region KEY DOWN
         private void RowPrensa_KeyDown(object sender, KeyEventArgs e)
         {
             //if (Key.Delete == e.Key)
@@ -137,21 +97,44 @@ namespace ReportCreator.View
             //    }
             //}
         }
+        #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        #region CLICKS
+        private void RowPrensa_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            PrensaUO prensa = new PrensaUO();
-            prensa.actividadId = 1;
-            prensa.aporte = 10;
-            prensa.comprador = null;
-            prensa.id = 1;
-            prensa.interno = new Interno() { nombre = "Gerardo", circulo = "UTN" };
-            prensa.modificado = false;
-            prensa.observacion = "Hola";
-            prensa.prensaNumero = 1905;
-            prensa.tipoPasaje = new Tipo(1, "En mano");
-
-            this.entradaPrensaUO.prensas.Add(prensa);
+            DataGridRow row = sender as DataGridRow;
+            PrensaOB entrada = (PrensaOB)row.Item;
+            MainWindow.self.Content = new AgregarPrensa(this, entrada, row.GetIndex(), entrada.entradaPrensaId == null);
         }
+
+        private void AgregarPasajePrensa_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new AgregarPrensa(this, this.entradaPrensaUO.id == null);
+        }
+
+        private void AgregarSuscripcion_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cancelar_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.entradaPrensaUO.informeId == null && (Prensas.Items.Count > 0 || Suscripciones.Items.Count > 0))
+            {
+                //TODO: Mensaje de aviso
+            }
+
+            MainWindow.self.Content = new Borrador((long)entradaPrensaUO.informeId, informeNuevo);
+        }
+
+        private void Guardar_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.entradaPrensaUO.id == null)
+                repo.AgregarEntradaPrensa(this.entradaPrensaUO);
+            else
+                repo.GuardarEntradaPrensa(this.entradaPrensaUO);
+            MainWindow.self.Content = new Borrador((long)this.entradaPrensaUO.informeId, informeNuevo);
+        }
+        #endregion
     }
 }

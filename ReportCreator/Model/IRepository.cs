@@ -35,13 +35,13 @@ namespace ReportCreator.Model
         IList<AporteCF> ObtenerAportesCF(long entradaId, long campaniaFinancieraId);
         IList<PadronCF> ObtenerPadronesCF(long entradaId, long campaniaFinancieraId);
         EntradaCampaniaFinancieraUO ObtenerEntradaCampaniaFinanciera(long idEntrada);
-        PrensaUO ObtenerPrensa(long id, bool closeConnection = true);
-        Suscripcion ObtenerSuscripcion(long id, bool closeConnection = true);
-        ObservableCollection<Suscripcion> ObtenerSuscripciones(bool closeConnection = true);
+        PrensaOB ObtenerPrensa(long id, bool closeConnection = true);
+        SuscripcionOB ObtenerSuscripcion(long id, bool closeConnection = true);
+        ObservableCollection<SuscripcionOB> ObtenerSuscripciones(bool closeConnection = true);
         EntradaPrensaUO ObtenerEntradaPrensa(long idEntrada);
         IList<Tipo> ObtenerPrensaTipoPasaje();
         IList<Actividad> ObtenerActividades();
-        ObservableCollection<PrensaUO> ObtenerPrensasByEntradaId(long entradaId, bool closeConnection = true);
+        ObservableCollection<PrensaOB> ObtenerPrensasByEntradaId(long entradaId, bool closeConnection = true);
 
         Notificacion GuardarEntradaGenerica(EntradaGenericaUO entradaGenerica);
         Notificacion GuardarInforme(long idInforme, string asunto);
@@ -53,8 +53,9 @@ namespace ReportCreator.Model
         Notificacion GuardarPadronCF(PadronCF padron);
         Notificacion GuardarEntradaCampaniaFinanciera(EntradaCampaniaFinancieraUO entradaCampaniaFinanciera);
         Notificacion GuardarOpcionesGenerales(IList<OpcionGeneral> listaOpcionesGenerales);
-        Notificacion GuardarPrensa(PrensaUO prensa);
-        Notificacion GuardarSuscripcion(Suscripcion suscripcion);
+        Notificacion GuardarPrensa(PrensaOB prensa, bool closeConnection = true);
+        Notificacion GuardarSuscripcion(SuscripcionOB suscripcion, bool closeConnection = true);
+        Notificacion GuardarEntradaPrensa(EntradaPrensaUO prensaUO);
 
         Notificacion BorrarMailSender(int id);
         Notificacion BorrarEntrada(long id, int tipo);

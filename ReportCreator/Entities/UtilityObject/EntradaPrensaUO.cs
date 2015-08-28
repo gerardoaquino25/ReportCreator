@@ -10,7 +10,13 @@ namespace ReportCreator.Entities.UtilityObject
 {
     public class EntradaPrensaUO : Entrada
     {
-        public ObservableCollection<PrensaUO> prensas { get; set; }
-        public ObservableCollection<Suscripcion> suscripciones { get; set; }
+        public ObservableCollection<PrensaOB> prensas { get; set; }
+        public ObservableCollection<SuscripcionOB> suscripciones { get; set; }
+
+        public EntradaPrensaUO()
+        {
+            this.prensas = new ObservableCollection<PrensaOB>();
+            this.suscripciones = new ObservableCollection<SuscripcionOB>();
+        }
     }
 }

@@ -34,7 +34,7 @@
                     <CheckBox Name="ExternoDesconocido" Content="Desconocido?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoDesconocido_Checked" Unchecked="ExternoDesconocido_Unchecked" Width="144"/>
                 </DockPanel>
                 <DockPanel Name="ExternoExistenteLabel">
-                    <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoExistenteCheck" Unchecked="ExternoExistenteUncheck" Width="144"/>
+                    <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoExistente_Check" Unchecked="ExternoExistente_Uncheck" Width="144"/>
                 </DockPanel>
                 <DockPanel Name="ExternoLabel">
                     <Label Content="Externo:"/>
@@ -48,18 +48,21 @@
                     <Label Content="Observación externo:"/>
                     <TextBox Name="ObservacionExterno" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
                 </DockPanel>
-                <DockPanel>
+                <DockPanel Name="AporteLabel">
                     <Label Content="Aporte:"/>
                     <TextBox Name="Aporte" Width="50" HorizontalAlignment="Left"/>
                 </DockPanel>
-                <DockPanel>
+                <DockPanel Name="NumeroPrensaLabel">
                     <Label Content="Numero de prensa:"/>
-                    <TextBox Name="NumeroPrensa" Width="50" HorizontalAlignment="Left"/>
+                    <StackPanel Uid="contenedorMensaje">
+                        <TextBox Name="NumeroPrensa" Height="Auto" Width="50" HorizontalAlignment="Left"/>
+                        <Label Visibility="Collapsed" Content="" Uid="mensaje" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
                 </DockPanel>
                 <DockPanel Name="ActividadLabel">
                     <Label Content="Actividad:"/>
                     <ListBox DisplayMemberPath="nombre" Name="Actividades" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="119"/>
-                    <Button Content="+" Height="25" Width="25" Click="AgregarActividadClick"/>
+                    <Button Content="+" Height="25" Width="25" Click="AgregarActividad_Click"/>
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Observación:"/>

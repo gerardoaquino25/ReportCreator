@@ -1,6 +1,7 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Entities.UtilityObject;
 using ReportCreator.Model;
+using ReportCreator.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,23 +27,43 @@ namespace ReportCreator.View
         public const string AGREGAR_PRENSA = "AGREGAR_PRENSA";
         public const string ABM_ACTIVIDAD = "ABM_ACTIVIDAD";
 
+        private static string FALTA_COMPLETAR_NUMERO_PRENSA = "FALTA_COMPLETAR_NUMERO_PRENSA";
+        private static string FALTA_COMPLETAR_APORTE = "FALTA_COMPLETAR_APORTE";
+        private static string FALTA_COMPLETAR_NOMBRE_EXTERNO = "FALTA_COMPLETAR_NOMBRE_EXTERNO";
+        private static string FALTA_SELECCIONAR_INTERNO = "FALTA_SELECCIONAR_INTERNO";
+        private static string FALTA_SELECCIONAR_EXTERNO = "FALTA_SELECCIONAR_EXTERNO";
+
         private IRepository repo = new Repository();
         private UserControl proveniente;
-        private PrensaUO prensaUO;
+        private PrensaOB prensaUO;
         private bool modificacion;
         private bool entradaPrensaNueva;
         private int orden;
+        private string mensaje = "OK";
 
+        #region INICIALIZADOR
+        /// <summary>
+        /// Inicializador para una prensa nueva.
+        /// </summary>
+        /// <param name="entradaPrensa"></param>
+        /// <param name="entradaPrensaNueva"></param>
         public AgregarPrensa(EntradaPrensa entradaPrensa, bool entradaPrensaNueva)
         {
             InitializeComponent();
             this.proveniente = entradaPrensa;
-            this.Iniciar();
+            this.CargarInfo();
             this.modificacion = false;
             this.entradaPrensaNueva = entradaPrensaNueva;
         }
 
-        public AgregarPrensa(EntradaPrensa entradaPrensa, PrensaUO prensaUO, int orden, bool entradaPrensaNueva)
+        /// <summary>
+        /// Inicializador para modificar una prensa.
+        /// </summary>
+        /// <param name="entradaPrensa"></param>
+        /// <param name="prensaUO"></param>
+        /// <param name="orden"></param>
+        /// <param name="entradaPrensaNueva"></param>
+        public AgregarPrensa(EntradaPrensa entradaPrensa, PrensaOB prensaUO, int orden, bool entradaPrensaNueva)
         {
             InitializeComponent();
             this.proveniente = entradaPrensa;
@@ -50,10 +71,11 @@ namespace ReportCreator.View
             this.modificacion = true;
             this.entradaPrensaNueva = entradaPrensaNueva;
             this.orden = orden;
-            this.Iniciar(this.prensaUO);
+            this.CargarInfo(this.prensaUO);
         }
+        #endregion
 
-        private void Iniciar(PrensaUO prensaUO = null)
+        private void CargarInfo(PrensaOB prensaUO = null)
         {
             TipoPasaje.ItemsSource = repo.ObtenerPrensaTipoPasaje();
             Internos.ItemsSource = repo.ObtenerInternos();
@@ -63,6 +85,7 @@ namespace ReportCreator.View
             if (modificacion)
             {
                 TipoPasaje.SelectedItem = prensaUO.tipoPasaje;
+                Internos.SelectedItem = prensaUO.interno;
 
                 if (prensaUO.comprador != null)
                 {
@@ -73,24 +96,17 @@ namespace ReportCreator.View
                     }
                     else
                     {
-                        TipoAportante.SelectedIndex = 2;
-
-                        if (((Externo)prensaUO.comprador).id != null)
-                        {
-                            Externos.SelectedItem = prensaUO.comprador;
-                            ExternoExistente.IsChecked = true;
-                            ExternoExistenteCheck(null, null);
-                        }
-                        else
-                        {
-                            ExternoDesconocido.IsChecked = true;
-                        }
-
+                        TipoAportante.SelectedIndex = 1;
+                        Externos.SelectedItem = prensaUO.comprador;
+                        ExternoDesconocido.IsChecked = false;
+                        ExternoDesconocido_Unchecked(null, null);
+                        ExternoExistente.IsChecked = true;
+                        ExternoExistente_Check(null, null);
                     }
                 }
                 else
                 {
-                    TipoAportante.SelectedItem = 2;
+                    TipoAportante.SelectedIndex = 1;
                     ExternoDesconocido.IsChecked = true;
                     ExternoDesconocido_Checked(null, null);
                 }
@@ -105,21 +121,15 @@ namespace ReportCreator.View
             }
         }
 
-        private void AgregarActividadClick(object sender, RoutedEventArgs e)
+        private PrensaOB ObtenerPrensaCargada()
         {
-            MainWindow.self.Content = new AgregarActividad(AgregarActividad.AGREGAR_PRENSA, this);
-        }
+            PrensaOB prensa = new PrensaOB();
 
-        private void Volver_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.self.Content = proveniente;
-        }
-
-        private PrensaUO CargarPrensa()
-        {
-            PrensaUO prensa = new PrensaUO();
             if (!entradaPrensaNueva)
                 prensa.entradaPrensaId = ((EntradaPrensa)proveniente).entradaPrensaUO.id;
+
+            if (modificacion)
+                prensa.id = prensaUO.id;
 
             if (Actividades.SelectedIndex == 0 || Actividades.SelectedIndex == -1)
                 prensa.actividadId = null;
@@ -147,37 +157,47 @@ namespace ReportCreator.View
             return prensa;
         }
 
-        private void Guardar_Click(object sender, RoutedEventArgs e)
+        private bool ValidarDatos()
         {
-            PrensaUO prensa = CargarPrensa();
-            prensa.modificado = true;
+            Validador validador = new Validador();
 
-            if (!modificacion)
+            if (TipoAportante.SelectedIndex == 1)
             {
-                ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Add(prensa);
-                MainWindow.self.Content = proveniente;
+                if (!(bool)ExternoDesconocido.IsChecked)
+                {
+                    if ((bool)ExternoExistente.IsChecked)
+                        validador.Add(ExternoLabel, Externos, AgregarPrensa.FALTA_SELECCIONAR_INTERNO);
+                    else
+                        validador.Add(NombreExternoLabel, NombreExterno, AgregarPrensa.FALTA_COMPLETAR_NOMBRE_EXTERNO);
+                }
             }
-            else
+
+            validador.Add(InternosLabel, Internos, AgregarPrensa.FALTA_SELECCIONAR_INTERNO);
+            validador.Add(AporteLabel, Aporte, AgregarPrensa.FALTA_COMPLETAR_APORTE);
+            validador.Add(NumeroPrensaLabel, NumeroPrensa, AgregarPrensa.FALTA_COMPLETAR_NUMERO_PRENSA);
+
+            validador.Validar();
+            //TODO: mostrar mensaje de error o correcto.
+
+            foreach (object[] objecto in validador.errores)
             {
-                ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas[orden] = prensa;
+                foreach (UIElement ele in ((DockPanel)objecto[0]).Children)
+                {
+                    if (ele.Uid == "contenedorMensaje")
+                    {
+                        foreach (UIElement ele2 in ((StackPanel)ele).Children)
+                        {
+                            if (ele2.Uid == "mensaje")
+                            {
+                                ele2.Visibility = Visibility.Visible;
+                                ((Label)ele2).Content = ((string)objecto[1]);
+                            }
+                        }
+                    }
+                }
             }
-        }
 
-        private void ExternoDesconocido_Checked(object sender, RoutedEventArgs e)
-        {
-            NombreExterno.Text = "";
-            ObservacionExterno.Text = "";
-            NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-            ExternoExistenteLabel.Visibility = System.Windows.Visibility.Collapsed;
-            ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-        }
-
-        private void ExternoDesconocido_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
-            ExternoExistente.IsChecked = true;
-            ExternoExistenteCheck(null, null);
+            return validador.errores.Count == 0;
         }
 
         private void TipoAportante_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -202,7 +222,25 @@ namespace ReportCreator.View
             }
         }
 
-        private void ExternoExistenteCheck(object sender, RoutedEventArgs e)
+        #region CHECKS
+        private void ExternoDesconocido_Checked(object sender, RoutedEventArgs e)
+        {
+            NombreExterno.Text = "";
+            ObservacionExterno.Text = "";
+            NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+            ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+            ExternoExistenteLabel.Visibility = System.Windows.Visibility.Collapsed;
+            ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void ExternoDesconocido_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ExternoExistenteLabel.Visibility = System.Windows.Visibility.Visible;
+            ExternoExistente.IsChecked = true;
+            ExternoExistente_Check(null, null);
+        }
+
+        private void ExternoExistente_Check(object sender, RoutedEventArgs e)
         {
             NombreExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
             ObservacionExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
@@ -210,12 +248,44 @@ namespace ReportCreator.View
             ExternoLabel.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private void ExternoExistenteUncheck(object sender, RoutedEventArgs e)
+        private void ExternoExistente_Uncheck(object sender, RoutedEventArgs e)
         {
             ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
 
             NombreExternoLabel.Visibility = System.Windows.Visibility.Visible;
             ObservacionExternoLabel.Visibility = System.Windows.Visibility.Visible;
         }
+        #endregion
+
+        #region CLICKS
+        private void AgregarActividad_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = new AgregarActividad(AgregarActividad.AGREGAR_PRENSA, this);
+        }
+
+        private void Volver_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.self.Content = proveniente;
+        }
+
+        private void Guardar_Click(object sender, RoutedEventArgs e)
+        {
+            if (ValidarDatos())
+            {
+                PrensaOB prensa = ObtenerPrensaCargada();
+                prensa.modificado = true;
+
+                if (!modificacion)
+                    ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Add(prensa);
+                else
+                {
+                    ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.RemoveAt(orden);
+                    ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Add(prensa);
+                    ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Move(((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Count - 1, orden);
+                }
+                MainWindow.self.Content = proveniente;
+            }
+        }
+        #endregion
     }
 }
