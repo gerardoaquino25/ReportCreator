@@ -116,6 +116,9 @@
     <Compile Include="View\AgregarPrensa.xaml.cs">
       <DependentUpon>AgregarPrensa.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AgregarSuscipcion.xaml.cs">
+      <DependentUpon>AgregarSuscipcion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Authentication\CrearNuevoUsuario.xaml.cs">
       <DependentUpon>CrearNuevoUsuario.xaml</DependentUpon>
     </Compile>
@@ -162,11 +165,36 @@
     <Compile Include="View\EntradaPrensa.xaml.cs">
       <DependentUpon>EntradaPrensa.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UtilityElement\ExternoDesconocidoUE.xaml.cs">
+      <DependentUpon>ExternoDesconocidoUE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UtilityElement\ExternoExistenteUE.xaml.cs">
+      <DependentUpon>ExternoExistenteUE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UtilityElement\ExternosUE.xaml.cs">
+      <DependentUpon>ExternosUE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UtilityElement\InternosUE.xaml.cs">
+      <DependentUpon>InternosUE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UtilityElement\NombreExternoUE.xaml.cs">
+      <DependentUpon>NombreExternoUE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UtilityElement\ObservacionExternoUE.xaml.cs">
+      <DependentUpon>ObservacionExternoUE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UtilityElement\ObservacionUE.xaml.cs">
+      <DependentUpon>ObservacionUE.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\AgregarActividad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AgregarPrensa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AgregarSuscipcion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -307,6 +335,34 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EntradaPrensa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UtilityElement\ExternoDesconocidoUE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UtilityElement\ExternoExistenteUE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UtilityElement\ExternosUE.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\UtilityElement\InternosUE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UtilityElement\NombreExternoUE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UtilityElement\ObservacionExternoUE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UtilityElement\ObservacionUE.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
