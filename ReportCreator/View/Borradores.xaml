@@ -8,10 +8,6 @@
     <Border Margin="10">
         <DockPanel VerticalAlignment="Stretch" Height="Auto">
             <DockPanel DockPanel.Dock="Top">
-                <Image HorizontalAlignment="Left" Height="40" Source="C:\Users\Gerardo\Desktop\Backward.png"/>
-                <!--<Button HorizontalAlignment="Right" Width="100" Height="25" SourceUpdated="" Click="VolverClick"/>-->
-            </DockPanel>
-            <DockPanel DockPanel.Dock="Top">
                 <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Informes">
                     <DataGrid.Columns >
                         <DataGridTextColumn Binding="{Binding Path=asunto}" Header="Asunto" MinWidth="50"/>

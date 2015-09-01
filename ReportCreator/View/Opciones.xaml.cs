@@ -24,6 +24,7 @@ namespace ReportCreator.View
         public Opciones()
         {
             InitializeComponent();
+            MainWindow.VolverReference.MouseRightButtonUp += new EventHandler(Volver_Click);
         }
 
         private void Volver_Click(object sender, RoutedEventArgs e)

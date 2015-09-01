@@ -26,13 +26,16 @@ namespace ReportCreator
         public static AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
         public static Grid ContenidoReference;
         public static DockPanel InitBarReference;
+        public static DockPanel VolverReference;
 
         public MainWindow()
         {
             InitializeComponent();
             ContenidoReference = Contenido;
             InitBarReference = InitBar;
+            InitBarReference.Visibility = Visibility.Collapsed;
             ContenidoReference.Children.Add(new LoginWindow(viewModel));
+            VolverReference = Volver;
         }
 
         public static void SetContent(UIElement elemento, bool showBar = false)
@@ -43,6 +46,16 @@ namespace ReportCreator
             else
                 InitBarReference.Visibility = Visibility.Collapsed;
             ContenidoReference.Children.Add(elemento);
+        }
+
+        private void Volver_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Volver.Cursor = Cursors.Hand;
+        }
+
+        private void Volver_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Volver.Cursor = Cursors.Arrow;
         }
     }
 }

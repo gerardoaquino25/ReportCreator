@@ -15,7 +15,6 @@ namespace ReportCreator.Entities.Authentication
         private readonly IAuthenticationService _authenticationService;
         private readonly DelegateCommand _loginCommand;
         private readonly DelegateCommand _logoutCommand;
-        private readonly DelegateCommand _showViewCommand;
         private string _username;
         private string _status;
 
@@ -58,8 +57,6 @@ namespace ReportCreator.Entities.Authentication
         public DelegateCommand LoginCommand { get { return _loginCommand; } }
 
         public DelegateCommand LogoutCommand { get { return _logoutCommand; } }
-
-        public DelegateCommand ShowViewCommand { get { return _showViewCommand; } }
         #endregion
 
         private void Login(object parameter)
@@ -85,7 +82,7 @@ namespace ReportCreator.Entities.Authentication
                 Username = string.Empty; //reset
                 PasswordBox.Password = string.Empty; //reset
                 Status = string.Empty;
-                MainWindow.SetContent(new Main(), true);
+                MainWindow.SetContent(new Main(), false);
             }
             catch (UnauthorizedAccessException)
             {
