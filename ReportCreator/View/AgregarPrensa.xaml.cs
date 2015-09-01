@@ -27,11 +27,11 @@ namespace ReportCreator.View
         public const string AGREGAR_PRENSA = "AGREGAR_PRENSA";
         public const string ABM_ACTIVIDAD = "ABM_ACTIVIDAD";
 
-        private static string FALTA_COMPLETAR_NUMERO_PRENSA = "FALTA_COMPLETAR_NUMERO_PRENSA";
-        private static string FALTA_COMPLETAR_APORTE = "FALTA_COMPLETAR_APORTE";
-        private static string FALTA_COMPLETAR_NOMBRE_EXTERNO = "FALTA_COMPLETAR_NOMBRE_EXTERNO";
-        private static string FALTA_SELECCIONAR_INTERNO = "FALTA_SELECCIONAR_INTERNO";
-        private static string FALTA_SELECCIONAR_EXTERNO = "FALTA_SELECCIONAR_EXTERNO";
+        private static string FALTA_COMPLETAR_NUMERO_PRENSA = "*Campo requerido.";
+        private static string FALTA_COMPLETAR_APORTE = "*Campo requerido.";
+        private static string FALTA_COMPLETAR_NOMBRE_EXTERNO = "*Campo requerido.";
+        private static string FALTA_SELECCIONAR_INTERNO = "*Campo requerido.";
+        private static string FALTA_SELECCIONAR_EXTERNO = "*Campo requerido.";
 
         private IRepository repo = new Repository();
         private UserControl proveniente;
@@ -159,14 +159,14 @@ namespace ReportCreator.View
 
         private bool ValidarDatos()
         {
-            Validador validador = new Validador();
+            Validador validador = new Validador("contenedorMensaje", "mensaje");
 
             if (TipoAportante.SelectedIndex == 1)
             {
                 if (!(bool)ExternoDesconocido.IsChecked)
                 {
                     if ((bool)ExternoExistente.IsChecked)
-                        validador.Add(ExternoLabel, Externos, AgregarPrensa.FALTA_SELECCIONAR_INTERNO);
+                        validador.Add(ExternoLabel, Externos, AgregarPrensa.FALTA_SELECCIONAR_EXTERNO);
                     else
                         validador.Add(NombreExternoLabel, NombreExterno, AgregarPrensa.FALTA_COMPLETAR_NOMBRE_EXTERNO);
                 }
@@ -178,24 +178,6 @@ namespace ReportCreator.View
 
             validador.Validar();
             //TODO: mostrar mensaje de error o correcto.
-
-            foreach (object[] objecto in validador.errores)
-            {
-                foreach (UIElement ele in ((DockPanel)objecto[0]).Children)
-                {
-                    if (ele.Uid == "contenedorMensaje")
-                    {
-                        foreach (UIElement ele2 in ((StackPanel)ele).Children)
-                        {
-                            if (ele2.Uid == "mensaje")
-                            {
-                                ele2.Visibility = Visibility.Visible;
-                                ((Label)ele2).Content = ((string)objecto[1]);
-                            }
-                        }
-                    }
-                }
-            }
 
             return validador.errores.Count == 0;
         }
@@ -260,12 +242,12 @@ namespace ReportCreator.View
         #region CLICKS
         private void AgregarActividad_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new AgregarActividad(AgregarActividad.AGREGAR_PRENSA, this);
+            MainWindow.SetContent(new AgregarActividad(AgregarActividad.AGREGAR_PRENSA, this), true);
         }
 
         private void Volver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = proveniente;
+            MainWindow.SetContent(proveniente, true);
         }
 
         private void Guardar_Click(object sender, RoutedEventArgs e)
@@ -283,7 +265,7 @@ namespace ReportCreator.View
                     ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Add(prensa);
                     ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Move(((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Count - 1, orden);
                 }
-                MainWindow.self.Content = proveniente;
+                MainWindow.SetContent(proveniente, true);
             }
         }
         #endregion

@@ -4,21 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
-    <Border>
-        <StackPanel>
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="0,0,0,10"/>
-                </Style>
-            </StackPanel.Resources>
-            <Button Content="General" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Click="GeneralClick"/>
-            <Button Content="Internos" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Click="InternosClick"/>
-            <Button Content="Destinatarios" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Click="MailReceiversClick"/>
-            <Button Content="Mail" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Click="MailSendersClick"/>
-            <Button Content="Google Drive" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117"/>
-            <Button Content="Outlook" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117"/>
-            <Button Content="Dropbox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117"/>
-            <Button Content="Volver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="117" Margin="0,0,0,0"  Click="VolverClick"/>
-        </StackPanel>
-    </Border>
+    <Grid>
+        <Border Style="{StaticResource CentroStyle}">
+            <StackPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button  Style="{StaticResource LongB}" Content="General" Click="General_Click"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Internos" Click="Internos_Click"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Destinatarios" Click="MailReceivers_Click"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Mail" Click="MailSenders_Click"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Google Drive"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Outlook"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Dropbox"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Volver" Click="Volver_Click"/>
+                </DockPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>

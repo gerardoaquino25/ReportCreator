@@ -5,12 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Nuevo" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Click="Button_Click_1" Padding="1" Margin="0,0,0,5"/>
-            <Button Content="Borrador" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Click="Button_Click_3" Margin="0,0,0,5"/>
-            <Button Content="Pendiente de Envio" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Click="Button_Click" Margin="0,0,0,5"/>
-            <Button Content="Enviados" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Margin="0,0,0,5"/>
-            <Button Content="Volver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Click="Button_Click_2" Margin="0,0,0,5"/>
-        </StackPanel>
+        <Border Style="{StaticResource CentroStyle}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Nuevo" Click="Borrador_Click"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Borrador" Click="Borradores_Click"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Pendiente de Envio" Click="PendienteEnvio_Click"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Enviados"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Volver" Click="Volver_Click"/>
+                </DockPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

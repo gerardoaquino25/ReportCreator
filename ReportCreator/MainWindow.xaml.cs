@@ -23,16 +23,26 @@ namespace ReportCreator
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Window self;
-        //public AuthenticationViewModel viewModel;
         public static AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
+        public static Grid ContenidoReference;
+        public static DockPanel InitBarReference;
 
         public MainWindow()
         {
             InitializeComponent();
-            self = this;
+            ContenidoReference = Contenido;
+            InitBarReference = InitBar;
+            ContenidoReference.Children.Add(new LoginWindow(viewModel));
+        }
 
-            this.Content = new LoginWindow(viewModel);
+        public static void SetContent(UIElement elemento, bool showBar = false)
+        {
+            ContenidoReference.Children.RemoveAt(0);
+            if (showBar)
+                InitBarReference.Visibility = Visibility.Visible;
+            else
+                InitBarReference.Visibility = Visibility.Collapsed;
+            ContenidoReference.Children.Add(elemento);
         }
     }
 }

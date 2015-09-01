@@ -25,24 +25,24 @@ namespace ReportCreator.View
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void PendienteEnvio_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new PendienteEnvio();
+            MainWindow.SetContent(new PendienteEnvio(), true);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Borrador_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Borrador();
+            MainWindow.SetContent(new Borrador(), true);
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Main();
+            MainWindow.SetContent(new Main(), true);
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Borradores_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Borradores();
+            MainWindow.SetContent(new Borradores(), true);
         }
     }
 }

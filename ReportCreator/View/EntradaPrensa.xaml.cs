@@ -104,12 +104,12 @@ namespace ReportCreator.View
         {
             DataGridRow row = sender as DataGridRow;
             PrensaOB entrada = (PrensaOB)row.Item;
-            MainWindow.self.Content = new AgregarPrensa(this, entrada, row.GetIndex(), entrada.entradaPrensaId == null);
+            MainWindow.SetContent(new AgregarPrensa(this, entrada, row.GetIndex(), entrada.entradaPrensaId == null), true);
         }
 
         private void AgregarPasajePrensa_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new AgregarPrensa(this, this.entradaPrensaUO.id == null);
+            MainWindow.SetContent(new AgregarPrensa(this, this.entradaPrensaUO.id == null), true);
         }
 
         private void AgregarSuscripcion_Click(object sender, RoutedEventArgs e)
@@ -124,7 +124,7 @@ namespace ReportCreator.View
                 //TODO: Mensaje de aviso
             }
 
-            MainWindow.self.Content = new Borrador((long)entradaPrensaUO.informeId, informeNuevo);
+            MainWindow.SetContent(new Borrador((long)entradaPrensaUO.informeId, informeNuevo), true);
         }
 
         private void Guardar_Click(object sender, RoutedEventArgs e)
@@ -133,7 +133,7 @@ namespace ReportCreator.View
                 repo.AgregarEntradaPrensa(this.entradaPrensaUO);
             else
                 repo.GuardarEntradaPrensa(this.entradaPrensaUO);
-            MainWindow.self.Content = new Borrador((long)this.entradaPrensaUO.informeId, informeNuevo);
+            MainWindow.SetContent(new Borrador((long)this.entradaPrensaUO.informeId, informeNuevo), true);
         }
         #endregion
     }

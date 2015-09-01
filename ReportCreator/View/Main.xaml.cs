@@ -29,20 +29,20 @@ namespace ReportCreator.View
             InitializeComponent();
         }
 
-        private void EnvioInformeClick(object sender, RoutedEventArgs e)
-        {
-            MainWindow.self.Content = new EnvioInforme();
-        }
-
-        private void OpcionesClick(object sender, RoutedEventArgs e)
-        {
-            MainWindow.self.Content = new Opciones();
-        }
-
         private void CerrarSesion(object sender, RoutedEventArgs e)
         {
             MainWindow.viewModel.Logout(new object());
-            MainWindow.self.Content = new LoginWindow(MainWindow.viewModel);
+            MainWindow.SetContent(new LoginWindow(MainWindow.viewModel), true);
+        }
+
+        private void EnvioInforme_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.SetContent(new EnvioInforme(), true);
+        }
+
+        private void Opciones_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.SetContent(new Opciones(), true);
         }
     }
 }

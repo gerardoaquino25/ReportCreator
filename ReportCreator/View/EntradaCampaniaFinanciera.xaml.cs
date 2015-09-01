@@ -106,17 +106,17 @@ namespace ReportCreator.View
 
         private void AgregarPadronClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new AgregarPadronAporte(idEntrada, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id, true, true, nuevo);
+            MainWindow.SetContent(new AgregarPadronAporte(idEntrada, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id, true, true, nuevo), true);
         }
 
         private void AgregarAporteClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new AgregarPadronAporte(idEntrada, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id, true, false, nuevo);
+            MainWindow.SetContent(new AgregarPadronAporte(idEntrada, ((CampaniaFinanciera)CampaniaAsociada.SelectedItem).id, true, false, nuevo), true);
         }
 
         private void AgregarCFClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new AgregarCF(idEntrada, nuevo);
+            MainWindow.SetContent(new AgregarCF(idEntrada, nuevo), true);
         }
 
         private void GuardarClick(object sender, RoutedEventArgs e)
@@ -127,7 +127,7 @@ namespace ReportCreator.View
                 entradaCampaniaFinanciera.titulo = Titulo.Text;
                 entradaCampaniaFinanciera.campaniaFinanciera = (CampaniaFinanciera)CampaniaAsociada.SelectedItem;
                 repo.GuardarEntradaCampaniaFinanciera(entradaCampaniaFinanciera);
-                MainWindow.self.Content = new Borrador((long)idInforme, nuevo);
+                MainWindow.SetContent(new Borrador((long)idInforme, nuevo), true);
             }
         }
 
@@ -138,7 +138,7 @@ namespace ReportCreator.View
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Borrador((long)idInforme, nuevo);
+            MainWindow.SetContent(new Borrador((long)idInforme, nuevo), true);
         }
 
         private void RowPadronesKeyDown(object sender, KeyEventArgs e)
@@ -175,7 +175,7 @@ namespace ReportCreator.View
             DataGridRow row = sender as DataGridRow;
             PadronCF entrada = (PadronCF)row.Item;
             if (entrada.entradaCampaniaFinancieraId == entradaCampaniaFinanciera.id)
-                MainWindow.self.Content = new AgregarPadronAporte(entrada, false, nuevo);
+                MainWindow.SetContent(new AgregarPadronAporte(entrada, false, nuevo), true);
         }
 
         private void RowAportesDoubleClick(object sender, MouseButtonEventArgs e)
@@ -183,7 +183,7 @@ namespace ReportCreator.View
             DataGridRow row = sender as DataGridRow;
             AporteCF entrada = (AporteCF)row.Item;
             if (entrada.entradaCampaniaFinancieraId == entradaCampaniaFinanciera.id)
-                MainWindow.self.Content = new AgregarPadronAporte(entrada, false, nuevo);
+                MainWindow.SetContent(new AgregarPadronAporte(entrada, false, nuevo), true);
         }
     }
 }

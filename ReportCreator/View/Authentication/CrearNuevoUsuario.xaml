@@ -8,27 +8,27 @@
     <Grid>
         <Border Style="{StaticResource CentroStyle}">
             <StackPanel>
-                <Label>Nombre de usuario</Label>
-                <TextBox Style="{StaticResource DefaultTB}" Name="Username"></TextBox>
-                <Label>E-mail</Label>
-                <TextBox Style="{StaticResource DefaultTB}" Name="Email"></TextBox>
-                <Label>Contraseña</Label>
-                <PasswordBox Style="{StaticResource PasswordPB}" Name="Password"></PasswordBox>
-                <Label>Repetir Contraseña</Label>
-                <PasswordBox Style="{StaticResource PasswordPB}" Name="RepeatPassword"></PasswordBox>
+                <DockPanel Style="{StaticResource VerticalFormDP}">
+                    <Label Style="{StaticResource VerticalFormL}">Nombre de usuario:</Label>
+                    <TextBox Style="{StaticResource ExtraLongTB}" Name="Username"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource VerticalFormDP}">
+                    <Label Style="{StaticResource VerticalFormL}">E-mail:</Label>
+                    <TextBox Style="{StaticResource ExtraLongTB}" Name="Email"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource VerticalFormDP}">
+                    <Label Style="{StaticResource VerticalFormL}">Contraseña:</Label>
+                    <PasswordBox Style="{StaticResource ExtraLongPB}" Name="Password"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource VerticalFormDP}">
+                    <Label Style="{StaticResource VerticalFormL}">Repetir Contraseña:</Label>
+                    <PasswordBox Style="{StaticResource ExtraLongPB}" Name="RepeatPassword"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource EndVerticalFormDP}">
+                    <Button Margin="0,0,10,0" Style="{StaticResource MediumB}" Click="Crear_Click">Crear</Button>
+                    <Button Margin="10,0,0,0" Style="{StaticResource MediumB}" Click="Volver_Click">Volver</Button>
+                </DockPanel>
             </StackPanel>
         </Border>
-        <StackPanel Style="{StaticResource RightBottomStyle}">
-            <DockPanel HorizontalAlignment="Center">
-                <DockPanel.Resources>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Margin" Value="20,5,20,5"/>
-                        <Setter Property="Width" Value="100"/>
-                    </Style>
-                </DockPanel.Resources>
-                <Button Click="CrearClick">Crear</Button>
-                <Button Click="VolverClick">Volver</Button>
-            </DockPanel>
-        </StackPanel>
     </Grid>
 </UserControl>

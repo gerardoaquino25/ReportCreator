@@ -6,21 +6,19 @@
              mc:Ignorable="d" 
              Height="Auto" Width="Auto">
     <Grid>
-        <StackPanel HorizontalAlignment="Left">
-            <Label HorizontalAlignment="Left">
-                Usuario
-            </Label>
-            <TextBox Name="Username" Width="200" HorizontalAlignment="Left"/>
-            <DockPanel>
-                <DockPanel.Resources>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Width" Value="100"/>
-                        <Setter Property="Margin" Value="20,5,20,5"/>
-                    </Style>
-                </DockPanel.Resources>
-                <Button Content="Recuperar" Click="RecuperarClick"/>
-                <Button Content="Volver" Click="VolverClick"/>
-            </DockPanel>
-        </StackPanel>
+        <Border Style="{StaticResource CentroStyle}">
+            <StackPanel>
+                <DockPanel Style="{StaticResource VerticalFormDP}">
+                    <Label Style="{StaticResource VerticalFormL}">
+                        Usuario:
+                    </Label>
+                    <TextBox Style="{StaticResource ExtraLongTB}" Name="Username" Width="200" HorizontalAlignment="Left"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource EndVerticalFormDP}">
+                    <Button Margin="0,0,10,0" Style="{StaticResource MediumB}" Content="Recuperar" Click="RecuperarClick"/>
+                    <Button Margin="10,0,0,0" Style="{StaticResource MediumB}" Content="Volver" Click="VolverClick"/>
+                </DockPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

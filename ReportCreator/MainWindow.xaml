@@ -3,5 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="RO Admin"
         Height="600" Width="800">
-    <Grid/>
+    <Grid Margin="10">
+        <DockPanel Grid.Row="0" Name="InitBar" Visibility="Visible" Height="60" VerticalAlignment="Top">
+            <DockPanel Visibility="Visible" Height="60" VerticalAlignment="Top">
+                <Image DockPanel.Dock="Top" HorizontalAlignment="Left" Height="40" Source="C:\Users\Gerardo\Desktop\Backward.png"/>
+                <Label DockPanel.Dock="Bottom" Height="20" Content="Volver" Padding="5,0,5,5"/>
+            </DockPanel>
+        </DockPanel>
+        <StackPanel Name="Contenido"/>
+    </Grid>
 </Window>

@@ -32,7 +32,7 @@ namespace ReportCreator.View.Authentication
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new LoginWindow(MainWindow.viewModel);
+            MainWindow.SetContent(new LoginWindow(MainWindow.viewModel), true);
         }
 
         private void RecuperarClick(object sender, RoutedEventArgs e)
@@ -40,7 +40,7 @@ namespace ReportCreator.View.Authentication
             Notificacion resultado = repo.RecuperarContraseña(Username.Text);
             if (resultado.Detalle == Notificacion.EMAIL_ENVIADO)
             {
-                MainWindow.self.Content = new LoginWindow(MainWindow.viewModel);
+                MainWindow.SetContent(new LoginWindow(MainWindow.viewModel), true);
             }
             else if (resultado.Detalle == Notificacion.CAMBIO_CONTRASENIA_KO)
             {

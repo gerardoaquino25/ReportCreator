@@ -54,7 +54,7 @@ namespace ReportCreator.View
             {
                 case AGREGAR_PRENSA:
                     ((AgregarPrensa)previous).Actividades.ItemsSource = repo.ObtenerActividades();
-                    MainWindow.self.Content = previous;
+                    MainWindow.SetContent(previous, true);
                     break;
                 case ABM_ACTIVIDAD:
                     break;

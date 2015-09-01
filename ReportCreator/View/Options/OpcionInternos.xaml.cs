@@ -35,12 +35,12 @@ namespace ReportCreator.View.Options
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             repo.GuardarInternos((List<Interno>)InternosDG.ItemsSource);
-            MainWindow.self.Content = new Opciones();
+            MainWindow.SetContent(new Opciones(), true);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Opciones();
+            MainWindow.SetContent(new Opciones(), true);
         }
     }
 }

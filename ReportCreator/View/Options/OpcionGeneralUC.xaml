@@ -6,19 +6,26 @@
     <Grid>
         <Border Style="{StaticResource CentroStyle}">
             <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                        <Setter Property="Width" Value="135"/>
+                    </Style>
+                </StackPanel.Resources>
                 <DockPanel>
                     <Label>Asunto default:</Label>
-                    <TextBox Style="{StaticResource InsideTB}" Name="AsuntoDefault" Width="200"></TextBox>
+                    <TextBox Style="{StaticResource LongTB}" Name="AsuntoDefault" HorizontalAlignment="Left"></TextBox>
                 </DockPanel>
                 <Expander Name="CambiarContrasenia" Width="Auto" Header="Cambiar contraseña" Collapsed="ContraseniaCollapsed">
                     <StackPanel>
                         <DockPanel>
-                            <Label>Contraseña actual:</Label>
-                            <PasswordBox Name="ContraseniaActual"></PasswordBox>
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="134">Contraseña actual:</Label>
+                            <PasswordBox Style="{StaticResource LongPB}" Name="ContraseniaActual" HorizontalAlignment="Left"></PasswordBox>
                         </DockPanel>
                         <DockPanel>
-                            <Label>Contraseña nueva:</Label>
-                            <PasswordBox Name="ContraseniaNueva"></PasswordBox>
+                            <Label Width="134">Contraseña nueva:</Label>
+                            <PasswordBox Style="{StaticResource LongPB}" Name="ContraseniaNueva" HorizontalAlignment="Left"></PasswordBox>
                         </DockPanel>
                     </StackPanel>
                 </Expander>

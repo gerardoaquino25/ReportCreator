@@ -3,16 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
-    <Border Padding="10">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="0,0,0,10"/>
-                </Style>
-            </StackPanel.Resources>
-            <Button Content="Envio de informe" HorizontalAlignment="Left" VerticalAlignment="Top" Width="102" Click="EnvioInformeClick" Margin="0,0,0,5"/>
-            <Button Content="Opciones" HorizontalAlignment="Left" VerticalAlignment="Top" Width="102" Click="OpcionesClick" Margin="0,0,0,5"/>
-            <Button Content="Cerrar Sesión" HorizontalAlignment="Left" VerticalAlignment="Top" Width="102" Margin="0,0,0,0" Click="CerrarSesion"/>
-        </StackPanel>
-    </Border>
+    <Grid>
+        <Border Style="{StaticResource CentroStyle}">
+            <StackPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Envio de informe" Click="EnvioInforme_Click" />
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Opciones" Click="Opciones_Click"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Button Style="{StaticResource LongB}" Content="Cerrar Sesión" Click="CerrarSesion"/>
+                </DockPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>

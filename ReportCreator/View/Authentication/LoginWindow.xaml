@@ -5,26 +5,22 @@
         <Border Style="{StaticResource CentroStyle}">
             <StackPanel>
                 <StackPanel.Resources>
-                    <Style TargetType="{x:Type TextBox}">
-                        <Setter Property="Margin" Value="0,0,0,10"/>
-                        <Setter Property="MinWidth" Value="200"/>
-                    </Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Margin" Value="0,0,0,10"/>
-                    </Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Margin" Value="0,0,0,0"/>
                     </Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Margin" Value="0,10,0,10"/>
-                    </Style>
                 </StackPanel.Resources>
                 <TextBlock Text="{Binding AuthenticatedUser}" FontSize="14" HorizontalAlignment="Right" TextWrapping="Wrap" FontWeight="Bold"/>
-                <TextBlock Text="Username:"/>
-                <TextBox MinWidth="300" Name="Username" Text="{Binding Username}"/>
-                <TextBlock Text="Password:"/>
-                <PasswordBox MinWidth="300" Name="PasswordBox"/>
-                <Button Content="Iniciar Sesión" Command="{Binding LoginCommand, Mode=OneTime}" CommandParameter="{Binding ElementName=PasswordBox}" HorizontalAlignment="Right"/>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <TextBlock DockPanel.Dock="Top" Text="Username:"/>
+                    <TextBox Style="{StaticResource ExtraLongTB}" Name="Username" Text="{Binding Username}"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <TextBlock DockPanel.Dock="Top" Text="Password:"/>
+                    <PasswordBox Style="{StaticResource ExtraLongPB}" Name="PasswordBox"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource EndVerticalFormDP}">
+                    <Button Style="{StaticResource MediumB}" Content="Iniciar Sesión" Command="{Binding LoginCommand, Mode=OneTime}" CommandParameter="{Binding ElementName=PasswordBox}" HorizontalAlignment="Right"/>
+                </DockPanel>
                 <TextBlock Text="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" TextWrapping="Wrap" />
             </StackPanel>
         </Border>

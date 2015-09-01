@@ -32,12 +32,12 @@ namespace ReportCreator.View.Options
 
         private void AgregarClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new DetalleMail();
+            MainWindow.SetContent(new DetalleMail(), true);
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Opciones();
+            MainWindow.SetContent(new Opciones(), true);
         }
 
         private void Row_KeyDown(object sender, KeyEventArgs e)
@@ -52,7 +52,7 @@ namespace ReportCreator.View.Options
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow row = sender as DataGridRow;
-            MainWindow.self.Content = new DetalleMail(((MailSender)row.Item).id);
+            MainWindow.SetContent(new DetalleMail(((MailSender)row.Item).id), true);
         }
     }
 }

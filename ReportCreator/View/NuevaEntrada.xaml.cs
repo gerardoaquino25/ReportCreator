@@ -53,14 +53,14 @@ namespace ReportCreator.View
                 //case 0:
                 //    break;
                 case 1:
-                    MainWindow.self.Content = new EntradaGenerica(idInforme, asunto.Text, nuevo);
+                    MainWindow.SetContent(new EntradaGenerica(idInforme, asunto.Text, nuevo), true);
                     break;
                 case 2:
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 3:
                     idEntrada = repo.AgregarEntrada(idInforme, asunto.Text, 3);
-                    MainWindow.self.Content = new EntradaCampaniaFinanciera(idEntrada, nuevo, true);
+                    MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, true), true);
                     break;
                 case 4:
                     //MainWindow.self.Content = new NuevoBorrador();
@@ -75,10 +75,10 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 8:
-                    MainWindow.self.Content = new EntradaPrensa(idInforme, asunto.Text, true, nuevo);
+                    MainWindow.SetContent(new EntradaPrensa(idInforme, asunto.Text, true, nuevo), true);
                     break;
                 case 9:
-                    MainWindow.self.Content = new EntradaCotizacion(idInforme, asunto.Text, nuevo);
+                    MainWindow.SetContent(new EntradaCotizacion(idInforme, asunto.Text, nuevo), true);
                     break;
                 case 10:
                     //MainWindow.self.Content = new NuevoBorrador();

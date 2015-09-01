@@ -13,7 +13,7 @@
                 <DataGridTextColumn Binding="{Binding Path=descripcion}" Header="Descripción" MinWidth="100" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Guardar" HorizontalAlignment="Left" Margin="135,268,0,0" VerticalAlignment="Top" Width="75" Click="GuardarClick"/>
-        <Button Content="Volver" HorizontalAlignment="Left" Margin="215,268,0,0" VerticalAlignment="Top" Width="75" Click="VolverClick"/>
+        <Button Content="Guardar" HorizontalAlignment="Left" Margin="135,268,0,0" VerticalAlignment="Top" Width="75" Click="Guardar_Click"/>
+        <Button Content="Volver" HorizontalAlignment="Left" Margin="215,268,0,0" VerticalAlignment="Top" Width="75" Click="Volver_Click"/>
     </Grid>
 </UserControl>

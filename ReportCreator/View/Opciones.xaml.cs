@@ -26,29 +26,29 @@ namespace ReportCreator.View
             InitializeComponent();
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Main();
+            MainWindow.SetContent(new Main(), true);
         }
 
-        private void InternosClick(object sender, RoutedEventArgs e)
+        private void Internos_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new OpcionInternos();
+            MainWindow.SetContent(new OpcionInternos(), true);
         }
 
-        private void MailSendersClick(object sender, RoutedEventArgs e)
+        private void MailSenders_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new OpcionMailSenders();
+            MainWindow.SetContent(new OpcionMailSenders(), true);
         }
 
-        private void MailReceiversClick(object sender, RoutedEventArgs e)
+        private void MailReceivers_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new OpcionMailReceivers();
+            MainWindow.SetContent(new OpcionMailReceivers(), true);
         }
 
-        private void GeneralClick(object sender, RoutedEventArgs e)
+        private void General_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new OpcionGeneralUC();
+            MainWindow.SetContent(new OpcionGeneralUC(), true);
         }
     }
 }

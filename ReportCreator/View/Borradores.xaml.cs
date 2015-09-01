@@ -36,12 +36,12 @@ namespace ReportCreator.View
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow row = sender as DataGridRow;
-            MainWindow.self.Content = new Borrador(((Informe)row.Item).id, false);
+            MainWindow.SetContent(new Borrador(((Informe)row.Item).id, false), true);
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new EnvioInforme();
+            MainWindow.SetContent(new EnvioInforme(), true);
         }
 
         private void Row_KeyDown(object sender, KeyEventArgs e)

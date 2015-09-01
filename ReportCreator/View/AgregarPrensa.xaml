@@ -8,69 +8,74 @@
     <Grid>
         <Border Style="{StaticResource CentroStyle}">
             <StackPanel HorizontalAlignment="Center" Margin="0,10" VerticalAlignment="Center">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="HorizontalAlignment" Value="Right"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                        <Setter Property="Width" Value="125"/>
-                    </Style>
-                </StackPanel.Resources>
-                <DockPanel>
-                    <Label Content="Tipo pasaje:"/>
-                    <ComboBox DisplayMemberPath="descripcion" Width="150" Name="TipoPasaje"/>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Tipo pasaje:"/>
+                    <ComboBox Style="{StaticResource ShortCB}" DisplayMemberPath="descripcion" Name="TipoPasaje" HorizontalAlignment="Left"/>
                 </DockPanel>
-                <DockPanel>
-                    <Label Content="Tipo aportante:"/>
-                    <ComboBox Name="TipoAportante" Width="150" SelectionChanged="TipoAportante_SelectionChanged">
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Tipo aportante:"/>
+                    <ComboBox Style="{StaticResource ShortCB}" Name="TipoAportante" SelectionChanged="TipoAportante_SelectionChanged" HorizontalAlignment="Left">
                         <ComboBoxItem>Interno</ComboBoxItem>
                         <ComboBoxItem>Externo</ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
-                <DockPanel Name="InternosLabel">
-                    <Label Content="Interno:" />
-                    <ComboBox DisplayMemberPath="nombreCompleto" Width="150" Name="Internos"/>
-                </DockPanel>
-                <DockPanel Name="ExternoDesconocidoLabel">
-                    <CheckBox Name="ExternoDesconocido" Content="Desconocido?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoDesconocido_Checked" Unchecked="ExternoDesconocido_Unchecked" Width="144"/>
-                </DockPanel>
-                <DockPanel Name="ExternoExistenteLabel">
-                    <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoExistente_Check" Unchecked="ExternoExistente_Uncheck" Width="144"/>
-                </DockPanel>
-                <DockPanel Name="ExternoLabel">
-                    <Label Content="Externo:"/>
-                    <ListBox DisplayMemberPath="nombre" Name="Externos" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="119"/>
-                </DockPanel>
-                <DockPanel Name="NombreExternoLabel">
-                    <Label Content="Nombre:"/>
-                    <TextBox Name="NombreExterno" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"/>
-                </DockPanel>
-                <DockPanel Name="ObservacionExternoLabel">
-                    <Label Content="Observación externo:"/>
-                    <TextBox Name="ObservacionExterno" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
-                </DockPanel>
-                <DockPanel Name="AporteLabel">
-                    <Label Content="Aporte:"/>
-                    <TextBox Name="Aporte" Width="50" HorizontalAlignment="Left"/>
-                </DockPanel>
-                <DockPanel Name="NumeroPrensaLabel">
-                    <Label Content="Numero de prensa:"/>
-                    <StackPanel Uid="contenedorMensaje">
-                        <TextBox Name="NumeroPrensa" Height="Auto" Width="50" HorizontalAlignment="Left"/>
-                        <Label Visibility="Collapsed" Content="" Uid="mensaje" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top"/>
+                <DockPanel Style="{StaticResource FormDP}" Name="InternosLabel">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Interno:" />
+                    <StackPanel Uid="contenedorMensaje" Height="Auto">
+                        <ComboBox Style="{StaticResource MediumCB}" DisplayMemberPath="nombreCompleto" Width="150" Name="Internos" HorizontalAlignment="Left"/>
+                        <Label Visibility="Collapsed" Style="{StaticResource FormL}" Uid="mensaje" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top"/>
                     </StackPanel>
                 </DockPanel>
-                <DockPanel Name="ActividadLabel">
-                    <Label Content="Actividad:"/>
-                    <ListBox DisplayMemberPath="nombre" Name="Actividades" HorizontalAlignment="Left" Height="78" VerticalAlignment="Top" Width="119"/>
+                <DockPanel  Style="{StaticResource FormDP}" Name="ExternoDesconocidoLabel">
+                    <CheckBox Name="ExternoDesconocido" Content="Desconocido?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoDesconocido_Checked" Unchecked="ExternoDesconocido_Unchecked" Width="144"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}" Name="ExternoExistenteLabel">
+                    <CheckBox Name="ExternoExistente" Content="Existente?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoExistente_Check" Unchecked="ExternoExistente_Uncheck" Width="144"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}" Name="ExternoLabel">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Externo:"/>
+                    <StackPanel Uid="contenedorMensaje" Height="Auto">
+                        <ListBox Style="{StaticResource DefaultLB}" DisplayMemberPath="nombre" Name="Externos" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Visibility="Collapsed" Style="{StaticResource FormL}" Uid="mensaje" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}" Name="NombreExternoLabel">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Nombre:"/>
+                    <StackPanel Uid="contenedorMensaje" Height="Auto">
+                        <TextBox Style="{StaticResource LongTB}" Name="NombreExterno" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Visibility="Collapsed" Style="{StaticResource FormL}" Uid="mensaje" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}" Name="ObservacionExternoLabel">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Observación externo:"/>
+                    <TextBox Style="{StaticResource BigTB}" Name="ObservacionExterno" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}" Name="AporteLabel">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Aporte:"/>
+                    <StackPanel Uid="contenedorMensaje" Height="Auto">
+                        <TextBox Style="{StaticResource ShortTB}" Name="Aporte" Width="50" HorizontalAlignment="Left"/>
+                        <Label Visibility="Collapsed" Style="{StaticResource FormL}" Uid="mensaje" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}" Name="NumeroPrensaLabel">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Numero de prensa:"/>
+                    <StackPanel Uid="contenedorMensaje" Height="Auto">
+                        <TextBox Style="{StaticResource ShortTB}" Name="NumeroPrensa" Width="50" HorizontalAlignment="Left"/>
+                        <Label Visibility="Collapsed" Style="{StaticResource FormL}" Uid="mensaje" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel Style="{StaticResource FormDP}" Name="ActividadLabel">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Actividad:"/>
+                    <ListBox Style="{StaticResource DefaultLB}" DisplayMemberPath="nombre" Name="Actividades" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Button Content="+" Height="25" Width="25" Click="AgregarActividad_Click"/>
                 </DockPanel>
-                <DockPanel>
-                    <Label Content="Observación:"/>
-                    <TextBox Name="Observacion" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="121"/>
+                <DockPanel Style="{StaticResource FormDP}">
+                    <Label Style="{StaticResource DefaultFormL}" Content="Observación:"/>
+                    <TextBox Style="{StaticResource BigTB}" Name="Observacion" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </DockPanel>
-                <DockPanel HorizontalAlignment="Center">
-                    <Button Name="Volver" Content="Volver" Click="Volver_Click"/>
-                    <Button Name="Guardar" Content="Guardar" Click="Guardar_Click"/>
+                <DockPanel Margin="0,10,0,10" HorizontalAlignment="Center">
+                    <Button Margin="0,0,10,0" Style="{StaticResource MediumB}" Name="Guardar" Content="Guardar" Click="Guardar_Click"/>
+                    <Button Margin="10,0,0,0" Style="{StaticResource MediumB}" Name="Volver" Content="Volver" Click="Volver_Click"/>
                 </DockPanel>
             </StackPanel>
         </Border>

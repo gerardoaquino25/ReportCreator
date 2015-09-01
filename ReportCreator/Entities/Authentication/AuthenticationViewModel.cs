@@ -85,7 +85,7 @@ namespace ReportCreator.Entities.Authentication
                 Username = string.Empty; //reset
                 PasswordBox.Password = string.Empty; //reset
                 Status = string.Empty;
-                MainWindow.self.Content = new Main();
+                MainWindow.SetContent(new Main(), true);
             }
             catch (UnauthorizedAccessException)
             {

@@ -31,15 +31,15 @@ namespace ReportCreator.View.Options
             MailReceiversDG.ItemsSource = mailReceivers;
         }
 
-        private void GuardarClick(object sender, RoutedEventArgs e)
+        private void Guardar_Click(object sender, RoutedEventArgs e)
         {
             repo.GuardarMailReceivers((List<MailReceiver>)MailReceiversDG.ItemsSource);
-            MainWindow.self.Content = new Opciones();
+            MainWindow.SetContent(new Opciones(), true);
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new Opciones();
+            MainWindow.SetContent(new Opciones(), true);
         }
     }
 }

@@ -29,13 +29,13 @@ namespace ReportCreator.View.Authentication
             InitializeComponent();
         }
 
-        private void CrearClick(object sender, RoutedEventArgs e)
+        private void Crear_Click(object sender, RoutedEventArgs e)
         {
             Notificacion respuesta = repo.AgregarUsuario(Username.Text, Email.Text, Password.Password);
 
             if (respuesta.Detalle.Equals(Notificacion.USUARIO_CREADO))
             {
-                MainWindow.self.Content = new LoginWindow(MainWindow.viewModel);
+                MainWindow.SetContent(new LoginWindow(MainWindow.viewModel), true);
             }
             else
             {
@@ -51,9 +51,9 @@ namespace ReportCreator.View.Authentication
             }
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.self.Content = new LoginWindow(MainWindow.viewModel);
+            MainWindow.SetContent(new LoginWindow(MainWindow.viewModel), true);
         }
     }
 }
