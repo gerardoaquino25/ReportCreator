@@ -34,12 +34,12 @@ namespace ReportCreator.View.Authentication
 
         private void CrearNuevoUsuarioClick(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.SetContent(new CrearNuevoUsuario(), true);
+            MainWindow.SetContent(new CrearNuevoUsuario());
         }
 
         private void RecuperarContraseniaClick(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.SetContent(new RecuperarContrasenia(Username.Text), true);
+            MainWindow.SetContent(new RecuperarContrasenia(Username.Text));
         }
 
         private void LabelMouseEnter(object sender, MouseEventArgs e)

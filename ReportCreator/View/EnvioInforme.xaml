@@ -19,9 +19,6 @@
                 <DockPanel Style="{StaticResource FormDP}">
                     <Button Style="{StaticResource LongB}" Content="Enviados"/>
                 </DockPanel>
-                <DockPanel Style="{StaticResource FormDP}">
-                    <Button Style="{StaticResource LongB}" Content="Volver" Click="Volver_Click"/>
-                </DockPanel>
             </StackPanel>
         </Border>
     </Grid>

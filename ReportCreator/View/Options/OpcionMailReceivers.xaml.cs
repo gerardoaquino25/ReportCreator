@@ -34,12 +34,12 @@ namespace ReportCreator.View.Options
         private void Guardar_Click(object sender, RoutedEventArgs e)
         {
             repo.GuardarMailReceivers((List<MailReceiver>)MailReceiversDG.ItemsSource);
-            MainWindow.SetContent(new Opciones(), true);
+            MainWindow.SetContent(new Opciones());
         }
 
         private void Volver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new Opciones(), true);
+            MainWindow.SetContent(new Opciones());
         }
     }
 }

@@ -35,7 +35,7 @@ namespace ReportCreator.View.Authentication
 
             if (respuesta.Detalle.Equals(Notificacion.USUARIO_CREADO))
             {
-                MainWindow.SetContent(new LoginWindow(MainWindow.viewModel), true);
+                MainWindow.SetContent(new LoginWindow(MainWindow.viewModel));
             }
             else
             {
@@ -53,7 +53,7 @@ namespace ReportCreator.View.Authentication
 
         private void Volver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new LoginWindow(MainWindow.viewModel), true);
+            MainWindow.SetContent(new LoginWindow(MainWindow.viewModel));
         }
     }
 }

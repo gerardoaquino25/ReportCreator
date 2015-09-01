@@ -6,6 +6,6 @@
              mc:Ignorable="d" 
              Height="Auto" Width="Auto">
     <DockPanel>
-        <CheckBox Name="Valor" Content="Desconocido?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Checked="ExternoDesconocido_Checked" Unchecked="ExternoDesconocido_Unchecked" Width="144"/>
+        <CheckBox Name="Valor" Content="Desconocido?" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Width="144"/>
     </DockPanel>
 </UserControl>

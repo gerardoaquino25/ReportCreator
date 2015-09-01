@@ -58,12 +58,12 @@ namespace ReportCreator.View
                     smtp = Smtp.Text
                 });
 
-            MainWindow.SetContent(new OpcionMailSenders(), true);
+            MainWindow.SetContent(new OpcionMailSenders());
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new OpcionMailSenders(), true);
+            MainWindow.SetContent(new OpcionMailSenders());
         }
 
         private void ProbarClick(object sender, RoutedEventArgs e)

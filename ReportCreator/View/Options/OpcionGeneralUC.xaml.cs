@@ -31,7 +31,7 @@ namespace ReportCreator.View.Options
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new Opciones(), true);
+            MainWindow.SetContent(new Opciones());
         }
 
         private void ContraseniaCollapsed(object sender, RoutedEventArgs e)

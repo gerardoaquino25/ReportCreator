@@ -1,5 +1,6 @@
 ﻿using ReportCreator.Model;
 using ReportCreator.View.Authentication;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,17 +33,19 @@ namespace ReportCreator.View
         private void CerrarSesion(object sender, RoutedEventArgs e)
         {
             MainWindow.viewModel.Logout(new object());
-            MainWindow.SetContent(new LoginWindow(MainWindow.viewModel), true);
+            MainWindow.SetContent(new LoginWindow(MainWindow.viewModel));
         }
 
         private void EnvioInforme_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new EnvioInforme(), true);
+            MainWindow.SetContent(new EnvioInforme());
         }
 
         private void Opciones_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new Opciones(), true);
+            MainWindow.SetContent(new Opciones());
         }
+
+
     }
 }

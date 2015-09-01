@@ -54,7 +54,7 @@ namespace ReportCreator.View
             else
                 repo.GuardarInforme(idInforme, Asunto.Text);
 
-            MainWindow.SetContent(new NuevaEntrada(idInforme, nuevo), true);
+            MainWindow.SetContent(new NuevaEntrada(idInforme, nuevo));
         }
 
         private void Row_KeyDown(object sender, KeyEventArgs e)
@@ -74,7 +74,7 @@ namespace ReportCreator.View
                 repo.AgregarInforme("");
             else
                 repo.GuardarInforme(idInforme, Asunto.Text);
-            MainWindow.SetContent(new EnvioInforme(), true);
+            MainWindow.SetContent(new EnvioInforme());
         }
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -85,13 +85,13 @@ namespace ReportCreator.View
             switch (entrada.tipo.id)
             {
                 case 1:
-                    MainWindow.SetContent(new EntradaGenerica((long)entrada.id, nuevo), true);
+                    MainWindow.SetContent(new EntradaGenerica((long)entrada.id, nuevo));
                     break;
                 case 2:
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 3:
-                    MainWindow.SetContent(new EntradaCampaniaFinanciera((long)entrada.id, nuevo, false), true);
+                    MainWindow.SetContent(new EntradaCampaniaFinanciera((long)entrada.id, nuevo, false));
                     break;
                 case 4:
                     //MainWindow.self.Content = new NuevoBorrador();
@@ -106,10 +106,10 @@ namespace ReportCreator.View
                     //MainWindow.self.Content = new NuevoBorrador();
                     break;
                 case 8:
-                    MainWindow.SetContent(new EntradaPrensa((long)entrada.id, nuevo), true);
+                    MainWindow.SetContent(new EntradaPrensa((long)entrada.id, nuevo));
                     break;
                 case 9:
-                    MainWindow.SetContent(new EntradaCotizacion((long)entrada.id, nuevo), true);
+                    MainWindow.SetContent(new EntradaCotizacion((long)entrada.id, nuevo));
                     break;
                 case 10:
                     //MainWindow.self.Content = new NuevoBorrador();
@@ -123,9 +123,9 @@ namespace ReportCreator.View
         private void VolverClick(object sender, RoutedEventArgs e)
         {
             if (nuevo)
-                MainWindow.SetContent(new EnvioInforme(), true);
+                MainWindow.SetContent(new EnvioInforme());
             else
-                MainWindow.SetContent(new Borradores(), true);
+                MainWindow.SetContent(new Borradores());
         }
     }
 }

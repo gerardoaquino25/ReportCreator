@@ -2,6 +2,7 @@
 using ReportCreator.Entities.UtilityObject;
 using ReportCreator.Model;
 using ReportCreator.Utilities;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,14 +43,31 @@ namespace ReportCreator.View
         private string mensaje = "OK";
 
         #region INICIALIZADOR
+
+        public AgregarPrensa()
+        {
+            InitializeComponent();
+            GuardarButtonUE guardarButton = new GuardarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Guardar_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+        }
+
         /// <summary>
         /// Inicializador para una prensa nueva.
         /// </summary>
         /// <param name="entradaPrensa"></param>
         /// <param name="entradaPrensaNueva"></param>
         public AgregarPrensa(EntradaPrensa entradaPrensa, bool entradaPrensaNueva)
+            : this()
         {
-            InitializeComponent();
             this.proveniente = entradaPrensa;
             this.CargarInfo();
             this.modificacion = false;
@@ -64,8 +82,8 @@ namespace ReportCreator.View
         /// <param name="orden"></param>
         /// <param name="entradaPrensaNueva"></param>
         public AgregarPrensa(EntradaPrensa entradaPrensa, PrensaOB prensaUO, int orden, bool entradaPrensaNueva)
+            : this()
         {
-            InitializeComponent();
             this.proveniente = entradaPrensa;
             this.prensaUO = prensaUO;
             this.modificacion = true;
@@ -242,12 +260,12 @@ namespace ReportCreator.View
         #region CLICKS
         private void AgregarActividad_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new AgregarActividad(AgregarActividad.AGREGAR_PRENSA, this), true);
+            MainWindow.SetContent(new AgregarActividad(AgregarActividad.AGREGAR_PRENSA, this));
         }
 
         private void Volver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(proveniente, true);
+            MainWindow.SetContent(proveniente);
         }
 
         private void Guardar_Click(object sender, RoutedEventArgs e)
@@ -265,7 +283,7 @@ namespace ReportCreator.View
                     ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Add(prensa);
                     ((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Move(((EntradaPrensa)this.proveniente).entradaPrensaUO.prensas.Count - 1, orden);
                 }
-                MainWindow.SetContent(proveniente, true);
+                MainWindow.SetContent(proveniente);
             }
         }
         #endregion

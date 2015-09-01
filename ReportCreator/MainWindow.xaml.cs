@@ -26,36 +26,48 @@ namespace ReportCreator
         public static AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
         public static Grid ContenidoReference;
         public static DockPanel InitBarReference;
-        public static DockPanel VolverReference;
+        public static IList<UserControl> ElementsToAdd;
+        delegate void MyFunctionDelegate(string a);
 
         public MainWindow()
         {
             InitializeComponent();
+            ElementsToAdd = new List<UserControl>();
             ContenidoReference = Contenido;
             InitBarReference = InitBar;
-            InitBarReference.Visibility = Visibility.Collapsed;
             ContenidoReference.Children.Add(new LoginWindow(viewModel));
-            VolverReference = Volver;
         }
 
-        public static void SetContent(UIElement elemento, bool showBar = false)
+        public static void SetContent(UIElement elemento)
         {
             ContenidoReference.Children.RemoveAt(0);
-            if (showBar)
-                InitBarReference.Visibility = Visibility.Visible;
-            else
-                InitBarReference.Visibility = Visibility.Collapsed;
+
+            for (int i = InitBarReference.Children.Count - 1; i >= 0; i--)
+                InitBarReference.Children.RemoveAt(i);
+
+            for (int i = ElementsToAdd.Count - 1; i >= 0; i--)
+            {
+                InitBarReference.Children.Add(ElementsToAdd[i]);
+                ElementsToAdd.RemoveAt(i);
+            }
+
             ContenidoReference.Children.Add(elemento);
         }
 
-        private void Volver_MouseEnter(object sender, MouseEventArgs e)
+        public static void AddButtonToInitBar(UserControl elemento)
         {
-            Volver.Cursor = Cursors.Hand;
+            ElementsToAdd.Add(elemento);
         }
 
-        private void Volver_MouseLeave(object sender, MouseEventArgs e)
+        public static void AddButtonNowToInitBar(UserControl elemento, bool removeAll = false)
         {
-            Volver.Cursor = Cursors.Arrow;
+            if (removeAll)
+            {
+                for (int i = InitBarReference.Children.Count - 1; i >= 0; i--)
+                    InitBarReference.Children.RemoveAt(i);
+            }
+
+            ContenidoReference.Children.Add(elemento);
         }
     }
 }

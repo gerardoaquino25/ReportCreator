@@ -403,7 +403,7 @@ namespace ReportCreator.View
                     }
                 }
 
-                MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, false), true);
+                MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, false));
             }
         }
 
@@ -497,7 +497,7 @@ namespace ReportCreator.View
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, false), true);
+            MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, false));
         }
 
         private void ExternoExistenteCheck(object sender, RoutedEventArgs e)

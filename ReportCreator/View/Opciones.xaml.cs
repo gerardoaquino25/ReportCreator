@@ -24,32 +24,31 @@ namespace ReportCreator.View
         public Opciones()
         {
             InitializeComponent();
-            MainWindow.VolverReference.MouseRightButtonUp += new EventHandler(Volver_Click);
         }
 
         private void Volver_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new Main(), true);
+            MainWindow.SetContent(new Main());
         }
 
         private void Internos_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new OpcionInternos(), true);
+            MainWindow.SetContent(new OpcionInternos());
         }
 
         private void MailSenders_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new OpcionMailSenders(), true);
+            MainWindow.SetContent(new OpcionMailSenders());
         }
 
         private void MailReceivers_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new OpcionMailReceivers(), true);
+            MainWindow.SetContent(new OpcionMailReceivers());
         }
 
         private void General_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new OpcionGeneralUC(), true);
+            MainWindow.SetContent(new OpcionGeneralUC());
         }
     }
 }

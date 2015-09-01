@@ -43,13 +43,13 @@ namespace ReportCreator.View
             if (ValidarDatos())
             {
                 repo.AgregarCF(NombreCampania.Text);
-                MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, this.nuevo), true);
+                MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, this.nuevo));
             }
         }
 
         private void VolverClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, this.nuevo), true);
+            MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, this.nuevo));
         }
     }
 }

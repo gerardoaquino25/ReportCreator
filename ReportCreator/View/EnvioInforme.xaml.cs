@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReportCreator.View.UtilityElement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,26 +24,31 @@ namespace ReportCreator.View
         public EnvioInforme()
         {
             InitializeComponent();
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
         }
 
         private void PendienteEnvio_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new PendienteEnvio(), true);
+            MainWindow.SetContent(new PendienteEnvio());
         }
 
         private void Borrador_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new Borrador(), true);
+            MainWindow.SetContent(new Borrador());
         }
 
-        private void Volver_Click(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.SetContent(new Main(), true);
+            MainWindow.SetContent(new Main());
         }
 
         private void Borradores_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new Borradores(), true);
+            MainWindow.SetContent(new Borradores());
         }
     }
 }
