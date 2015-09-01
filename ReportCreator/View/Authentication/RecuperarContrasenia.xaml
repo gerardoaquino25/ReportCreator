@@ -14,10 +14,6 @@
                     </Label>
                     <TextBox Style="{StaticResource ExtraLongTB}" Name="Username" Width="200" HorizontalAlignment="Left"/>
                 </DockPanel>
-                <DockPanel Style="{StaticResource EndVerticalFormDP}">
-                    <Button Margin="0,0,10,0" Style="{StaticResource MediumB}" Content="Recuperar" Click="RecuperarClick"/>
-                    <Button Margin="10,0,0,0" Style="{StaticResource MediumB}" Content="Volver" Click="VolverClick"/>
-                </DockPanel>
             </StackPanel>
         </Border>
     </Grid>

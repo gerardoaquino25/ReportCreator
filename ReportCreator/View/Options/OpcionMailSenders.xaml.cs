@@ -1,5 +1,6 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,15 +28,28 @@ namespace ReportCreator.View.Options
         public OpcionMailSenders()
         {
             InitializeComponent();
+
+            AgregarButtonUE agregarButton = new AgregarButtonUE();
+            agregarButton.Name = "Agregar";
+            agregarButton.Visibility = Visibility.Visible;
+            agregarButton.MouseLeftButtonUp += Agregar_Click;
+            MainWindow.AddButtonToInitBar(agregarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+
             MailSendersDG.ItemsSource = repo.ObtenerMailSenders();
         }
 
-        private void AgregarClick(object sender, RoutedEventArgs e)
+        private void Agregar_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new DetalleMail());
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new Opciones());
         }

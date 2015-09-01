@@ -11,16 +11,6 @@
                 <Label Name="NombreCampaniaLabel" Content="Nombre campaña:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" HorizontalContentAlignment="Right"/>
                 <TextBox Name="NombreCampania" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
             </DockPanel>
-            <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <DockPanel.Resources>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Width" Value="100"/>
-                        <Setter Property="Margin" Value="20,5,20,5"/>
-                    </Style>
-                </DockPanel.Resources>
-                <Button Content="Guardar" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Click="GuardarClick"/>
-                <Button Content="Volver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Click="VolverClick"/>
-            </DockPanel>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,6 +30,13 @@ namespace ReportCreator.View
         public Borradores()
         {
             InitializeComponent();
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+
             informes = new ObservableCollection<Informe> (repo.ObtenerInformesBorrador());
             Informes.ItemsSource = informes;
         }
@@ -39,7 +47,7 @@ namespace ReportCreator.View
             MainWindow.SetContent(new Borrador(((Informe)row.Item).id, false));
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new EnvioInforme());
         }

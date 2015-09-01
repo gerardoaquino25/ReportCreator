@@ -30,10 +30,6 @@
                     <Label Content="Fecha:"/>
                     <DatePicker Name="Fecha" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
                 </DockPanel>
-                <DockPanel Style="{StaticResource DefaultButtonDP}">
-                    <Button Style="{StaticResource DefaultB}" Content="Guardar" Click="GuardarClick"/>
-                    <Button Style="{StaticResource DefaultB}" Content="Volver" Click="VolverClick"/>
-                </DockPanel>
             </StackPanel>
         </Border>
     </Grid>

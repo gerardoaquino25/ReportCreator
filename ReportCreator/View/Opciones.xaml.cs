@@ -1,4 +1,5 @@
 ﻿using ReportCreator.View.Options;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,11 @@ namespace ReportCreator.View
         public Opciones()
         {
             InitializeComponent();
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
         }
 
         private void Volver_Click(object sender, RoutedEventArgs e)

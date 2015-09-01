@@ -165,6 +165,15 @@
     <Compile Include="View\EntradaPrensa.xaml.cs">
       <DependentUpon>EntradaPrensa.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UtilityElement\AceptarButtonUE.xaml.cs">
+      <DependentUpon>AceptarButtonUE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UtilityElement\AgregarButtonUE.xaml.cs">
+      <DependentUpon>AgregarButtonUE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UtilityElement\CancelarButtonUE.xaml.cs">
+      <DependentUpon>CancelarButtonUE.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UtilityElement\ExternoDesconocidoUE.xaml.cs">
       <DependentUpon>ExternoDesconocidoUE.xaml</DependentUpon>
     </Compile>
@@ -344,6 +353,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UtilityElement\AceptarButtonUE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UtilityElement\AgregarButtonUE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UtilityElement\CancelarButtonUE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UtilityElement\ExternoDesconocidoUE.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -464,8 +485,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="datos.txt" />
-    <Resource Include="Images\Backward Button.png" />
-    <Resource Include="Images\guardarButton.png" />
+    <Resource Include="Images\backwardButton.png" />
+    <Resource Include="Images\cancelButton.png" />
+    <Resource Include="Images\checkedButton.png" />
+    <Resource Include="Images\saveButton.png" />
+    <Resource Include="Images\addButton.png" />
     <Content Include="ReportCreator.sdf" />
   </ItemGroup>
   <ItemGroup>

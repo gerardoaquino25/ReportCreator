@@ -1,6 +1,7 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Entities.UtilityObject;
 using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,11 +34,24 @@ namespace ReportCreator.View
         public AgregarActividad(string proveniente, AgregarPrensa previous)
         {
             InitializeComponent();
+
+            GuardarButtonUE guardarButton = new GuardarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Guardar_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+
             this.proveniente = proveniente;
             this.previous = previous;
         }
 
-        private void GuardarClick(object sender, RoutedEventArgs e)
+        private void Guardar_Click(object sender, RoutedEventArgs e)
         {
             Actividad actividad = new Actividad();
             actividad.nombre = Nombre.Text;
@@ -61,7 +75,7 @@ namespace ReportCreator.View
             }
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             this.VolverAOrigen();
         }

@@ -23,7 +23,5 @@
             </DataGrid.Resources>
         </DataGrid>
         <Button Content="+" HorizontalAlignment="Left" Margin="333,10,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="AgregarClick" FontWeight="Bold" FontSize="16" Padding="0,0,1,1"/>
-        <Button Content="Guardar" HorizontalAlignment="Left" Margin="203,367,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="GuardarClick"/>
-        <Button Content="Volver" HorizontalAlignment="Left" Margin="283,367,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="VolverClick"/>
     </Grid>
 </UserControl>

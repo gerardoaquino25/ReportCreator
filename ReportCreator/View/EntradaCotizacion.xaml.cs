@@ -1,6 +1,7 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Entities.UtilityObject;
 using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,17 +27,34 @@ namespace ReportCreator.View
         private IRepository repo = new Repository();
         private EntradaCotizacionUO cotizacion;
         private bool nuevo;
-        //private IList<Interno> Internos = new Repository().GetInternos();
 
-        public EntradaCotizacion(long idEntrada, bool nuevo)
+        public EntradaCotizacion()
         {
             InitializeComponent();
+
+            GuardarButtonUE guardarButton = new GuardarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Guardar_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+        }
+
+        public EntradaCotizacion(long idEntrada, bool nuevo)
+            : this()
+        {
             this.cotizacion = repo.ObtenerEntradaCotizacion(idEntrada);
             iniciar();
             this.nuevo = nuevo;
         }
 
         public EntradaCotizacion(long idInforme, string asunto, bool nuevo)
+            : this()
         {
             InitializeComponent();
             iniciar();
@@ -70,12 +88,12 @@ namespace ReportCreator.View
             CotizacionesDG.DataContext = cotizacion.cotizacionesInternos;
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new Borrador((long)cotizacion.informeId, nuevo));
         }
 
-        private void GuardarClick(object sender, RoutedEventArgs e)
+        private void Guardar_Click(object sender, RoutedEventArgs e)
         {
             if (cotizacion.id == 0)
                 cotizacion.id = repo.AgregarEntrada((long)cotizacion.informeId, cotizacion.titulo, 9);

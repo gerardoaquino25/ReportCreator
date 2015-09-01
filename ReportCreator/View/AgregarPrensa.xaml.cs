@@ -40,7 +40,6 @@ namespace ReportCreator.View
         private bool modificacion;
         private bool entradaPrensaNueva;
         private int orden;
-        private string mensaje = "OK";
 
         #region INICIALIZADOR
 

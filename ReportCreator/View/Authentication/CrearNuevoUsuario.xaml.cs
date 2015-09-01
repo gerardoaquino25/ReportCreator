@@ -1,5 +1,6 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,18 @@ namespace ReportCreator.View.Authentication
         public CrearNuevoUsuario()
         {
             InitializeComponent();
+
+            AceptarButtonUE aceptarButton = new AceptarButtonUE();
+            aceptarButton.Name = "Guardar";
+            aceptarButton.Visibility = Visibility.Visible;
+            aceptarButton.MouseLeftButtonUp += Crear_Click;
+            MainWindow.AddButtonToInitBar(aceptarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
         }
 
         private void Crear_Click(object sender, RoutedEventArgs e)

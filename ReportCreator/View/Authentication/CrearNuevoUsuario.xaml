@@ -24,10 +24,6 @@
                     <Label Style="{StaticResource VerticalFormL}">Repetir Contraseña:</Label>
                     <PasswordBox Style="{StaticResource ExtraLongPB}" Name="RepeatPassword"/>
                 </DockPanel>
-                <DockPanel Style="{StaticResource EndVerticalFormDP}">
-                    <Button Margin="0,0,10,0" Style="{StaticResource MediumB}" Click="Crear_Click">Crear</Button>
-                    <Button Margin="10,0,0,0" Style="{StaticResource MediumB}" Click="Volver_Click">Volver</Button>
-                </DockPanel>
             </StackPanel>
         </Border>
     </Grid>

@@ -1,6 +1,7 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Model;
 using ReportCreator.View;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,11 +35,23 @@ namespace ReportCreator.View
         public Borrador()
         {
             InitializeComponent();
+
+            GuardarButtonUE guardarButton = new GuardarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Guardar_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
         }
 
         public Borrador(long idInforme, bool nuevo)
+            : this()
         {
-            InitializeComponent();
             informe = repo.ObtenerInforme(idInforme);
             this.idInforme = idInforme;
             entradas = new ObservableCollection<Entrada>(informe.entradas);
@@ -68,7 +81,7 @@ namespace ReportCreator.View
             }
         }
 
-        private void GuardarClick(object sender, RoutedEventArgs e)
+        private void Guardar_Click(object sender, RoutedEventArgs e)
         {
             if (idInforme == 0)
                 repo.AgregarInforme("");
@@ -120,7 +133,7 @@ namespace ReportCreator.View
             }
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             if (nuevo)
                 MainWindow.SetContent(new EnvioInforme());

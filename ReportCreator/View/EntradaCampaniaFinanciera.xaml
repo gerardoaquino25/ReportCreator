@@ -9,8 +9,6 @@
     <Grid>
         <Label Name="CampaniaAsociadaLabel" Content="Campaña asociada:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="59,42,0,0" Width="113" HorizontalContentAlignment="Right"/>
         <ComboBox DisplayMemberPath="nombreAMostar" Name="CampaniaAsociada" HorizontalAlignment="Left" Margin="177,42,0,0" VerticalAlignment="Top" Width="152" Height="26"/>
-        <Button Content="Guardar" HorizontalAlignment="Left" Margin="134,475,0,0" VerticalAlignment="Top" Width="90" Click="GuardarClick"/>
-        <Button Content="Volver" HorizontalAlignment="Left" Margin="229,475,0,0" VerticalAlignment="Top" Width="90" Click="VolverClick"/>
         <Label Content="Padron:" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="75"/>
         <DataGrid IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Name="Padrones" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Height="140" Width="432">
             <DataGrid.RowStyle>

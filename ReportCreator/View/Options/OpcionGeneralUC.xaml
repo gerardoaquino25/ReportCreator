@@ -31,11 +31,5 @@
                 </Expander>
             </StackPanel>
         </Border>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <DockPanel>
-                <Button Click="GuardarClick">Guardar</Button>
-                <Button Click="VolverClick">Volver</Button>
-            </DockPanel>
-        </StackPanel>
     </Grid>
 </UserControl>

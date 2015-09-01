@@ -21,10 +21,6 @@
                     </DataGrid.Resources>
                 </DataGrid>
             </DockPanel>
-            <!--<DockPanel DockPanel.Dock="Bottom">
-                <Image HorizontalAlignment="Right"  Source="C:\Users\Gerardo\Desktop\Backward.png"/>
-                <Button HorizontalAlignment="Right" Width="100" Height="25" SourceUpdated="" Click="VolverClick"/>
-            </DockPanel>-->
         </DockPanel>
     </Border>
 </UserControl>

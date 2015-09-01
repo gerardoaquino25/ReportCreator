@@ -66,10 +66,6 @@
                         <DataGridTextColumn Binding="{Binding Path=observacion}" Header="Observacion" MinWidth="100" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <DockPanel HorizontalAlignment="Center">
-                    <Button Content="Guardar" Click="Guardar_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button Content="Cancelar" Click="Cancelar_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </DockPanel>
             </StackPanel>
         </Border>
     </Grid>

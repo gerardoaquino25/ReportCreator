@@ -1,6 +1,7 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Model;
 using ReportCreator.View.Options;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,11 +32,23 @@ namespace ReportCreator.View
         public DetalleMail()
         {
             InitializeComponent();
+
+            GuardarButtonUE guardarButton = new GuardarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Guardar_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
         }
 
         public DetalleMail(int mail_id)
+            : this()
         {
-            InitializeComponent();
             this.mail_id = mail_id;
             mailSender = repo.ObtenerMailSender(mail_id);
             Email.Text = mailSender.email;
@@ -44,7 +57,7 @@ namespace ReportCreator.View
             Smtp.Text = mailSender.smtp;
         }
 
-        private void GuardarClick(object sender, RoutedEventArgs e)
+        private void Guardar_Click(object sender, RoutedEventArgs e)
         {
             if (mail_id == 0)
                 repo.AgregarMailSender(Email.Text, Password.Password, Convert.ToInt32(Puerto.Text), Smtp.Text);
@@ -61,12 +74,12 @@ namespace ReportCreator.View
             MainWindow.SetContent(new OpcionMailSenders());
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new OpcionMailSenders());
         }
 
-        private void ProbarClick(object sender, RoutedEventArgs e)
+        private void Probar_Click(object sender, RoutedEventArgs e)
         {
             Notificacion resultado = repo.EnviarEmail(Email.Text, Password.Password, Smtp.Text, Puerto.Text, EmailPrueba.Text, "Prueba", "Esto es una prueba.");
         }

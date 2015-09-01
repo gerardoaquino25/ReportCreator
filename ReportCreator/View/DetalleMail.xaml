@@ -14,9 +14,7 @@
         <PasswordBox Name="Password" HorizontalAlignment="Left" Margin="110,65,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
         <TextBox Name="Puerto" HorizontalAlignment="Left" Height="23" Margin="110,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
         <TextBox Name="Smtp" HorizontalAlignment="Left" Height="23" Margin="110,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142"/>
-        <Button Content="Probar" HorizontalAlignment="Left" Margin="65,149,0,0" VerticalAlignment="Top" Width="75" Click="ProbarClick"/>
+        <Button Content="Probar" HorizontalAlignment="Left" Margin="65,149,0,0" VerticalAlignment="Top" Width="75" Click="Probar_Click"/>
         <TextBox Name="EmailPrueba" HorizontalAlignment="Left" Height="23" Margin="145,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="98"/>
-        <Button Content="Guardar" HorizontalAlignment="Left" Height="24" Margin="58,183,0,0" VerticalAlignment="Top" Width="90" Click="GuardarClick"/>
-        <Button Content="Volver" HorizontalAlignment="Left" Height="24" Margin="153,183,0,0" VerticalAlignment="Top" Width="90" Click="VolverClick"/>
     </Grid>
 </UserControl>

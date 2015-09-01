@@ -1,6 +1,7 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Entities.UtilityObject;
 using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,29 +28,29 @@ namespace ReportCreator.View
         private long? idInforme;
         private bool nuevo;
         private long idEntrada;
-        private bool cargaInicial = true;
         EntradaCampaniaFinancieraUO entradaCampaniaFinanciera;
         IRepository repo = new Repository();
 
-        //public EntradaCampaniaFinanciera(long idEntrada, bool nuevo)
-        //{
-        //    InitializeComponent();
-        //    //CampaniaAsociadaLabel.Visibility = System.Windows.Visibility.Collapsed;
-        //    //CampaniaAsociada.Visibility = System.Windows.Visibility.Collapsed;
-        //    //InternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-        //    //Interno.Visibility = System.Windows.Visibility.Collapsed;
-        //    //ExternoLabel.Visibility = System.Windows.Visibility.Collapsed;
-        //    //Externo.Visibility = System.Windows.Visibility.Collapsed;
-        //    //NombreLabel.Visibility = System.Windows.Visibility.Collapsed;
-        //    //Nombre.Visibility = System.Windows.Visibility.Collapsed;
-        //    this.cotizacion = repo.ObtenerEntradaCampaniaFinanciera(idEntrada);
-        //    this.idEntrada = idEntrada;
-        //    this.nuevo = nuevo;
-        //}
-
-        public EntradaCampaniaFinanciera(long idEntrada, bool nuevo, bool nuevaEntrada)
+        public EntradaCampaniaFinanciera()
         {
             InitializeComponent();
+
+            GuardarButtonUE guardarButton = new GuardarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Guardar_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+        }
+
+        public EntradaCampaniaFinanciera(long idEntrada, bool nuevo, bool nuevaEntrada)
+            : this()
+        {
             this.idEntrada = idEntrada;
             this.nuevo = nuevo;
             entradaCampaniaFinanciera = repo.ObtenerEntradaCampaniaFinanciera(idEntrada);
@@ -100,8 +101,6 @@ namespace ReportCreator.View
 
             Padrones.ItemsSource = entradaCampaniaFinanciera.padrones;
             Aportes.ItemsSource = entradaCampaniaFinanciera.aportes;
-
-            cargaInicial = false;
         }
 
         private void AgregarPadronClick(object sender, RoutedEventArgs e)
@@ -119,7 +118,7 @@ namespace ReportCreator.View
             MainWindow.SetContent(new AgregarCF(idEntrada, nuevo));
         }
 
-        private void GuardarClick(object sender, RoutedEventArgs e)
+        private void Guardar_Click(object sender, RoutedEventArgs e)
         {
 
             if (ValidarDatos())
@@ -136,7 +135,7 @@ namespace ReportCreator.View
             return true;
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new Borrador((long)idInforme, nuevo));
         }

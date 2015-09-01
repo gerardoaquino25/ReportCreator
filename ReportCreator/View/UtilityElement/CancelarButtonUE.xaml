@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="ReportCreator.View.UtilityElement.GuardarButtonUE"
+﻿<UserControl x:Class="ReportCreator.View.UtilityElement.CancelarButtonUE"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Height="Auto" Width="Auto">
-    <DockPanel Name="Contenedor" Height="40" Width="45" HorizontalAlignment="Left" MouseEnter="Guardar_MouseEnter" MouseLeave="Guardar_MouseLeave">
-        <Image DockPanel.Dock="Top" HorizontalAlignment="Center" Height="40" Source="C:\development\Proyectos\ReportCreator\ReportCreator\Images\saveButton.png"/>
+             d:DesignHeight="300" d:DesignWidth="300">
+    <DockPanel Name="Contenedor" Height="40" Width="45" HorizontalAlignment="Left" MouseEnter="Cancelar_MouseEnter" MouseLeave="Cancelar_MouseLeave">
+        <Image DockPanel.Dock="Top" HorizontalAlignment="Center" Height="40" Source="C:\development\Proyectos\ReportCreator\ReportCreator\Images\cancelButton.png"/>
         <!--<Label DockPanel.Dock="Bottom" Height="20" Content="Volver" Padding="5,0,5,5"/>-->
     </DockPanel>
 </UserControl>

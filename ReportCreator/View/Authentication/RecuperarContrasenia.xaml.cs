@@ -1,5 +1,6 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,15 +28,28 @@ namespace ReportCreator.View.Authentication
         public RecuperarContrasenia(string username)
         {
             InitializeComponent();
+
+            AceptarButtonUE guardarButton = new AceptarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Aceptar_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+
             Username.Text = username;
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new LoginWindow(MainWindow.viewModel));
         }
 
-        private void RecuperarClick(object sender, RoutedEventArgs e)
+        private void Aceptar_Click(object sender, RoutedEventArgs e)
         {
             Notificacion resultado = repo.RecuperarContraseña(Username.Text);
             if (resultado.Detalle == Notificacion.EMAIL_ENVIADO)

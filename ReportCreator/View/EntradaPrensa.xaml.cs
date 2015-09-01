@@ -1,6 +1,7 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Entities.UtilityObject;
 using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -31,6 +32,23 @@ namespace ReportCreator.View
         public EntradaPrensaUO entradaPrensaUO;
 
         #region INICIALIZADOR
+        public EntradaPrensa()
+        {
+            InitializeComponent();
+
+            GuardarButtonUE guardarButton = new GuardarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Guardar_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+        }
+
         /// <summary>
         /// Inicializador para una entrada nueva.
         /// </summary>
@@ -39,9 +57,8 @@ namespace ReportCreator.View
         /// <param name="entradaPrensaNueva"></param>
         /// <param name="informeNuevo"></param>
         public EntradaPrensa(long informeId, string titulo, bool entradaPrensaNueva, bool informeNuevo)
+            : this()
         {
-            InitializeComponent();
-
             this.entradaPrensaUO = new EntradaPrensaUO();
             this.entradaPrensaUO.titulo = titulo;
             this.entradaPrensaUO.informeId = informeId;
@@ -58,6 +75,7 @@ namespace ReportCreator.View
         /// <param name="idEntrada"></param>
         /// <param name="informeNuevo"></param>
         public EntradaPrensa(long idEntrada, bool informeNuevo)
+            : this()
         {
             InitializeComponent();
 
@@ -117,7 +135,7 @@ namespace ReportCreator.View
 
         }
 
-        private void Cancelar_Click(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             if (this.entradaPrensaUO.informeId == null && (Prensas.Items.Count > 0 || Suscripciones.Items.Count > 0))
             {

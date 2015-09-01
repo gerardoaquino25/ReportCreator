@@ -65,10 +65,6 @@
                 <Label Content="Observación:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="122" HorizontalContentAlignment="Right"/>
                 <TextBox Name="Observacion" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="122"/>
             </DockPanel>
-            <DockPanel Margin="0,30,0,10" HorizontalAlignment="Center">
-                <Button Margin="0,0,10,0" Content="Guardar" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Click="GuardarClick"/>
-                <Button Margin="10,0,0,0" Content="Volver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Click="VolverClick"/>
-            </DockPanel>
         </StackPanel>
     </Grid>
 </UserControl>

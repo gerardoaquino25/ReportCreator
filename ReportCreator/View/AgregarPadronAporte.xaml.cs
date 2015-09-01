@@ -1,5 +1,6 @@
 ﻿using ReportCreator.Entities;
 using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,29 +32,27 @@ namespace ReportCreator.View
         private bool padron;
         //private long idPadronAporte;
         private object entrada;
-        private bool ceroInterno = true;
 
-        //public AgregarPadronAporte()
-        //{
-        //    InitializeComponent();
-        //}
-
-        //public AgregarPadronAporte(long idPadronAporte, long idEntrada, long campaniaAsociadaId, bool entradaNueva, bool padron, bool nuevo)
-        //{
-        //    InitializeComponent();
-        //    this.idEntrada = idEntrada;
-        //    this.campaniaAsociadaId = campaniaAsociadaId;
-        //    this.entradaNueva = entradaNueva;
-        //    this.nuevo = nuevo;
-        //    this.padron = padron;
-        //    this.idPadronAporte = idPadronAporte;
-        //    cargaInicial = true;
-        //    iniciar(false);
-        //}
-
-        public AgregarPadronAporte(long idEntrada, long campaniaAsociadaId, bool entradaNueva, bool padron, bool nuevo)
+        public AgregarPadronAporte()
         {
             InitializeComponent();
+
+            GuardarButtonUE guardarButton = new GuardarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Guardar_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+        }
+
+        public AgregarPadronAporte(long idEntrada, long campaniaAsociadaId, bool entradaNueva, bool padron, bool nuevo)
+            : this()
+        {
             this.idEntrada = idEntrada;
             this.campaniaAsociadaId = campaniaAsociadaId;
             this.entradaNueva = entradaNueva;
@@ -64,8 +63,8 @@ namespace ReportCreator.View
         }
 
         public AgregarPadronAporte(AporteCF aportador, bool entradaNueva, bool nuevo)
+            : this()
         {
-            InitializeComponent();
             this.idEntrada = aportador.entradaCampaniaFinancieraId;
             this.campaniaAsociadaId = aportador.campaniaFinancieraId;
             this.entradaNueva = entradaNueva;
@@ -77,8 +76,8 @@ namespace ReportCreator.View
         }
 
         public AgregarPadronAporte(PadronCF entrada, bool entradaNueva, bool nuevo)
+            : this()
         {
-            InitializeComponent();
             this.idEntrada = entrada.entradaCampaniaFinancieraId;
             this.campaniaAsociadaId = entrada.campaniaFinancieraId;
             this.entradaNueva = entradaNueva;
@@ -100,7 +99,6 @@ namespace ReportCreator.View
             Interno.ItemsSource = repo.ObtenerInternos();
             if (Interno.Items.Count > 0)
             {
-                ceroInterno = false;
                 resta = 0;
                 listaTipoAportante.Add("Interno");
             }
@@ -341,7 +339,7 @@ namespace ReportCreator.View
             }
         }
 
-        private void GuardarClick(object sender, RoutedEventArgs e)
+        private void Guardar_Click(object sender, RoutedEventArgs e)
         {
             if (ValidarDatos())
             {
@@ -495,7 +493,7 @@ namespace ReportCreator.View
             }
         }
 
-        private void VolverClick(object sender, RoutedEventArgs e)
+        private void Volver_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new EntradaCampaniaFinanciera(idEntrada, nuevo, false));
         }

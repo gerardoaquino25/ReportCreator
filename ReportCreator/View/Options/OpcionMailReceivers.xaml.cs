@@ -1,4 +1,5 @@
 ﻿using ReportCreator.Model;
+using ReportCreator.View.UtilityElement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,19 @@ namespace ReportCreator.View.Options
         public OpcionMailReceivers()
         {
             InitializeComponent();
+
+            VolverButtonUE volverButton = new VolverButtonUE();
+            volverButton.Name = "Volver";
+            volverButton.Visibility = Visibility.Visible;
+            volverButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(volverButton);
+
+            GuardarButtonUE guardarButton = new GuardarButtonUE();
+            guardarButton.Name = "Guardar";
+            guardarButton.Visibility = Visibility.Visible;
+            guardarButton.MouseLeftButtonUp += Volver_Click;
+            MainWindow.AddButtonToInitBar(guardarButton);
+
             mailReceivers = repo.ObtenerMailReceivers();
             MailReceiversDG.ItemsSource = mailReceivers;
         }
